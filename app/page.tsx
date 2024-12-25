@@ -7,7 +7,8 @@ import HomeTabs from "../app/(main)/HomeTabs/page";
 export default function Home() {
 
   const words = ["Practica en Cabina", "Grabacion de Set", "Estudio de Producion",
-    "Fotos/Fotographia", "Eventos en CDMX", "Diseño de Logo", "Diseño de Pagina Web"];
+    "Fotos/Fotographia", "Eventos en CDMX"];
+  // Maybe: "Diseño de Logo", "Diseño de Pagina Web", "Press Kit"
 
   return (
     <>
@@ -19,7 +20,7 @@ export default function Home() {
 
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center">
           <Image src={zontSvg} alt="ZONT" width={500} height={500} />
-          <FlipWords className="text-md md:text-4xl" words={words} />
+          <FlipWords className="text-md md:text-4xl text-white" words={words} />
         </div>
       </div >
       <HomeTabs />
