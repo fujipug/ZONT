@@ -1,5 +1,5 @@
 import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/popover";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const timeSlots = [
   { startTime: 11 },
