@@ -1,4 +1,4 @@
-'ues client'
+'use client'
 import { useState } from "react";
 import Practica from "./practica";
 import Grabar from "./grabar";
