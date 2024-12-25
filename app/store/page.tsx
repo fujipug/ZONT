@@ -194,7 +194,6 @@ export default function Store() {
                               <div className="group grid size-4 grid-cols-1">
                                 <input
                                   defaultValue={option.value}
-                                  defaultChecked={option.checked}
                                   id={`filter-mobile-${section.id}-${optionIdx}`}
                                   name={`${section.id}[]`}
                                   type="checkbox"
@@ -272,7 +271,7 @@ export default function Store() {
                   >
                     <div className="py-1">
                       {sortOptions.map((option) => (
-                        <MenuItem key={option}>
+                        <MenuItem key={option.name}>
                           <a
                             href={option.href}
                             className="block px-4 py-2 text-sm font-medium text-gray-900 data-[focus]:bg-gray-100 data-[focus]:outline-none"
@@ -322,7 +321,6 @@ export default function Store() {
                                 <div className="group grid size-4 grid-cols-1">
                                   <input
                                     defaultValue={option.value}
-                                    defaultChecked={option.checked}
                                     id={`filter-${section.id}-${optionIdx}`}
                                     name={`${section.id}[]`}
                                     type="checkbox"
