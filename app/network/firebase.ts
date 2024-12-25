@@ -2,7 +2,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, si
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import { firebaseConfig } from "@/lib/firebase-config";
-import { getFirestore, collection, getDocs, Timestamp, query, addDoc, doc, setDoc, getDoc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, Timestamp, query, doc, setDoc, getDoc } from "firebase/firestore";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
