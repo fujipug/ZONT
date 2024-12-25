@@ -4,10 +4,7 @@ import Practica from "./practica";
 import Grabar from "./grabar";
 import Studio from "./studio";
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
-
-function classNames(...classes: (string | undefined)[]) {
-  return classes.filter(Boolean).join(' ')
-}
+import { classNames } from "@/app/utils/classesNames"
 
 const HomeTabs = () => {
   const [activeTab, setActiveTab] = useState('Practicar');

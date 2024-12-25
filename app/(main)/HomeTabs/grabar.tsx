@@ -1,3 +1,5 @@
+import { classNames } from "@/app/utils/classesNames"
+
 const features = [
   {
     name: 'ZONT Studio',
@@ -22,11 +24,8 @@ const features = [
   }
 ]
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
 export default function Grabar() {
+
   return (
     <div className="bg-gray-50 mb-16">
       <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">

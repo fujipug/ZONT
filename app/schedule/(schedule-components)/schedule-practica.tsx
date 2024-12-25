@@ -5,6 +5,7 @@ import TimeSlots from '@/components/ui/time-slots';
 import { useState } from 'react';
 import { getReservations } from '@/app/network/firebase';
 import { Timestamp } from 'firebase/firestore';
+import { classNames } from "@/app/utils/classesNames"
 
 const product = {
   name: 'Practica en Estudio',
@@ -42,10 +43,6 @@ const policies = [
   { name: 'Audifonos', description: 'Audifonos con cable o ' },
   { name: 'USB', description: "USB formateado con Rekordbox o Serato" },
 ]
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
 
 export default function SchedulePractica() {
   const [selectedDate, setSelectedDate] = useState<CalendarDate>(today(getLocalTimeZone()))

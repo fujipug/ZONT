@@ -7,6 +7,7 @@ import AuthModal from './auth-modal'
 import Link from 'next/link'
 import { useAuth } from '@/app/utils/AuthContext'
 import { useRouter } from 'next/navigation'
+import { classNames } from "@/app/utils/classesNames"
 
 const user = {
   name: 'Tom Cook',
@@ -26,10 +27,6 @@ const userNavigation = [
   { name: 'Tu Perfil', href: '/profile' },
   { name: 'Settings', href: '/settings' },
 ]
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
 
 export default function Navbar() {
   const { isSignedIn } = useAuth();

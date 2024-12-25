@@ -1,5 +1,6 @@
 import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/popover";
 import { useEffect, useState } from "react";
+import { classNames } from "@/app/utils/classesNames"
 
 const timeSlots = [
   { startTime: 11 },
@@ -27,10 +28,6 @@ const timeLengths = [
   { timeLength: 9 },
   { timeLength: 10 },
 ]
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
 
 export default function TimeSlots({ setScheduleTime }: { setScheduleTime: (time: number, length: number) => void }) {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<number | null>(null)
