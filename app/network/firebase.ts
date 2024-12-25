@@ -48,7 +48,9 @@ export const firebaseSignIn = async (formData: FormData) => {
     });
 }
 
-const createUserInFirestore = async (user: any, firstName: string, lastName: string, djName: string) => {
+import { User } from "firebase/auth";
+
+const createUserInFirestore = async (user: User, firstName: string, lastName: string, djName: string) => {
   const docRef = doc(db, 'users', user.uid);
   return await setDoc(docRef, {
     email: user.email,

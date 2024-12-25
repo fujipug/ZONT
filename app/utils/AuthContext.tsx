@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 const AuthContext = createContext<{
   isSignedIn: boolean;
-  profile: any;
+  profile: DocumentData | null;
   register: (formData: FormData) => Promise<void>;
   signIn: (formData: FormData) => Promise<void>;
   signOut: () => void;
