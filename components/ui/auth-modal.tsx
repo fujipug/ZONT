@@ -32,7 +32,7 @@ export default function AuthModal({ open, setOpen }: { open: boolean, setOpen: (
             <DialogTitle className="hidden">Sign in</DialogTitle>
             <div className="flex justify-center">
               <img
-                src="Zont_black.svg"
+                src="ZONT_black.svg"
                 alt="ZONT"
                 className="h-10 w-auto"
               />
