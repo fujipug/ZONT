@@ -83,7 +83,7 @@ export const getReservations = async (timestamp: Timestamp, hours: number) => {
   querySnapshot.forEach((doc) => {
     console.log(doc.data());
     // check if the timestamp and hours added to the timestamp is between the start and end time of the reservation
-    const startOfReservation = doc.data().dateTime.toDate();
+    // const startOfReservation = doc.data().dateTime.toDate();
 
   });
 };
