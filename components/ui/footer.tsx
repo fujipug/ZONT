@@ -1,4 +1,18 @@
-const navigation = {
+interface NavigationItem {
+  name: string;
+  href: string;
+}
+
+interface SocialItem extends NavigationItem {
+  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+}
+
+interface Navigation {
+  main: NavigationItem[];
+  social: SocialItem[];
+}
+
+const navigation: Navigation = {
   main: [
     { name: 'About', href: '#' },
     { name: 'Blog', href: '#' },
