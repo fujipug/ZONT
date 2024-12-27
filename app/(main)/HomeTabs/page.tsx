@@ -5,6 +5,7 @@ import Grabar from "./grabar";
 import Studio from "./studio";
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import { classNames } from "@/app/utils/classesNames"
+import Services from "./services";
 
 const HomeTabs = () => {
   const [activeTab, setActiveTab] = useState('Practicar');
@@ -69,6 +70,7 @@ const HomeTabs = () => {
           {activeTab === 'Practicar' && <Practica />}
           {activeTab === 'Grabar Set' && <Grabar />}
           {activeTab === 'Producir' && <Studio />}
+          {activeTab === 'Ver Otros Servicios' && <Services />}
         </div>
       </div>
 

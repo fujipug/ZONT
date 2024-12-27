@@ -44,7 +44,7 @@ export default function Register() {
           <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
             <div>
               <h2 className="text-4xl font-bold tracking-tight text-gray-900">
-                Descubre los Beneficios de Ser Miembro de ZONT
+                Descubre los beneficios de ser miembro de ZONT
               </h2>
               <p className="mt-4 text-gray-500">
                 Convertirte en miembro de ZONT te brinda una variedad de beneficios

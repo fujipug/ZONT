@@ -25,7 +25,7 @@ const navigation = [
 
 const userNavigation = [
   { name: 'Tu Perfil', href: '/profile' },
-  { name: 'Settings', href: '/settings' },
+  { name: 'Configuración', href: '/settings' },
 ]
 
 export default function Navbar() {
@@ -60,8 +60,8 @@ export default function Navbar() {
               <div className="flex shrink-0 items-center">
                 <Link href="/">
                   <img
-                    alt="Your Company"
-                    src="ZONT_white.svg"
+                    alt="ZONT"
+                    src="/ZONT_white.svg"
                     className="h-6 w-auto"
                   />
                 </Link>
@@ -123,6 +123,7 @@ export default function Navbar() {
                       {userNavigation.map((item) => (
                         <MenuItem key={item.name}>
                           <a
+                            href={item.href}
                             className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                           >
                             {item.name}
@@ -132,9 +133,9 @@ export default function Navbar() {
                       <MenuItem>
                         <a
                           onClick={signOut}
-                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+                          className="block cursor-pointer px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                         >
-                          Sign Out
+                          Cerrar sesión
                         </a>
                       </MenuItem>
                     </MenuItems>
@@ -186,6 +187,7 @@ export default function Navbar() {
                 <DisclosureButton
                   key={item.name}
                   as="a"
+                  href={item.href}
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                 >
                   {item.name}
@@ -193,9 +195,9 @@ export default function Navbar() {
               ))}
               <DisclosureButton
                 onClick={signOut}
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                className="block cursor-pointer rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
               >
-                Sign Out
+                Cerrar sesión
               </DisclosureButton>
             </div>
           </div>
