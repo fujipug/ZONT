@@ -98,3 +98,15 @@ export const firebaseSignOut = async () => {
     return errorMessage;
   });
 }
+
+// get events from firebase DB
+export const getEvents = async () => {
+  const q = query(collection(db, "events"));
+  const querySnapshot = await getDocs(q);
+  const events: Array<{ [key: string]: any }> = [];
+  querySnapshot.forEach((doc) => {
+    events.push(doc.data());
+  });
+  console.log(events);
+  return events;
+};
