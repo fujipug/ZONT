@@ -5,6 +5,7 @@ import {
   HomeIcon,
 } from '@heroicons/react/24/outline'
 import { classNames } from '@/app/utils/classesNames'
+import Link from 'next/link'
 
 const pages = [
   { name: 'Classes', href: '/classes', current: false },
@@ -61,10 +62,10 @@ export default function ClassTemplate() {
         <ol role="list" className="mx-auto flex w-full max-w-screen-xl space-x-4 px-4 sm:px-6 lg:px-8">
           <li className="flex">
             <div className="flex items-center">
-              <a href="/" className="text-gray-400 hover:text-gray-500">
+              <Link href="/" className="text-gray-400 hover:text-gray-500">
                 <HomeIcon aria-hidden="true" className="size-5 shrink-0" />
                 <span className="sr-only">Home</span>
-              </a>
+              </Link>
             </div>
           </li>
           {pages.map((page) => (
