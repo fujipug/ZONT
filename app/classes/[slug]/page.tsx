@@ -2,8 +2,14 @@
 import {
   CurrencyDollarIcon,
   GlobeAmericasIcon,
+  HomeIcon,
 } from '@heroicons/react/24/outline'
 import { classNames } from '@/app/utils/classesNames'
+
+const pages = [
+  { name: 'Classes', href: '/classes', current: false },
+  { name: 'Current', href: '#', current: true },
+]
 
 const product = {
   name: 'El Arte del DJing: De los Fundamentos a la Magia',
@@ -51,6 +57,40 @@ const policies = [
 export default function ClassTemplate() {
   return (
     <div className="bg-gray-50">
+      <nav aria-label="Breadcrumb" className="flex border-b border-gray-200 bg-white">
+        <ol role="list" className="mx-auto flex w-full max-w-screen-xl space-x-4 px-4 sm:px-6 lg:px-8">
+          <li className="flex">
+            <div className="flex items-center">
+              <a href="/" className="text-gray-400 hover:text-gray-500">
+                <HomeIcon aria-hidden="true" className="size-5 shrink-0" />
+                <span className="sr-only">Home</span>
+              </a>
+            </div>
+          </li>
+          {pages.map((page) => (
+            <li key={page.name} className="flex">
+              <div className="flex items-center">
+                <svg
+                  fill="currentColor"
+                  viewBox="0 0 24 44"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                  className="h-full w-6 shrink-0 text-gray-200"
+                >
+                  <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
+                </svg>
+                <a
+                  href={page.href}
+                  aria-current={page.current ? 'page' : undefined}
+                  className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
+                >
+                  {page.name}
+                </a>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </nav>
       <main className="mx-auto mt-8 max-w-2xl px-4 pb-16 sm:px-6 sm:pb-24 lg:max-w-7xl lg:px-8">
         <div className="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
           <div className="lg:col-span-5 lg:col-start-8">
@@ -96,7 +136,7 @@ export default function ClassTemplate() {
 
             {/* Product details */}
             <div className="mt-10">
-              <h2 className="text-sm font-medium text-gray-900">Description</h2>
+              <h2 className="text-sm font-medium text-gray-900">Descripcion</h2>
 
               <div
                 dangerouslySetInnerHTML={{ __html: product.description }}
@@ -105,7 +145,7 @@ export default function ClassTemplate() {
             </div>
 
             <div className="mt-8 border-t border-gray-200 pt-8">
-              <h2 className="text-sm font-medium text-gray-900">Fabric &amp; Care</h2>
+              <h2 className="text-sm font-medium text-gray-900">Detalles del Curso</h2>
 
               <div className="mt-4">
                 <ul role="list" className="list-disc space-y-1 pl-5 text-sm/6 text-gray-500 marker:text-gray-300">

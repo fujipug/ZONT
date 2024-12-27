@@ -1,20 +1,25 @@
+import Link from "next/link"
+
 const classes = [
   {
     level: 'Principiante',
     title: 'El Arte del DJing: De los Fundamentos a la Magia',
     image: '/arte_lesson.png',
+    href: '/classes/arte',
     description: 'Descubre el apasionante mundo del DJing con este curso práctico de 4 días. Aprende a dominar tu controlador, sincronizar beats, usar efectos y crear transiciones impecables. Diseñado para principiantes, este programa te llevará de los fundamentos técnicos a crear sets llenos de magia musical. ¡Conviértete en el DJ que siempre soñaste ser!'
   },
   {
     level: 'Avanzado',
     title: 'Master Mix: Encuadre y Armonía para DJs Pro',
     image: '/master_lesson.png',
+    href: '/classes/master',
     description: 'Perfecciona tus mezclas con este curso intensivo de 4 días enfocado en mezcla armónica y encuadre. Aprende a sincronizar fraseos, hacer transiciones suaves y crear sets que fluyan con una precisión musical impactante. Ideal para DJs que buscan llevar su arte al siguiente nivel y destacarse en cualquier pista de baile.'
   },
   {
     level: 'Intermedio',
     title: 'FX Mastery: Domina los Efectos en tu Controlador',
     image: '/fx_lesson.png',
+    href: '/classes/fx',
     description: 'Descubre el poder creativo de los efectos en este curso intensivo de 4 días. Aprende a usar filtros, ecos, delays y más para transformar tus sets en experiencias únicas. Desde los fundamentos hasta técnicas avanzadas, te enseñaremos cómo integrar efectos de manera estratégica y creativa para destacar en cualquier cabina. ¡Lleva tu DJing al siguiente nivel!'
   },
 ]
@@ -43,6 +48,11 @@ export default function Classes() {
                   <p className="mt-2 max-w-lg text-sm/6 text-gray-600">
                     {course.description}
                   </p>
+                  <Link href={course.href}>
+                    <button type="button" className="mt-6 inline-flex items-center gap-x-1.5 rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                      Aprende mas sobre este curso
+                    </button>
+                  </Link>
                 </div>
               </div>
               <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem]" />

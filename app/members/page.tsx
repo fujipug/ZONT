@@ -6,7 +6,7 @@ export default function Members() {
   const { profile } = useAuth();
 
   return (
-    <div className="bg-white py-8 sm:py-16">
+    <div className="bg-gray-50 py-8 sm:py-16">
       <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
         <h2 className="text-base/7 font-semibold text-indigo-600 flex justify-start items-center">
           <CakeIcon className="size-5 mr-2" />
@@ -42,8 +42,8 @@ export default function Members() {
                 className="h-80 object-cover object-left"
               />
               <div className="p-10 pt-4">
-                <h3 className="text-sm/4 font-semibold text-indigo-600">Performance</h3>
-                <p className="mt-2 text-lg font-medium tracking-tight text-gray-950">Lightning-fast builds</p>
+                <h3 className="text-sm/4 font-semibold text-indigo-600">Nuevo!</h3>
+                <p className="mt-2 text-lg font-medium tracking-tight text-gray-950">Nuevo Contenido de ZONT</p>
                 <p className="mt-2 max-w-lg text-sm/6 text-gray-600">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. In gravida justo et nulla efficitur, maximus
                   egestas sem pellentesque.
@@ -57,11 +57,11 @@ export default function Members() {
             <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-tr-[calc(2rem+1px)]">
               <img
                 alt=""
-                src="https://tailwindui.com/plus/img/component-images/bento-01-releases.png"
+                src="/points.png"
                 className="h-80 object-cover object-left lg:object-right"
               />
               <div className="p-10 pt-4">
-                <h3 className="text-sm/4 font-semibold text-indigo-600">Releases</h3>
+                <h3 className="text-sm/4 font-semibold text-indigo-600">Para Ti</h3>
                 <p className="mt-2 text-lg font-medium tracking-tight text-gray-950">Usa Tus Puntos</p>
                 <p className="mt-2 max-w-lg text-sm/6 text-gray-600">
                   Curabitur auctor, ex quis auctor venenatis, eros arcu rhoncus massa, laoreet dapibus ex elit vitae
