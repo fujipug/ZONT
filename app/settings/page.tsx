@@ -1,8 +1,4 @@
 'use client'
-
-import { useState } from 'react'
-import { Dialog, DialogPanel, Field, Label, Switch } from '@headlessui/react'
-import { Bars3Icon } from '@heroicons/react/20/solid'
 import {
   BellIcon,
   CreditCardIcon,
@@ -10,8 +6,8 @@ import {
   FingerPrintIcon,
   UserCircleIcon,
   UsersIcon,
-  XMarkIcon,
 } from '@heroicons/react/24/outline'
+import { classNames } from '@/app/utils/classesNames'
 
 const secondaryNavigation = [
   { name: 'General', href: '#', icon: UserCircleIcon, current: true },
@@ -22,14 +18,7 @@ const secondaryNavigation = [
   { name: 'Team members', href: '#', icon: UsersIcon, current: false },
 ]
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
 export default function Settings() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [automaticTimezoneEnabled, setAutomaticTimezoneEnabled] = useState(true)
-
   return (
     <>
       <div className="mx-auto max-w-7xl pt-16 lg:flex lg:gap-x-16 lg:px-8">
@@ -128,7 +117,7 @@ export default function Settings() {
                     </button>
                   </dd>
                 </div>
-                <Field className="flex pt-6">
+                {/* <Field className="flex pt-6">
                   <Label as="dt" passive className="flex-none pr-6 font-medium text-gray-900 sm:w-64">
                     Automatic timezone
                   </Label>
@@ -144,7 +133,7 @@ export default function Settings() {
                       />
                     </Switch>
                   </dd>
-                </Field>
+                </Field> */}
               </dl>
             </div>
           </div>
