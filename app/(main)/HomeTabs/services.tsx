@@ -5,21 +5,21 @@ const features = [
     name: 'Fotographia Profesional',
     description:
       'Our laptop sleeve is compact and precisely fits 13" devices. The zipper allows you to access the interior with ease, and the front pouch provides a convenient place for your charger cable.',
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-feature-07-detail-01.jpg',
+    imageSrc: '/photography.jpg',
     imageAlt: 'White canvas laptop sleeve with gray felt interior, silver zipper, and tan leather zipper pull.',
   },
   {
     name: 'Ayuda con Press Kit',
     description:
       'We design every detail with the best materials and finishes. This laptop sleeve features durable canvas with double-stitched construction, a felt interior, and a high quality zipper that hold up to daily use.',
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-feature-07-detail-02.jpg',
+    imageSrc: '/presskit.png',
     imageAlt: 'Detail of zipper pull with tan leather and silver rivet.',
   },
   {
     name: 'Desiño de Pagina Web',
     description:
       'The front pouch is perfect for your charger cable, earbuds, or anything else you want to keep handy. The durable canvas exterior is secured with double-stitched construction.',
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-feature-07-detail-03.jpg',
+    imageSrc: '/webdesign.jpg',
     imageAlt: 'White canvas laptop sleeve with gray felt interior, silver zipper, and tan leather zipper pull.',
   }
 ]

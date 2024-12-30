@@ -19,7 +19,7 @@ export default function AdminSignIn() {
                 className="h-10 w-auto"
               />
               <h2 className="mt-8 text-2xl/9 font-bold tracking-tight text-gray-900">Sign in to your account</h2>
-              <h2 className="text-xl/9 font-bold tracking-tight text-gray-700">Este es login para, profesores.</h2>
+              <h2 className="text-xl/9 font-bold tracking-tight text-gray-700">Este es login para, profesores y administradores</h2>
 
             </div>
 

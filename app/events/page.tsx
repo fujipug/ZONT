@@ -24,8 +24,6 @@ import { getEvents } from '../network/firebase'
 import { DocumentData } from 'firebase/firestore'
 
 const sortOptions = [
-  // { name: 'Most Popular', href: '#' },
-  // { name: 'Best Rating', href: '#' },
   { name: 'Mas Reciente', href: '#' },
   { name: 'Precio: Bajo a Alto', href: '#' },
   { name: 'Precio: Alto a Bajo', href: '#' },
@@ -56,19 +54,7 @@ const filters = [
       { value: 'Music', label: 'Music' },
       { value: 'Dance', label: 'Dance' },
     ],
-  },
-  // {
-  //   id: 'sizes',
-  //   name: 'Sizes',
-  //   options: [
-  //     { value: 'xs', label: 'XS' },
-  //     { value: 's', label: 'S' },
-  //     { value: 'm', label: 'M' },
-  //     { value: 'l', label: 'L' },
-  //     { value: 'xl', label: 'XL' },
-  //     { value: '2xl', label: '2XL' },
-  //   ],
-  // },
+  }
 ]
 
 const products2 = [
@@ -101,7 +87,6 @@ const products2 = [
     imageAlt:
       'Leather long wallet held open with hand-stitched card dividers, full-length bill pocket, and simple tab closure.',
   },
-  // More products...
 ]
 
 export default function Events() {

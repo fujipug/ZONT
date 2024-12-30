@@ -17,7 +17,7 @@ const user = {
 }
 
 const navigation = [
-  { name: 'Classes', href: '/classes', current: false },
+  { name: 'Classes', href: '/courses', current: false },
   { name: 'Eventos', href: '/events', current: false },
   { name: 'Tienda', href: '/store', current: false },
   { name: 'Ayuda', href: '/help', current: false },
@@ -84,7 +84,7 @@ export default function Navbar() {
             </div>
             <div className="flex items-center">
               <div className="shrink-0">
-                <span onClick={handleZontMembers} className='text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium cursor-pointer mr-2'>
+                <span onClick={handleZontMembers} className='text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-3 text-sm font-semibold cursor-pointer mr-2'>
                   Miembros ZONT
                 </span>
                 <Link

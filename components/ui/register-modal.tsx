@@ -32,7 +32,7 @@ export default function RegisterModal({ open, setOpen }: { open: boolean, setOpe
             <DialogTitle className="hidden">Sign in</DialogTitle>
             <div className="flex justify-center">
               <img
-                src="ZONT_black.svg"
+                src="/ZONT_black.svg"
                 alt="ZONT"
                 className="h-10 w-auto"
               />

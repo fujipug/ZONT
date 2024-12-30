@@ -107,6 +107,27 @@ export const getEvents = async () => {
   querySnapshot.forEach((doc) => {
     events.push(doc.data());
   });
-  console.log(events);
   return events;
+};
+
+// get courses from firebase DB
+export const getCourses = async () => {
+  const q = query(collection(db, "courses"));
+  const querySnapshot = await getDocs(q);
+  const courses: DocumentData[] = [];
+  querySnapshot.forEach((doc) => {
+    courses.push({ courseId: doc.id, ...doc.data() });
+  });
+  return courses;
+};
+
+// get course by id from firebase DB
+export const getCourseById = async (courseId: string) => {
+  const docRef = doc(db, 'courses', courseId);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    console.log('No such course!');
+  }
 };
