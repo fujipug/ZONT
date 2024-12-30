@@ -6,6 +6,7 @@ import Footer from "@/components/ui/footer";
 import Navbar from "@/components/ui/navbar";
 import { NextUIProvider } from "@nextui-org/react";
 import { AuthProvider } from "./utils/AuthContext";
+import CartFab from "@/components/ui/cart-fab";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -45,6 +46,7 @@ export default function RootLayout({
           </MantineProvider>
         </AuthProvider>
         <Footer />
+        <CartFab />
       </body>
     </html >
   );

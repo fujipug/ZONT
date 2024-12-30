@@ -105,9 +105,20 @@ export const getEvents = async () => {
   const querySnapshot = await getDocs(q);
   const events: DocumentData[] = [];
   querySnapshot.forEach((doc) => {
-    events.push(doc.data());
+    events.push({ eventId: doc.id, ...doc.data() });
   });
   return events;
+};
+
+// get event by id from firebase DB
+export const getEventById = async (eventId: string) => {
+  const docRef = doc(db, 'events', eventId);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    console.log('No such event!');
+  }
 };
 
 // get courses from firebase DB

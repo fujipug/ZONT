@@ -17,6 +17,7 @@ import {
   PopoverPanel,
 } from '@headlessui/react'
 import {
+  MapPinIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
@@ -96,7 +97,6 @@ export default function Events() {
 
   useEffect(() => {
     getEvents().then((events) => {
-      console.log(events);
       setEvents(events);
     });
   }, [])
@@ -330,16 +330,17 @@ export default function Events() {
 
               <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
                 {events.map((event) => (
-                  <a key={event.name} href={event.href} className="group relative">
+                  <a key={event.eventId} href={`events/${event.eventId}`} className="group relative">
                     <div className="relative">
-                      <div className="absolute z-10">
-                        <span className="rounded-md bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 ring-1 ring-inset ring-pink-700/10">
-                          {event.city}
+                      <div className="absolute z-10 -left-2 -top-2">
+                        <span className="rounded-md bg-black/90 px-3 py-2 text-lg font-medium text-white ring-1 ring-inset ring-black">
+                          {event.collective}
                         </span>
                       </div>
-                      <div className="absolute inset-0 flex z-10 justify-end items-end">
-                        <span className="rounded-md bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 ring-1 ring-inset ring-pink-700/10">
-                          {event.collective}
+                      <div className="absolute z-10 -left-2 top-8">
+                        <span className="rounded-md bg-black/90 px-3 py-2 font-medium text-white ring-1 ring-inset ring-black flex items-center gap-1">
+                          <MapPinIcon className="size-5" />
+                          {event.city}
                         </span>
                       </div>
                       <img
@@ -349,7 +350,7 @@ export default function Events() {
                       />
                     </div>
                     <div className="mt-4 flex items-center justify-between text-base font-medium text-gray-900">
-                      <h3>{event.name}</h3>
+                      <h3>{event.title}</h3>
                       {new Date(event?.date?.seconds * 1000).toLocaleDateString("es-MX", {
                         year: "numeric",
                         month: "short",
@@ -357,6 +358,7 @@ export default function Events() {
                       })}
                     </div>
                     <p className="mt-1 text-sm italic text-gray-500">{event.description}</p>
+
                   </a>
                 ))}
               </div>
@@ -367,7 +369,7 @@ export default function Events() {
               <div className="absolute inset-0">
                 <img
                   alt=""
-                  src="https://tailwindui.com/plus/img/ecommerce-images/category-page-01-featured-collection.jpg"
+                  src="/promote_event.jpg"
                   className="size-full object-cover"
                 />
               </div>
@@ -376,17 +378,17 @@ export default function Events() {
               <div className="absolute inset-x-0 bottom-0 rounded-bl-lg rounded-br-lg bg-black/75 p-6 backdrop-blur backdrop-filter sm:flex sm:items-center sm:justify-between lg:inset-x-auto lg:inset-y-0 lg:w-96 lg:flex-col lg:items-start lg:rounded-br-none lg:rounded-tl-lg">
                 <div>
                   <h2 id="featured-heading" className="text-xl font-bold text-white">
-                    Workspace Collection
+                    Quieres que salgo to evento aqui?
                   </h2>
                   <p className="mt-1 text-sm text-gray-300">
-                    Upgrade your desk with objects that keep you organized and clear-minded.
+                    Mandanos un mensaje y te ayudamos a promocionar tu evento.
                   </p>
                 </div>
                 <a
                   href="#"
                   className="mt-6 flex shrink-0 items-center justify-center rounded-md border border-white/25 px-4 py-3 text-base font-medium text-white hover:bg-white/10 sm:ml-8 sm:mt-0 lg:ml-0 lg:w-full"
                 >
-                  View the collection
+                  Mandar Mensaje
                 </a>
               </div>
             </section>
@@ -396,6 +398,7 @@ export default function Events() {
                 More products
               </h2>
 
+              <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-gray-900 mb-2">Eventos Pasados</h1>
               <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
                 {products2.map((product) => (
                   <a key={product.id} href={product.href} className="group">
