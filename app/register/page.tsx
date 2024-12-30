@@ -56,8 +56,8 @@ export default function Register() {
               </button>
             </div>
             <img
-              alt=""
-              src="https://tailwindui.com/plus/img/ecommerce-images/incentives-07-hero.jpg"
+              alt="Register"
+              src="/register.jpg"
               className="aspect-[3/2] w-full rounded-lg bg-gray-100 object-cover"
             />
           </div>
