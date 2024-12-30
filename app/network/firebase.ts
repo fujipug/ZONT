@@ -2,7 +2,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, si
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import { firebaseConfig } from "@/lib/firebase-config";
-import { getFirestore, collection, getDocs, Timestamp, query, doc, setDoc, getDoc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, Timestamp, query, doc, setDoc, getDoc, DocumentData } from "firebase/firestore";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -103,7 +103,7 @@ export const firebaseSignOut = async () => {
 export const getEvents = async () => {
   const q = query(collection(db, "events"));
   const querySnapshot = await getDocs(q);
-  const events: Array<{ [key: string]: any }> = [];
+  const events: DocumentData[] = [];
   querySnapshot.forEach((doc) => {
     events.push(doc.data());
   });

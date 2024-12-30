@@ -21,6 +21,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { getEvents } from '../network/firebase'
+import { DocumentData } from 'firebase/firestore'
 
 const sortOptions = [
   // { name: 'Most Popular', href: '#' },
@@ -106,7 +107,7 @@ const products2 = [
 export default function Events() {
   // const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-  const [events, setEvents] = useState<{ [key: string]: any }[]>([])
+  const [events, setEvents] = useState<DocumentData[]>([])
 
   useEffect(() => {
     getEvents().then((events) => {
