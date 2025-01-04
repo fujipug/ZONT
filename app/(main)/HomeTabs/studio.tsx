@@ -1,18 +1,40 @@
 const features = [
   {
     name: 'Equipo Profesional',
-    description: 'El estudio esta equipados con equipo de nivel profesional para DJing. Conéctate, sin necesidad de configuración.',
+    description: (
+      <div>
+        El estudio esta equipado con equipo y software de nivel profesional para producion:
+        <ul className="list-disc pl-5 mt-2">
+          <li>Ableton 12 Suite</li>
+          <li>KRK Classic 5 Monitores</li>
+          <li>Focusrite Scarlett 2i2</li>
+          <li>Akai Mini mk2</li>
+          <li>Microfono Shure</li>
+        </ul>
+      </div>
+    )
   },
   {
     name: 'Precios Accesiblese',
-    description: 'Nuestra misión es hacer que los estudios de calidad sean accesibles para todos. Aprovecha nuestras tarifas bajas y gana tiempo de estudio gratis al unirte a nuestro programa de recompensas.',
+    description: (
+      <div>
+        Nuestra misión es hacer que los estudios de calidad estén al alcance de todos. Aprovecha nuestras tarifas asequibles.
+        <ul className="list-disc pl-5 mt-2">
+          <li>$300 por hora</li>
+          <li>Paquetes de horas disponisbles</li>
+        </ul>
+      </div>
+    )
   },
   {
-    name: 'Thoughtfully designed',
+    name: 'Adaptamos a tu Horario',
     description:
-      'The comfortable disc binding allows you to quickly rearrange pages or combine lined, graph, and blank refills.',
+      'Horarios flexibles para que puedas practicar cuando más lo necesites, adaptándonos a tu agenda.',
   },
-  { name: 'Locally made', description: 'Responsibly and sustainably made real close to wherever you are, somehow.' },
+  {
+    name: 'Recompensas para Miembros',
+    description: 'Ustedes nos apoyan, y nosotros queremos apoyarlos a ustedes. Gana sesiones de práctica gratis a través de nuestro programa de recompensas.'
+  },
 ]
 
 export default function Studio() {
@@ -28,7 +50,7 @@ export default function Studio() {
         <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 sm:pb-32 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8 lg:pt-32">
           <div className="lg:col-start-2">
             <h2 id="features-heading" className="font-medium text-gray-500">
-              Espacio para tu cancion
+              Donde tu música toma vida
             </h2>
             <p className="mt-4 text-xl sm:text-4xl font-bold tracking-tight text-gray-900">Estudio de Producion</p>
             <p className="mt-4 text-gray-500">
@@ -47,12 +69,34 @@ export default function Studio() {
         </div>
       </section>
 
+      <section aria-labelledby="why-zont" className="relative">
+        <div className="grid grid-cols-1 sm:grid-cols-2 my-16 gap-x-8">
+          <div className="col-span-1">
+            <h2 id="why-zont" className="font-medium text-gray-500">
+              Porque ZONT?
+            </h2>
+            <p className="mt-4 text-xl sm:text-4xl font-bold tracking-tight text-gray-900">Estudio por Artistas, para Artistas</p>
+            <p className="mt-4 text-gray-500">
+              En ZONT, entendemos las necesidades de los DJs, productores y músicos, por lo que ofrecemos un entorno diseñado específicamente para que puedas practicar, grabar y producir tu música con el equipo más avanzado.
+            </p>
+          </div>
+
+          <div className="col-span-1">
+            <img
+              alt="By artists, for artists"
+              src="/byartists.jpg"
+              className="aspect-[3/2] w-full object-cover sm:aspect-[5/2] lg:absolute lg:aspect-auto lg:h-full lg:w-1/2 lg:pr-4 xl:pr-16"
+            />
+          </div>
+        </div>
+      </section>
+
       <section aria-labelledby="how-does-it-work" className="relative">
         <div className="">
           <h2 id="how-does-it-work" className="font-medium text-gray-500">
             Como reservar?
           </h2>
-          <p className="mt-4 text-xl sm:text-4xl font-bold tracking-tight text-gray-900">
+          <p className="mt-4 text-2xl sm:text-4xl font-bold tracking-tight text-gray-900">
             Reserva En Linea o Mandanos un Mensaje
           </p>
           <p className="mt-4 text-gray-500">

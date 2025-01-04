@@ -4,23 +4,33 @@ const features = [
   {
     name: 'ZONT Studio',
     description:
-      'Our laptop sleeve is compact and precisely fits 13" devices. The zipper allows you to access the interior with ease, and the front pouch provides a convenient place for your charger cable.',
+      `Zont Studio es el espacio ideal para DJs en CDMX, diseñado para practicar, 
+      producir música y grabar sets de alta calidad en un ambiente profesional y creativo. 
+      Equipado con tecnología de punta, iluminación vibrante y un diseño inspirado en la energía 
+      de la música, es el lugar perfecto para perfeccionar tu técnica y crear sets inolvidables.`,
     imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-feature-07-detail-01.jpg',
-    imageAlt: 'White canvas laptop sleeve with gray felt interior, silver zipper, and tan leather zipper pull.',
+    imageAlt: 'Zont Studio',
   },
   {
     name: 'Balcon Ritmico',
     description:
-      'We design every detail with the best materials and finishes. This laptop sleeve features durable canvas with double-stitched construction, a felt interior, and a high quality zipper that hold up to daily use.',
+      `La terraza de Zont Studio ofrece un espacio abierto y único, perfecto para grabar tus DJ 
+      sets en un ambiente relajado y auténtico. Con un toque urbano y la atmósfera vibrante de 
+      la ciudad como telón de fondo, es el lugar ideal para crear sets memorables en un entorno 
+      lleno de inspiración.`,
     imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-feature-07-detail-02.jpg',
-    imageAlt: 'Detail of zipper pull with tan leather and silver rivet.',
+    imageAlt: 'Balcon Ritmico',
   },
   {
     name: 'Huertito Roma',
     description:
-      'The front pouch is perfect for your charger cable, earbuds, or anything else you want to keep handy. The durable canvas exterior is secured with double-stitched construction.',
+      `Huertito Roma es un rincón lleno de vida y naturaleza, ubicado en el corazón de la histórica La Romita.
+       Rodeado de plantas y un ambiente verde, este espacio único combina la serenidad de la 
+       naturaleza con el encanto del barrio. Es el lugar perfecto para grabar tus DJ sets en un 
+       entorno íntimo, fresco y lleno de inspiración, ideal para conectar con tu creatividad en un 
+       escenario especial.`,
     imageSrc: '/huertito.jpeg',
-    imageAlt: 'White canvas laptop sleeve with gray felt interior, silver zipper, and tan leather zipper pull.',
+    imageAlt: 'Huertito Roma',
   }
 ]
 
@@ -32,8 +42,9 @@ export default function Grabar() {
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Graba tu Set</h2>
           <p className="mt-4 text-gray-500">
-            Grabacion de set en cabina con los mejores equipos de audio y video, para que puedas grabar tus sets y
-            producir tu musica.
+            Grabación de sets en cabina equipada con tecnología de audio y video de última generación,
+            diseñada para que puedas capturar tus sets con calidad profesional y llevar tu música al
+            siguiente nivel.
           </p>
         </div>
 

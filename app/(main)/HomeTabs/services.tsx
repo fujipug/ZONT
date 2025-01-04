@@ -4,23 +4,37 @@ const features = [
   {
     name: 'Fotographia Profesional',
     description:
-      'Our laptop sleeve is compact and precisely fits 13" devices. The zipper allows you to access the interior with ease, and the front pouch provides a convenient place for your charger cable.',
+      `Fotografía Profesional en ZONT te ofrece la oportunidad de capturar imágenes impactantes 
+      y de alta calidad que reflejen tu esencia como artista. Ya sea para promocionar tu música, 
+      compartir en redes sociales o complementar tus proyectos creativos, nuestro servicio combina 
+      experiencia técnica, equipo de primer nivel y un enfoque personalizado para resaltar tu estilo 
+      único. En un ambiente profesional y dinámico, creamos fotografías que cuentan tu historia y 
+      potencian tu presencia artística.`,
     imageSrc: '/photography.jpg',
-    imageAlt: 'White canvas laptop sleeve with gray felt interior, silver zipper, and tan leather zipper pull.',
+    imageAlt: 'fotographia profesional',
   },
   {
     name: 'Ayuda con Press Kit',
     description:
-      'We design every detail with the best materials and finishes. This laptop sleeve features durable canvas with double-stitched construction, a felt interior, and a high quality zipper that hold up to daily use.',
+      `Ayuda con Press Kit en ZONT te brinda las herramientas necesarias para destacar como 
+      artista y comunicar tu esencia de manera profesional. Desde la creación de tu biografía 
+      hasta la selección de fotos, diseño y contenido clave, te apoyamos en la elaboración de 
+      un press kit que capture tu identidad musical y atraiga la atención de promotores, 
+      sellos y medios. Con nuestro enfoque estratégico, aseguramos que tu presentación sea 
+      tan impresionante como tu música.`,
     imageSrc: '/presskit.png',
-    imageAlt: 'Detail of zipper pull with tan leather and silver rivet.',
+    imageAlt: 'Ayuda con Press Kit',
   },
   {
     name: 'Desiño de Pagina Web',
     description:
-      'The front pouch is perfect for your charger cable, earbuds, or anything else you want to keep handy. The durable canvas exterior is secured with double-stitched construction.',
+      `Diseño de Página Web en ZONT te ofrece una plataforma personalizada y profesional para 
+      mostrar tu música y conectar con tu audiencia. Creamos sitios web visualmente atractivos 
+      y funcionales, adaptados a tu estilo y necesidades, que te permiten destacar en el mundo digital. 
+      Desde la integración de tus sets hasta la promoción de tus próximos eventos, te ayudamos a tener 
+      una presencia en línea que refleje tu identidad como artista y te acerque a tu público.`,
     imageSrc: '/webdesign.jpg',
-    imageAlt: 'White canvas laptop sleeve with gray felt interior, silver zipper, and tan leather zipper pull.',
+    imageAlt: 'Desiño de Pagina Web',
   }
 ]
 
@@ -32,8 +46,10 @@ export default function Services() {
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Nuestros Otros Servicios</h2>
           <p className="mt-4 text-gray-500">
-            Grabacion de set en cabina con los mejores equipos de audio y video, para que puedas grabar tus sets y
-            producir tu musica.
+            Estamos para ofrecerte todo el apoyo necesario en tu carrera musical.
+            Ya sea que necesites potenciar tu presencia digital, mejorar tu imagen o preparar
+            material promocional, en ZONT contamos con las herramientas y la experiencia para
+            ayudarte a destacar.
           </p>
         </div>
 

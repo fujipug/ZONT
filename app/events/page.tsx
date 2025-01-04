@@ -21,8 +21,9 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import { getEvents } from '../network/firebase'
+import { getPastEvents, getUpcomingEvents } from '../network/firebase'
 import { DocumentData } from 'firebase/firestore'
+import { daysUntil } from '../utils/dateCheck'
 
 const sortOptions = [
   { name: 'Mas Reciente', href: '#' },
@@ -58,46 +59,19 @@ const filters = [
   }
 ]
 
-const products2 = [
-  {
-    id: 7,
-    name: 'Electric Kettle',
-    href: '#',
-    price: '$149',
-    description: 'Black',
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/category-page-01-image-card-07.jpg',
-    imageAlt: 'Close up of long kettle spout pouring boiling water into pour-over coffee mug with frothy coffee.',
-  },
-  {
-    id: 8,
-    name: 'Leather Workspace Pad',
-    href: '#',
-    price: '$165',
-    description: 'Black',
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/category-page-01-image-card-08.jpg',
-    imageAlt:
-      'Extra large black leather workspace pad on desk with computer, wooden shelf, desk organizer, and computer peripherals.',
-  },
-  {
-    id: 9,
-    name: 'Leather Long Wallet',
-    href: '#',
-    price: '$118',
-    description: 'Natural',
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/category-page-01-image-card-09.jpg',
-    imageAlt:
-      'Leather long wallet held open with hand-stitched card dividers, full-length bill pocket, and simple tab closure.',
-  },
-]
-
 export default function Events() {
   // const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-  const [events, setEvents] = useState<DocumentData[]>([])
+  const [upcomingEvents, setUpcomingEvents] = useState<DocumentData[]>([])
+  const [pastEvents, setPastEvents] = useState<DocumentData[]>([])
 
   useEffect(() => {
-    getEvents().then((events) => {
-      setEvents(events);
+    getUpcomingEvents().then((events) => {
+      setUpcomingEvents(events);
+    });
+
+    getPastEvents().then((events) => {
+      setPastEvents(events);
     });
   }, [])
 
@@ -199,9 +173,11 @@ export default function Events() {
         <main>
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             <div className="py-24 text-center">
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900">Que Eventos Hay?</h1>
+              <h1 className="text-4xl font-bold tracking-tight text-gray-900">¡Eventos Que No Te Puedes Perder!</h1>
               <p className="mx-auto mt-4 max-w-3xl text-base text-gray-500">
-                Aqui puedes encontrar eventos de ZONT y de nuestros amigos de otros collectivos.
+                Aquí encontrarás los eventos de ZONT y de nuestros colaboradores de otros colectivos,
+                ofreciendo una variedad de experiencias musicales únicas y exclusivas para que disfrutes
+                lo mejor de la escena.
               </p>
             </div>
 
@@ -329,7 +305,7 @@ export default function Events() {
               </h2>
 
               <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-                {events.map((event) => (
+                {upcomingEvents.map((event) => (
                   <a key={event.eventId} href={`events/${event.eventId}`} className="group relative">
                     <div className="relative">
                       <div className="absolute z-10 -left-2 -top-2">
@@ -341,6 +317,12 @@ export default function Events() {
                         <span className="rounded-md bg-black/90 px-3 py-2 font-medium text-white ring-1 ring-inset ring-black flex items-center gap-1">
                           <MapPinIcon className="size-5" />
                           {event.city}
+                        </span>
+                      </div>
+
+                      <div className="absolute z-10 -left-2 bottom-8">
+                        <span className="rounded-md bg-indigo-500/90 px-3 py-2 font-medium text-white ring-1 ring-inset ring-indigo-500 flex items-center gap-1">
+                          En {daysUntil(event?.date)} Dias
                         </span>
                       </div>
                       <img
@@ -358,11 +340,9 @@ export default function Events() {
                       })}
                     </div>
                     <p className="mt-1 text-sm italic text-gray-500">{event.description}</p>
-
                   </a>
                 ))}
               </div>
-
             </section>
 
             <section aria-labelledby="featured-heading" className="relative mt-16 overflow-hidden rounded-lg lg:h-96">
@@ -398,20 +378,37 @@ export default function Events() {
                 More products
               </h2>
 
-              <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-gray-900 mb-2">Eventos Pasados</h1>
+              <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-gray-900 mb-8">Eventos Pasados</h1>
               <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-                {products2.map((product) => (
-                  <a key={product.id} href={product.href} className="group">
-                    <img
-                      alt={product.imageAlt}
-                      src={product.imageSrc}
-                      className="aspect-square w-full rounded-lg object-cover group-hover:opacity-75 sm:aspect-[2/3]"
-                    />
-                    <div className="mt-4 flex items-center justify-between text-base font-medium text-gray-900">
-                      <h3>{product.name}</h3>
-                      <p>{product.price}</p>
+                {pastEvents.map((event) => (
+                  <a key={event.eventId} href={`events/${event.eventId}`} className="group relative">
+                    <div className="relative">
+                      <div className="absolute z-10 -left-2 -top-2">
+                        <span className="rounded-md bg-black/90 px-3 py-2 text-lg font-medium text-white ring-1 ring-inset ring-black">
+                          {event.collective}
+                        </span>
+                      </div>
+                      <div className="absolute z-10 -left-2 top-8">
+                        <span className="rounded-md bg-black/90 px-3 py-2 font-medium text-white ring-1 ring-inset ring-black flex items-center gap-1">
+                          <MapPinIcon className="size-5" />
+                          {event.city}
+                        </span>
+                      </div>
+                      <img
+                        alt={event.imageAlt}
+                        src={event.imgUrl}
+                        className="aspect-square w-full rounded-lg object-cover group-hover:opacity-75 sm:aspect-[2/3]"
+                      />
                     </div>
-                    <p className="mt-1 text-sm italic text-gray-500">{product.description}</p>
+                    <div className="mt-4 flex items-center justify-between text-base font-medium text-gray-900">
+                      <h3>{event.title}</h3>
+                      {new Date(event?.date?.seconds * 1000).toLocaleDateString("es-MX", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </div>
+                    <p className="mt-1 text-sm italic text-gray-500">{event.description}</p>
                   </a>
                 ))}
               </div>

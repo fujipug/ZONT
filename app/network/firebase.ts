@@ -2,7 +2,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, si
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import { firebaseConfig } from "@/lib/firebase-config";
-import { getFirestore, collection, getDocs, Timestamp, query, doc, setDoc, getDoc, DocumentData } from "firebase/firestore";
+import { getFirestore, collection, getDocs, Timestamp, query, doc, setDoc, getDoc, DocumentData, where, orderBy, limit } from "firebase/firestore";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -102,6 +102,28 @@ export const firebaseSignOut = async () => {
 // get events from firebase DB
 export const getEvents = async () => {
   const q = query(collection(db, "events"));
+  const querySnapshot = await getDocs(q);
+  const events: DocumentData[] = [];
+  querySnapshot.forEach((doc) => {
+    events.push({ eventId: doc.id, ...doc.data() });
+  });
+  return events;
+};
+
+// get events from firebase DB where the dateStart is greater than or equal to current timestamp and the dateEnd is less than or equal to current timestamp and limit 10
+export const getUpcomingEvents = async () => {
+  const q = query(collection(db, "events"), where("dateStart", ">=", Timestamp.now()), where("dateEnd", "<=", Timestamp.now()), limit(10), orderBy("dateStart", "asc"));
+  const querySnapshot = await getDocs(q);
+  const events: DocumentData[] = [];
+  querySnapshot.forEach((doc) => {
+    events.push({ eventId: doc.id, ...doc.data() });
+  });
+  return events;
+};
+
+// get events from firebase DB where the dateEnd is less than the current timestamp and limit 10 
+export const getPastEvents = async () => {
+  const q = query(collection(db, "events"), where("dateEnd", "<", Timestamp.now()), limit(10), orderBy("dateStart", "desc"));
   const querySnapshot = await getDocs(q);
   const events: DocumentData[] = [];
   querySnapshot.forEach((doc) => {
