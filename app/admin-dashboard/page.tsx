@@ -19,7 +19,8 @@ import {
   CalendarDaysIcon,
   AcademicCapIcon,
   TicketIcon,
-  BuildingStorefrontIcon
+  BuildingStorefrontIcon,
+  NewspaperIcon
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { classNames } from '@/app/utils/classesNames'
@@ -32,12 +33,12 @@ const navigation = [
   { name: 'Classes', href: '#', icon: AcademicCapIcon },
   { name: 'Eventos', href: '#', icon: TicketIcon },
   { name: 'Tienda', href: '#', icon: BuildingStorefrontIcon },
-  // { name: 'Reports', href: '#', icon: ChartPieIcon },
+  { name: 'Blogs', href: '#', icon: NewspaperIcon },
 ]
-const teams = [
-  { id: 1, name: 'Heroicons', href: '#', initial: 'H' },
-  { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T' },
-  { id: 3, name: 'Workcation', href: '#', initial: 'W' },
+const management = [
+  { id: 1, name: 'Manejar Usuarios', href: '#', initial: 'U' },
+  { id: 2, name: 'Mensajes', href: '#', initial: 'M' },
+  { id: 3, name: 'Quejas', href: '#', initial: 'Q' },
 ]
 const userNavigation = [
   { name: 'Your profile', href: '#' },
@@ -112,21 +113,21 @@ export default function AdminDashboard() {
                     <li>
                       <div className="text-xs/6 font-semibold text-gray-400">Your teams</div>
                       <ul role="list" className="-mx-2 mt-2 space-y-1">
-                        {teams.map((team) => (
-                          <li key={team.name}>
+                        {management.map((manage) => (
+                          <li key={manage.name}>
                             <a
-                              href={team.href}
+                              href={manage.href}
                               className={classNames(
-                                team.name
+                                manage.name
                                   ? 'bg-gray-800 text-white'
                                   : 'text-gray-400 hover:bg-gray-800 hover:text-white',
                                 'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                               )}
                             >
                               <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
-                                {team.initial}
+                                {manage.initial}
                               </span>
-                              <span className="truncate">{team.name}</span>
+                              <span className="truncate">{manage.name}</span>
                             </a>
                           </li>
                         ))}
@@ -184,21 +185,21 @@ export default function AdminDashboard() {
                 <li>
                   <div className="text-xs/6 font-semibold text-gray-400">Your teams</div>
                   <ul role="list" className="-mx-2 mt-2 space-y-1">
-                    {teams.map((team) => (
-                      <li key={team.name}>
+                    {management.map((manage) => (
+                      <li key={manage.name}>
                         <a
-                          href={team.href}
+                          href={manage.href}
                           className={classNames(
-                            team.name
+                            manage.name
                               ? 'bg-gray-800 text-white'
                               : 'text-gray-400 hover:bg-gray-800 hover:text-white',
                             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                           )}
                         >
                           <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
-                            {team.initial}
+                            {manage.initial}
                           </span>
-                          <span className="truncate">{team.name}</span>
+                          <span className="truncate">{manage.name}</span>
                         </a>
                       </li>
                     ))}

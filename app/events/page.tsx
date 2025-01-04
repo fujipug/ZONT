@@ -370,7 +370,7 @@ export default function Events() {
                   </p>
                 </div>
                 <a
-                  href="#"
+                  href="/contact"
                   className="mt-6 flex shrink-0 items-center justify-center rounded-md border border-white/25 px-4 py-3 text-base font-medium text-white hover:bg-white/10 sm:ml-8 sm:mt-0 lg:ml-0 lg:w-full"
                 >
                   Mandar Mensaje

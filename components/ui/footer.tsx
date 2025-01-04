@@ -15,8 +15,8 @@ interface Navigation {
 const navigation: Navigation = {
   main: [
     { name: 'Sobre Nosotros', href: '/about' },
-    { name: 'Blog', href: '#' },
-    { name: 'Menciones', href: '#' },
+    { name: 'Blog', href: '/blog' },
+    // { name: 'Menciones', href: '#' },
     { name: 'Ayuda', href: '/help' },
     { name: 'Contacto', href: '/contact' },
     // { name: 'Equipo', href: '/team' },
@@ -85,7 +85,7 @@ const Footer = () => {
             </a>
           ))}
         </div>
-        <p className="mt-10 text-center text-sm/6 text-gray-400">&copy; 2024 ZONT Music. All rights reserved.</p>
+        <p className="mt-10 text-center text-sm/6 text-gray-400">&copy; 2025 ZONT Music. All rights reserved.</p>
       </div>
     </footer>
   )
