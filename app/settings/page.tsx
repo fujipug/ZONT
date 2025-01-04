@@ -3,19 +3,17 @@ import {
   BellIcon,
   CreditCardIcon,
   CubeIcon,
-  FingerPrintIcon,
   UserCircleIcon,
-  UsersIcon,
 } from '@heroicons/react/24/outline'
 import { classNames } from '@/app/utils/classesNames'
 
 const secondaryNavigation = [
   { name: 'General', href: '#', icon: UserCircleIcon, current: true },
-  { name: 'Security', href: '#', icon: FingerPrintIcon, current: false },
+  // { name: 'Security', href: '#', icon: FingerPrintIcon, current: false },
   { name: 'Notifications', href: '#', icon: BellIcon, current: false },
   { name: 'Plan', href: '#', icon: CubeIcon, current: false },
   { name: 'Billing', href: '#', icon: CreditCardIcon, current: false },
-  { name: 'Team members', href: '#', icon: UsersIcon, current: false },
+  // { name: 'Team members', href: '#', icon: UsersIcon, current: false },
 ]
 
 export default function Settings() {
@@ -55,7 +53,7 @@ export default function Settings() {
 
         <main className="px-4 py-16 sm:px-6 lg:flex-auto lg:px-0 lg:py-20">
           <div className="mx-auto max-w-2xl space-y-16 sm:space-y-20 lg:mx-0 lg:max-w-none">
-            <div>
+            {/* <div>
               <h2 className="text-base/7 font-semibold text-gray-900">Profile</h2>
               <p className="mt-1 text-sm/6 text-gray-500">
                 This information will be displayed publicly so be careful what you share.
@@ -90,7 +88,7 @@ export default function Settings() {
                   </dd>
                 </div>
               </dl>
-            </div>
+            </div> */}
 
             <div>
               <h2 className="text-base/7 font-semibold text-gray-900">Language and dates</h2>

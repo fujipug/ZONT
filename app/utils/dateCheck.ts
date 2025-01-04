@@ -5,14 +5,14 @@ export const pastDateCheck = (date: Timestamp) => {
   return date.seconds < now.seconds;
 }
 
-export const daysUntil = (date: Timestamp) => {
+export const daysUntil = (dateStart: Timestamp, dateEnd: Timestamp) => {
   const now = Timestamp.now();
-  const diffInSeconds = date.seconds - now.seconds;
-  const days = Math.floor(diffInSeconds / 86400);
+  const diffInSeconds = dateStart.seconds - now.seconds;
+  const daysUntilStart = Math.floor(diffInSeconds / 86400);
+  const isHappening = now.seconds >= dateStart.seconds && now.seconds <= dateEnd.seconds;
 
-  if (days === 0) {
-    return "Hoy";
-  }
-
-  return days;
-}
+  return {
+    daysUntilStart,
+    isHappening,
+  };
+};

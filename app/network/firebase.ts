@@ -110,18 +110,43 @@ export const getEvents = async () => {
   return events;
 };
 
-// get events from firebase DB where the dateStart is greater than or equal to current timestamp and the dateEnd is less than or equal to current timestamp and limit 10
 export const getUpcomingEvents = async () => {
-  const q = query(collection(db, "events"), where("dateStart", ">=", Timestamp.now()), where("dateEnd", "<=", Timestamp.now()), limit(10), orderBy("dateStart", "asc"));
-  const querySnapshot = await getDocs(q);
+  const q2 = query(
+    collection(db, "events"),
+    where("dateStart", ">=", Timestamp.now()),
+    orderBy("dateStart", "asc"),
+    limit(10)
+  );
+
+  const q1 = query(
+    collection(db, "events"),
+    where("dateEnd", ">=", Timestamp.now()),
+    orderBy("dateEnd", "asc"),
+    limit(10)
+  );
+
+  const querySnapshot1 = await getDocs(q1);
+  const querySnapshot2 = await getDocs(q2);
+
   const events: DocumentData[] = [];
-  querySnapshot.forEach((doc) => {
+
+  // Collect results from both queries
+  querySnapshot1.forEach((doc) => {
     events.push({ eventId: doc.id, ...doc.data() });
   });
-  return events;
+
+  querySnapshot2.forEach((doc) => {
+    events.push({ eventId: doc.id, ...doc.data() });
+  });
+
+  // Optionally, remove duplicates (in case events match both queries)
+  const uniqueEvents = Array.from(new Set(events.map((a) => a.eventId)))
+    .map((id) => events.find((a) => a.eventId === id));
+
+  return uniqueEvents;
 };
 
-// get events from firebase DB where the dateEnd is less than the current timestamp and limit 10 
+
 export const getPastEvents = async () => {
   const q = query(collection(db, "events"), where("dateEnd", "<", Timestamp.now()), limit(10), orderBy("dateStart", "desc"));
   const querySnapshot = await getDocs(q);
@@ -163,4 +188,15 @@ export const getCourseById = async (courseId: string) => {
   } else {
     console.log('No such course!');
   }
+};
+
+// get items from store from firebase DB
+export const getStoreItems = async () => {
+  const q = query(collection(db, "store"));
+  const querySnapshot = await getDocs(q);
+  const storeItems: DocumentData[] = [];
+  querySnapshot.forEach((doc) => {
+    storeItems.push({ itemId: doc.id, ...doc.data() });
+  });
+  return storeItems;
 };

@@ -67,11 +67,11 @@ export default function Events() {
 
   useEffect(() => {
     getUpcomingEvents().then((events) => {
-      setUpcomingEvents(events);
+      setUpcomingEvents(events.filter((event): event is DocumentData => event !== undefined));
     });
 
     getPastEvents().then((events) => {
-      setPastEvents(events);
+      setPastEvents(events.filter((event): event is DocumentData => event !== undefined));
     });
   }, [])
 
@@ -320,11 +320,16 @@ export default function Events() {
                         </span>
                       </div>
 
-                      <div className="absolute z-10 -left-2 bottom-8">
-                        <span className="rounded-md bg-indigo-500/90 px-3 py-2 font-medium text-white ring-1 ring-inset ring-indigo-500 flex items-center gap-1">
-                          En {daysUntil(event?.date)} Dias
-                        </span>
-                      </div>
+                      {daysUntil(event?.dateStart, event?.dateEnd).daysUntilStart >= -1 &&
+                        <div className="absolute z-10 -left-2 bottom-8">
+                          <span className={`rounded-md px-3 py-2 font-medium text-white ring-1 ring-inset ring-indigo-500 flex items-center gap-1 ${daysUntil(event?.dateStart, event?.dateEnd).daysUntilStart === -1 && daysUntil(event?.dateStart, event?.dateEnd).isHappening ? 'animate-party-vibe' : 'bg-indigo-500/90'}`}>
+                            {daysUntil(event?.dateStart, event?.dateEnd).daysUntilStart === 0 && 'Hoy'}
+                            {daysUntil(event?.dateStart, event?.dateEnd).daysUntilStart === 1 && 'Mañana'}
+                            {(daysUntil(event?.dateStart, event?.dateEnd).daysUntilStart === -1 && daysUntil(event?.dateStart, event?.dateEnd).isHappening) && '🎉 En Curso'}
+                            {daysUntil(event?.dateStart, event?.dateEnd).daysUntilStart > 1 && `En ${daysUntil(event?.dateStart, event?.dateEnd).daysUntilStart} días`}
+                          </span>
+                        </div>
+                      }
                       <img
                         alt={event.imageAlt}
                         src={event.imgUrl}
@@ -333,7 +338,7 @@ export default function Events() {
                     </div>
                     <div className="mt-4 flex items-center justify-between text-base font-medium text-gray-900">
                       <h3>{event.title}</h3>
-                      {new Date(event?.date?.seconds * 1000).toLocaleDateString("es-MX", {
+                      {new Date(event?.dateStart?.seconds * 1000).toLocaleDateString("es-MX", {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
@@ -394,6 +399,7 @@ export default function Events() {
                           {event.city}
                         </span>
                       </div>
+
                       <img
                         alt={event.imageAlt}
                         src={event.imgUrl}
@@ -402,7 +408,7 @@ export default function Events() {
                     </div>
                     <div className="mt-4 flex items-center justify-between text-base font-medium text-gray-900">
                       <h3>{event.title}</h3>
-                      {new Date(event?.date?.seconds * 1000).toLocaleDateString("es-MX", {
+                      {new Date(event?.dateStart?.seconds * 1000).toLocaleDateString("es-MX", {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
