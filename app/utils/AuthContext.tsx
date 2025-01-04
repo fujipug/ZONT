@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [profile, setProfile] = useState<DocumentData | null>(null);
 
+  // TODO: Maybe see how to use useCallback here
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {

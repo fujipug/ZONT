@@ -19,11 +19,11 @@ export default {
       },
       keyframes: {
         partyVibe: {
-          '0%': { backgroundColor: '#FF007F' }, // Pink
-          '25%': { backgroundColor: '#FF8C00' }, // Orange
-          '50%': { backgroundColor: '#32CD32' }, // Green
-          '75%': { backgroundColor: '#1E90FF' }, // Blue
-          '100%': { backgroundColor: '#FF007F' }, // Back to Pink
+          '0%': { backgroundColor: '#FF007F', opacity: '90%' }, // Pink
+          '25%': { backgroundColor: '#FF8C00', opacity: '90%' }, // Orange
+          '50%': { backgroundColor: '#32CD32', opacity: '90%' }, // Green
+          '75%': { backgroundColor: '#1E90FF', opacity: '90%' }, // Blue
+          '100%': { backgroundColor: '#FF007F', opacity: '90%' }, // Back to Pink
         },
       },
     },

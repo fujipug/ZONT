@@ -320,8 +320,8 @@ export default function Store() {
                 {storeItems.map((item: DocumentData) => (
                   <a key={item.itemId} href={item.href} className="group">
                     <img
-                      alt={item.imageAlt}
-                      src={item.imageSrc}
+                      // alt={item.imageAlt}
+                      src={item.imgUrl}
                       className="aspect-square w-full rounded-lg object-cover group-hover:opacity-75 sm:aspect-[2/3]"
                     />
                     <div className="mt-4 flex items-center justify-between text-base font-medium text-gray-900">
