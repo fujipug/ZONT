@@ -30,7 +30,6 @@ const paymentMethods = [
 ]
 
 export default function Checkout() {
-  const [open, setOpen] = useState(false)
   const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(deliveryMethods[0])
 
   return (
