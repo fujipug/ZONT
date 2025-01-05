@@ -11,9 +11,9 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType>({
   cart: [],
-  addToCart: (item: string) => { },
-  removeItemFromCart: (itemId: string) => { },
-  removeFromCart: (itemId: string) => { },
+  addToCart: () => { },
+  removeItemFromCart: () => { },
+  removeFromCart: () => { },
   clearCart: () => { }
 });
 

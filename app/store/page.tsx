@@ -223,7 +223,7 @@ export default function Store() {
                 </button>
 
                 <PopoverGroup className="hidden sm:flex sm:items-baseline sm:space-x-8">
-                  {filters.map((section, sectionIdx) => (
+                  {filters.map((section) => (
                     <Popover key={section.name} id="menu" className="relative inline-block text-left">
                       <div>
                         <PopoverButton className="group inline-flex items-center justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
