@@ -13,7 +13,7 @@ const GoogleMap = () => {
 
   useEffect(() => {
     const loader = new Loader({
-      apiKey: 'AIzaSyBLBAZOl9zx3TFkUF9HgQjepNkKX09rVAc',
+      apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
       version: "weekly",
     });
 
