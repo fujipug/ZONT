@@ -84,7 +84,7 @@ export default function Studio() {
           <div className="col-span-1">
             <img
               alt="By artists, for artists"
-              src="/byartists.jpg"
+              src="/artist_studio.jpg"
               className="aspect-[3/2] w-full object-cover sm:aspect-[5/2] lg:absolute lg:aspect-auto lg:h-full lg:w-1/2 lg:pr-4 xl:pr-16"
             />
           </div>
@@ -122,7 +122,7 @@ export default function Studio() {
               Instagram
             </a>
             <a
-              href="https://wa.me/19288636489?text=Estoy%20intersado%20de%20practica%20en%20cabina" target="_blank"
+              href="https://wa.me/19288636489?text=Estoy%20intersado%20de%20reservar%20el%20estudio" target="_blank"
               type="button"
               className="w-full relative -ml-px inline-flex items-center justify-center rounded-r-md bg-[#27d366] px-3 py-2 text-sm font-semibold text-white focus:z-10"
             >

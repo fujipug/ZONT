@@ -7,6 +7,7 @@ import Navbar from "@/components/ui/navbar";
 import { NextUIProvider } from "@nextui-org/react";
 import { AuthProvider } from "./utils/AuthContext";
 import CartFab from "@/components/ui/cart-fab";
+import { CartProvider } from "./utils/CartContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -37,16 +38,18 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthProvider>
-          <Navbar />
-          <MantineProvider>
-            <NextUIProvider>
-              {children}
-            </NextUIProvider>
-          </MantineProvider>
-        </AuthProvider>
-        <Footer />
-        <CartFab />
+        <CartProvider>
+          <AuthProvider>
+            <Navbar />
+            <MantineProvider>
+              <NextUIProvider>
+                {children}
+              </NextUIProvider>
+            </MantineProvider>
+          </AuthProvider>
+          <Footer />
+          <CartFab />
+        </CartProvider>
       </body>
     </html >
   );

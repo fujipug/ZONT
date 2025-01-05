@@ -200,3 +200,29 @@ export const getStoreItems = async () => {
   });
   return storeItems;
 };
+
+// get item by id from store from firebase DB
+export const getStoreItemById = async (itemId: string) => {
+  const docRef = doc(db, 'store', itemId);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return { itemId: docSnap.id, ...docSnap.data() };
+  } else {
+    console.log('No such item!');
+  }
+};
+
+// get get item by id from store from firebase DB but the parameter is an array of ids
+export const getCheckoutItemsByIds = async (itemIds: string[]) => {
+  const checkoutItems: DocumentData[] = [];
+  for (const itemId of itemIds) {
+    const docRef = doc(db, 'store', itemId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      checkoutItems.push({ itemId: docSnap.id, ...docSnap.data() });
+    } else {
+      console.log('No such item!');
+    }
+  }
+  return checkoutItems;
+};

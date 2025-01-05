@@ -77,7 +77,6 @@ export default function Events() {
 
   return (
     <div className="bg-gray-50">
-
       <div>
         {/* Mobile filter dialog */}
         <Dialog open={mobileFiltersOpen} onClose={setMobileFiltersOpen} className="relative z-40 sm:hidden">
@@ -232,11 +231,11 @@ export default function Events() {
                       <div>
                         <PopoverButton className="group inline-flex items-center justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
                           <span>{section.name}</span>
-                          {sectionIdx === 0 ? (
+                          {/* {sectionIdx === 0 ? (
                             <span className="ml-1.5 rounded bg-gray-200 px-1.5 py-0.5 text-xs font-semibold tabular-nums text-gray-700">
                               1
                             </span>
-                          ) : null}
+                          ) : null} */}
                           <ChevronDownIcon
                             aria-hidden="true"
                             className="-mr-1 ml-1 size-5 shrink-0 text-gray-400 group-hover:text-gray-500"
@@ -246,7 +245,7 @@ export default function Events() {
 
                       <PopoverPanel
                         transition
-                        className="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                        className="absolute right-0 z-40 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                       >
                         <form className="space-y-4">
                           {section.options.map((option, optionIdx) => (

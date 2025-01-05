@@ -110,7 +110,7 @@ export default function Grabar() {
                 Instagram
               </a>
               <a
-                href="https://wa.me/19288636489?text=Estoy%20intersado%20de%20practica%20en%20cabina" target="_blank"
+                href="https://wa.me/19288636489?text=Estoy%20intersado%20en%20grabar20mi%20set" target="_blank"
                 type="button"
                 className="w-full relative -ml-px inline-flex items-center justify-center rounded-r-md bg-[#27d366] px-3 py-2 text-sm font-semibold text-white focus:z-10"
               >

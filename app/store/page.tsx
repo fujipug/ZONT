@@ -24,59 +24,41 @@ import { getStoreItems } from '../network/firebase'
 import { DocumentData } from 'firebase/firestore'
 
 const sortOptions = [
-  { name: 'Most Popular', href: '#' },
-  { name: 'Best Rating', href: '#' },
-  { name: 'Newest', href: '#' },
-  { name: 'Price: Low to High', href: '#' },
-  { name: 'Price: High to Low', href: '#' },
+  // { name: 'Most Popular', href: '#' },
+  // { name: 'Best Rating', href: '#' },
+  { name: 'Mas Reciente', href: '#' },
+  { name: 'Precio: Bajo a Alto', href: '#' },
+  { name: 'Precio: Alto a Bajo', href: '#' },
 ]
 const filters = [
   {
     id: 'category',
-    name: 'Category',
+    name: 'Categoria',
     options: [
-      { value: 'tees', label: 'Tees' },
-      { value: 'crewnecks', label: 'Crewnecks' },
-      { value: 'hats', label: 'Hats' },
-      { value: 'bundles', label: 'Bundles' },
-      { value: 'carry', label: 'Carry' },
-      { value: 'objects', label: 'Objects' },
+      { value: 'tshirt', label: 'Playera' },
+      // { value: 'crewnecks', label: 'Crewnecks' },
+      { value: 'hat', label: 'Gorra' },
+      // { value: 'bundles', label: 'Bundles' },
+      // { value: 'carry', label: 'Carry' },
+      { value: 'gift', label: 'Regalo' },
     ],
   },
   {
     id: 'brand',
-    name: 'Brand',
+    name: 'Marca',
     options: [
-      { value: 'clothing-company', label: 'Clothing Company' },
-      { value: 'fashion-inc', label: 'Fashion Inc.' },
-      { value: 'shoes-n-more', label: "Shoes 'n More" },
-      { value: 'supplies-n-stuff', label: "Supplies 'n Stuff" },
-    ],
+      { value: 'zont', label: 'ZONT' },
+    ]
   },
   {
     id: 'color',
     name: 'Color',
     options: [
-      { value: 'white', label: 'White' },
-      { value: 'black', label: 'Black' },
-      { value: 'grey', label: 'Grey' },
-      { value: 'blue', label: 'Blue' },
-      { value: 'olive', label: 'Olive' },
-      { value: 'tan', label: 'Tan' },
-    ],
-  },
-  {
-    id: 'sizes',
-    name: 'Sizes',
-    options: [
-      { value: 'xs', label: 'XS' },
-      { value: 's', label: 'S' },
-      { value: 'm', label: 'M' },
-      { value: 'l', label: 'L' },
-      { value: 'xl', label: 'XL' },
-      { value: '2xl', label: '2XL' },
-    ],
-  },
+      { value: 'white', label: 'Blanco' },
+      { value: 'black', label: 'Negro' },
+      { value: 'grey', label: 'Gris' },
+    ]
+  }
 ]
 
 export default function Store() {
@@ -187,9 +169,11 @@ export default function Store() {
         <main>
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             <div className="py-24 text-center">
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900">Tienda ZONT</h1>
+              <h1 className="text-4xl font-bold tracking-tight text-gray-900">La Colección ZONT</h1>
               <p className="mx-auto mt-4 max-w-3xl text-base text-gray-500">
-                Explora nuestra selección de ropa de marca con diseños exclusivos en Tienda ZONT.
+                Descubre nuestra colección de ropa única y original en Tienda ZONT, donde cada
+                diseño refleja estilo y autenticidad. Viste con confianza y lleva contigo la esencia
+                de ZONT en cada prenda.
               </p>
             </div>
 
@@ -203,7 +187,7 @@ export default function Store() {
                 <Menu as="div" className="relative inline-block text-left">
                   <div>
                     <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                      Sort
+                      Filtrar
                       <ChevronDownIcon
                         aria-hidden="true"
                         className="-mr-1 ml-1 size-5 shrink-0 text-gray-400 group-hover:text-gray-500"
@@ -244,11 +228,11 @@ export default function Store() {
                       <div>
                         <PopoverButton className="group inline-flex items-center justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
                           <span>{section.name}</span>
-                          {sectionIdx === 0 ? (
+                          {/* {sectionIdx === 0 ? (
                             <span className="ml-1.5 rounded bg-gray-200 px-1.5 py-0.5 text-xs font-semibold tabular-nums text-gray-700">
                               1
                             </span>
-                          ) : null}
+                          ) : null} */}
                           <ChevronDownIcon
                             aria-hidden="true"
                             className="-mr-1 ml-1 size-5 shrink-0 text-gray-400 group-hover:text-gray-500"
@@ -318,7 +302,7 @@ export default function Store() {
 
               <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
                 {storeItems.map((item: DocumentData) => (
-                  <a key={item.itemId} href={item.href} className="group">
+                  <a key={item.itemId} href={`store/${item?.itemId}`} className="group">
                     <img
                       // alt={item.imageAlt}
                       src={item.imgUrl}
@@ -328,7 +312,7 @@ export default function Store() {
                       <h3>{item.title}</h3>
                       <p>${item.price}</p>
                     </div>
-                    <p className="mt-1 text-sm italic text-gray-500">{item.description}</p>
+                    <p className="mt-1 text-sm italic text-gray-500">{item.category}</p>
                   </a>
                 ))}
               </div>

@@ -1,27 +1,17 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Radio,
   RadioGroup
 } from '@headlessui/react'
 import { CheckCircleIcon, ChevronDownIcon, TrashIcon } from '@heroicons/react/20/solid'
+import { useCart } from '../utils/CartContext'
+import { getCheckoutItemsByIds } from '../network/firebase'
+import { DocumentData } from 'firebase/firestore'
 
-const products = [
-  {
-    id: 1,
-    title: 'Basic Tee',
-    href: '#',
-    price: '$32.00',
-    color: 'Black',
-    size: 'Large',
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/checkout-page-02-product-01.jpg',
-    imageAlt: "Front of men's Basic Tee in black.",
-  },
-  // More products...
-]
 const deliveryMethods = [
-  { id: 1, title: 'Standard', turnaround: '4–10 business days', price: '$5.00' },
-  { id: 2, title: 'Express', turnaround: '2–5 business days', price: '$16.00' },
+  { id: 1, title: 'Recojer', turnaround: 'Escandon, CDMX', price: 0, priceText: 'Gratis' },
+  { id: 2, title: 'Standard', turnaround: '2–5 business days', price: 5, priceText: '$5.00' },
 ]
 const paymentMethods = [
   { id: 'credit-card', title: 'Credit card' },
@@ -31,6 +21,56 @@ const paymentMethods = [
 
 export default function Checkout() {
   const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(deliveryMethods[0])
+  const { cart, removeFromCart, removeItemFromCart, addToCart, clearCart } = useCart()
+  const [products, setProducts] = useState<DocumentData[]>([])
+
+  useEffect(() => {
+    // check for duplicates in cart, create an object with the duplicate id and quantity
+    const uniqueCart = cart.reduce((acc: { [key: string]: number }, item: string) => {
+      if (!acc[item]) {
+        acc[item] = 1
+      } else {
+        acc[item]++
+      }
+      return acc
+    }, {})
+
+    const uniqueCartArray = Object.keys(uniqueCart).map((key) => key)
+
+    getCheckoutItemsByIds(uniqueCartArray).then((items) => {
+      const productsWithQuantity = items.map((item) => {
+        return {
+          ...item,
+          quantity: uniqueCart[item.itemId]
+        }
+      })
+      setProducts(productsWithQuantity)
+    })
+  }, [cart])
+
+  const subtotal = products.reduce((acc, product) => {
+    return acc + (product.price * product.quantity)
+  }, 0)
+
+  const handleQuantityChange = (quantity: string, itemId: string) => {
+    const newQuantity = Number(quantity)
+    products.map((product) => {
+      if (product.itemId === itemId) {
+
+        if (product.quantity > newQuantity) {
+          for (let i = 0; i < product.quantity - newQuantity; i++) {
+            removeItemFromCart(itemId)
+          }
+        }
+
+        if (product.quantity < newQuantity) {
+          for (let i = 0; i < newQuantity - product.quantity; i++) {
+            addToCart(itemId)
+          }
+        }
+      }
+    })
+  }
 
   return (
     <div className="bg-gray-50">
@@ -220,7 +260,7 @@ export default function Checkout() {
                         key={deliveryMethod.id}
                         value={deliveryMethod}
                         aria-label={deliveryMethod.title}
-                        aria-description={`${deliveryMethod.turnaround} for ${deliveryMethod.price}`}
+                        aria-description={`${deliveryMethod.turnaround} for ${deliveryMethod.priceText}`}
                         className="group relative flex cursor-pointer rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2 data-[focus]:ring-indigo-500"
                       >
                         <span className="flex flex-1">
@@ -229,7 +269,7 @@ export default function Checkout() {
                             <span className="mt-1 flex items-center text-sm text-gray-500">
                               {deliveryMethod.turnaround}
                             </span>
-                            <span className="mt-6 text-sm font-medium text-gray-900">{deliveryMethod.price}</span>
+                            <span className="mt-6 text-sm font-medium text-gray-900">{deliveryMethod.priceText}</span>
                           </span>
                         </span>
                         <CheckCircleIcon
@@ -342,9 +382,9 @@ export default function Checkout() {
                 <h3 className="sr-only">Items in your cart</h3>
                 <ul role="list" className="divide-y divide-gray-200">
                   {products.map((product) => (
-                    <li key={product.id} className="flex px-4 py-6 sm:px-6">
+                    <li key={product.itemId} className="flex px-4 py-6 sm:px-6">
                       <div className="shrink-0">
-                        <img alt={product.imageAlt} src={product.imageSrc} className="w-20 rounded-md" />
+                        <img alt="Product" src={product.imgUrl} className="w-20 rounded-md" />
                       </div>
 
                       <div className="ml-6 flex flex-1 flex-col">
@@ -355,7 +395,7 @@ export default function Checkout() {
                                 {product.title}
                               </a>
                             </h4>
-                            <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                            <p className="mt-1 text-sm text-gray-500">{product.category}</p>
                             <p className="mt-1 text-sm text-gray-500">{product.size}</p>
                           </div>
 
@@ -365,19 +405,21 @@ export default function Checkout() {
                               className="-m-2.5 flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500"
                             >
                               <span className="sr-only">Remove</span>
-                              <TrashIcon aria-hidden="true" className="size-5" />
+                              <TrashIcon onClick={() => removeFromCart(product.itemId)} aria-hidden="true" className="size-5" />
                             </button>
                           </div>
                         </div>
 
                         <div className="flex flex-1 items-end justify-between pt-2">
-                          <p className="mt-1 text-sm font-medium text-gray-900">{product.price}</p>
+                          <p className="mt-1 text-sm font-medium text-gray-900">${product.price * product.quantity}</p>
 
                           <div className="ml-4 grid grid-cols-1">
                             <select
                               id="quantity"
                               name="quantity"
                               aria-label="Quantity"
+                              onChange={(e) => handleQuantityChange(e.target.value, product.itemId)}
+                              defaultValue={product.quantity}
                               className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                             >
                               <option value={1}>1</option>
@@ -402,19 +444,19 @@ export default function Checkout() {
                 <dl className="space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6">
                   <div className="flex items-center justify-between">
                     <dt className="text-sm">Subtotal</dt>
-                    <dd className="text-sm font-medium text-gray-900">$64.00</dd>
+                    <dd className="text-sm font-medium text-gray-900">${subtotal}</dd>
                   </div>
                   <div className="flex items-center justify-between">
                     <dt className="text-sm">Shipping</dt>
-                    <dd className="text-sm font-medium text-gray-900">$5.00</dd>
+                    <dd className="text-sm font-medium text-gray-900">{selectedDeliveryMethod.priceText}</dd>
                   </div>
-                  <div className="flex items-center justify-between">
+                  {/* <div className="flex items-center justify-between">
                     <dt className="text-sm">Taxes</dt>
                     <dd className="text-sm font-medium text-gray-900">$5.52</dd>
-                  </div>
+                  </div> */}
                   <div className="flex items-center justify-between border-t border-gray-200 pt-6">
                     <dt className="text-base font-medium">Total</dt>
-                    <dd className="text-base font-medium text-gray-900">$75.52</dd>
+                    <dd className="text-base font-medium text-gray-900">${subtotal + selectedDeliveryMethod.price}</dd>
                   </div>
                 </dl>
 
@@ -424,6 +466,10 @@ export default function Checkout() {
                     className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                   >
                     Confirm order
+                  </button>
+
+                  <button onClick={clearCart} className="mt-4 w-full rounded-md border border-transparent bg-gray-200 px-4 py-3 text-base font-medium text-gray-900 shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-50">
+                    Clear cart
                   </button>
                 </div>
               </div>

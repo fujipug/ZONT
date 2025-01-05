@@ -1,39 +1,39 @@
 'use client'
 const stats = [
-  { label: 'Transactions every 24 hours', value: '44 million' },
-  { label: 'Assets under holding', value: '$119 trillion' },
-  { label: 'New users annually', value: '46,000' },
+  { label: 'Vistas de DJ sets en YouTube', value: '150,000' },
+  { label: 'Miembros ZONT', value: '3' },
+  { label: 'Puntos acumulados por miembros', value: '100' },
 ]
 const values = [
   {
-    name: 'Be world-class',
+    name: 'Creatividad Sin Límites',
     description:
-      'Aut illo quae. Ut et harum ea animi natus. Culpa maiores et sed sint et magnam exercitationem quia. Ullam voluptas nihil vitae dicta molestiae et. Aliquid velit porro vero.',
+      'Fomentamos la libertad de expresión y la innovación sin barreras.',
   },
   {
-    name: 'Share everything you know',
+    name: 'Comunidad',
     description:
-      'Mollitia delectus a omnis. Quae velit aliquid. Qui nulla maxime adipisci illo id molestiae. Cumque cum ut minus rerum architecto magnam consequatur. Quia quaerat minima.',
+      'Creemos en la colaboración y en el poder de la conexión entre artistas.',
   },
   {
-    name: 'Always learning',
+    name: 'Excelencia',
     description:
-      'Aut repellendus et officiis dolor possimus. Deserunt velit quasi sunt fuga error labore quia ipsum. Commodi autem voluptatem nam. Quos voluptatem totam.',
+      'Nos comprometemos a ofrecer servicios de alta calidad, siempre buscando lo mejor.',
   },
   {
-    name: 'Be supportive',
+    name: 'Aprendizaje y Crecimiento',
     description:
-      'Magnam provident veritatis odit. Vitae eligendi repellat non. Eum fugit impedit veritatis ducimus. Non qui aspernatur laudantium modi. Praesentium rerum error deserunt harum.',
+      'Apoyamos el desarrollo continuo de cada individuo, desde principiantes hasta expertos.',
   },
   {
-    name: 'Take responsibility',
+    name: 'Pasión por la Música',
     description:
-      'Sit minus expedita quam in ullam molestiae dignissimos in harum. Tenetur dolorem iure. Non nesciunt dolorem veniam necessitatibus laboriosam voluptas perspiciatis error.',
+      'Nos mueve el amor por la música y el deseo de ayudar a otros a compartirlo.',
   },
   {
-    name: 'Enjoy downtime',
+    name: 'Autenticidad',
     description:
-      'Ipsa in earum deserunt aut. Quos minus aut animi et soluta. Ipsum dicta ut quia eius. Possimus reprehenderit iste aspernatur ut est velit consequatur distinctio.',
+      'Valoramos la expresión genuina y el arte que refleja la identidad única de cada persona.',
   },
 ]
 const team = [
@@ -41,35 +41,35 @@ const team = [
     name: 'Lane Fujikado',
     role: 'Co-Fundador',
     imageUrl:
-      '/lane.PNG',
+      '/lane.jpg',
   },
   {
     name: 'Azamat Baimetov',
     role: 'Co-Fundador',
     imageUrl:
-      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
+      '/azamat.jpg',
   },
   {
     name: 'Edson Utrev',
     role: 'Residente',
     imageUrl:
-      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
+      '/edson.jpg',
   },
   {
     name: 'Valentino',
     role: 'Primer Perro DJ',
     imageUrl:
-      '/valentino.jpg',
+      '/valentino.png',
   },
   {
     name: 'Miguel',
     role: 'Profesor',
     imageUrl:
-      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
+      '/miguel.jpg',
   },
 ]
 
-export default function Example() {
+export default function About() {
   return (
     <div className="bg-gray-50">
 
@@ -117,13 +117,14 @@ export default function Example() {
               <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
                 <div className="relative w-full lg:max-w-xl lg:shrink-0 xl:max-w-2xl">
                   <h1 className="text-pretty text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">
-                    We’re changing the way people connect
+                    Quiénes Somos y Qué Nos Mueve
                   </h1>
                   <p className="mt-8 text-pretty text-lg font-medium text-gray-500 sm:max-w-md sm:text-xl/8 lg:max-w-none">
-                    Cupidatat minim id magna ipsum sint dolor qui. Sunt sit in quis cupidatat mollit aute velit. Et
-                    labore commodo nulla aliqua proident mollit ullamco exercitation tempor. Sint aliqua anim nulla sunt
-                    mollit id pariatur in voluptate cillum. Eu voluptate tempor esse minim amet fugiat veniam occaecat
-                    aliqua.
+                    En ZONT, somos más que un estudio de música; somos un espacio diseñado para que
+                    DJs y productores den vida a su creatividad. Aquí puedes practicar tus mezclas,
+                    producir música, grabar tus sets, tomar clases para aprender a ser DJ y aprovechar
+                    una variedad de servicios diseñados para impulsar tu talento. Nos mueve la pasión
+                    por la música y el compromiso de apoyar a nuestra comunidad en su camino creativo.
                   </p>
                 </div>
                 <div className="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
@@ -182,19 +183,24 @@ export default function Example() {
         {/* Content section */}
         <div className="mx-auto -mt-12 max-w-7xl px-6 sm:mt-0 lg:px-8 xl:-mt-8">
           <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
-            <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">La Mision</h2>
+            <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Nuestra Misión</h2>
             <div className="mt-6 flex flex-col gap-x-8 gap-y-20 lg:flex-row">
               <div className="lg:w-full lg:max-w-2xl lg:flex-auto">
                 <p className="text-xl/8 text-gray-600">
-                  Aliquet nec orci mattis amet quisque ullamcorper neque, nibh sem. At arcu, sit dui mi, nibh dui, diam
-                  eget aliquam. Quisque id at vitae feugiat egestas ac. Diam nulla orci at in viverra scelerisque eget.
-                  Eleifend egestas fringilla sapien.
+                  En ZONT, nuestra misión es empoderar a DJs y productores musicales,
+                  proporcionando un espacio accesible y profesional donde puedan perfeccionar
+                  sus habilidades, crear música, y expresar su creatividad. Nos esforzamos por
+                  construir una comunidad inclusiva que fomente el aprendizaje, la colaboración,
+                  y el crecimiento artístico, apoyando a cada individuo en su viaje hacia el éxito
+                  musical.
                 </p>
                 <p className="mt-10 max-w-xl text-base/7 text-gray-700">
-                  Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet
-                  vitae sed turpis id. Id dolor praesent donec est. Odio penatibus risus viverra tellus varius sit neque
-                  erat velit. Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris
-                  semper sed amet vitae sed turpis id.
+                  Creemos que la música es una fuerza que conecta a las personas, y nuestro
+                  objetivo es ofrecer un entorno equipado con tecnología de punta y servicios
+                  personalizados, desde grabación de sets y producción musical hasta clases para
+                  principiantes y avanzados. Ya sea que estés comenzando o buscando llevar tu
+                  carrera al siguiente nivel, en ZONT encontrarás las herramientas, el apoyo, y la
+                  inspiración que necesitas para alcanzar tus metas.
                 </p>
               </div>
               <div className="lg:flex lg:flex-auto lg:justify-center">
@@ -214,8 +220,8 @@ export default function Example() {
         {/* Image section */}
         <div className="mt-32 sm:mt-40 xl:mx-auto xl:max-w-7xl xl:px-8">
           <img
-            alt=""
-            src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
+            alt="Mission Statement"
+            src="/mission_statement.jpg"
             className="aspect-[5/2] w-full object-cover xl:rounded-3xl"
           />
         </div>
@@ -225,8 +231,10 @@ export default function Example() {
           <div className="mx-auto max-w-2xl lg:mx-0">
             <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Nuestros Valores</h2>
             <p className="mt-6 text-lg/8 text-gray-600">
-              Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in
-              accusamus quisquam.
+              En ZONT, nos impulsan la pasión, la creatividad y el compromiso con nuestra comunidad.
+              Creemos en el poder de la música para conectar personas y fomentar la expresión
+              auténtica, ofreciendo un espacio inclusivo donde cada individuo puede crecer y
+              desarrollar su talento.
             </p>
           </div>
           <dl className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 text-base/7 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
@@ -307,12 +315,14 @@ export default function Example() {
         </div> */}
 
         {/* Team section */}
-        <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-48 lg:px-8">
+        <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-48 lg:px-8 mb-8">
           <div className="mx-auto max-w-2xl lg:mx-0">
-            <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Nuestro Equipo</h2>
+            <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">El Equipo Detrás de ZONT</h2>
             <p className="mt-6 text-lg/8 text-gray-600">
-              We’re a dynamic group of individuals who are passionate about what we do and dedicated to delivering the
-              best results for our clients.
+              Nuestro equipo está formado por personas apasionadas y creativas que comparten el
+              objetivo de ofrecer un espacio único para artistas. Con experiencia en música, diseño
+              y tecnología, trabajamos juntos para apoyar y hacer crecer el talento de nuestra
+              comunidad.
             </p>
           </div>
           <ul
