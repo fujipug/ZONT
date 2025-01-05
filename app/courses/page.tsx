@@ -11,8 +11,6 @@ export default function Courses() {
     getCourses().then((res) => {
       setCourses(res)
     })
-
-    console.log(courses)
   }, [])
 
   return (

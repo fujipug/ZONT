@@ -8,15 +8,16 @@ import { CheckCircleIcon, ChevronDownIcon, TrashIcon } from '@heroicons/react/20
 import { useCart } from '../utils/CartContext'
 import { getCheckoutItemsByIds } from '../network/firebase'
 import { DocumentData } from 'firebase/firestore'
+import GoogleMap from '../utils/GoogleMap'
 
 const deliveryMethods = [
   { id: 1, title: 'Recojer', turnaround: 'Escandon, CDMX', price: 0, priceText: 'Gratis' },
-  { id: 2, title: 'Standard', turnaround: '2–5 business days', price: 5, priceText: '$5.00' },
+  { id: 2, title: 'Standard', turnaround: '2–5 dias laborales', price: 5, priceText: '$5.00' },
 ]
 const paymentMethods = [
-  { id: 'credit-card', title: 'Credit card' },
+  { id: 'credit-card', title: 'Tarjeta de Credito' },
   { id: 'paypal', title: 'PayPal' },
-  { id: 'etransfer', title: 'eTransfer' },
+  { id: 'etransfer', title: 'Transferencia' },
 ]
 
 export default function Checkout() {
@@ -81,16 +82,16 @@ export default function Checkout() {
           <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
             <div>
               <div>
-                <h2 className="text-lg font-medium text-gray-900">Contact information</h2>
+                <h2 className="text-lg font-medium text-gray-900">Información de Contacto</h2>
 
                 <div className="mt-4">
-                  <label htmlFor="email-address" className="block text-sm/6 font-medium text-gray-700">
-                    Email address
+                  <label htmlFor="email" className="block text-sm/6 font-medium text-gray-700">
+                    Email
                   </label>
                   <div className="mt-2">
                     <input
-                      id="email-address"
-                      name="email-address"
+                      id="email"
+                      name="email"
                       type="email"
                       autoComplete="email"
                       className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
@@ -100,154 +101,7 @@ export default function Checkout() {
               </div>
 
               <div className="mt-10 border-t border-gray-200 pt-10">
-                <h2 className="text-lg font-medium text-gray-900">Shipping information</h2>
-
-                <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-                  <div>
-                    <label htmlFor="first-name" className="block text-sm/6 font-medium text-gray-700">
-                      First name
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        id="first-name"
-                        name="first-name"
-                        type="text"
-                        autoComplete="given-name"
-                        className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-700">
-                      Last name
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        id="last-name"
-                        name="last-name"
-                        type="text"
-                        autoComplete="family-name"
-                        className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <label htmlFor="address" className="block text-sm/6 font-medium text-gray-700">
-                      Address
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        id="address"
-                        name="address"
-                        type="text"
-                        autoComplete="street-address"
-                        className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <label htmlFor="apartment" className="block text-sm/6 font-medium text-gray-700">
-                      Apartment, suite, etc.
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        id="apartment"
-                        name="apartment"
-                        type="text"
-                        className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="city" className="block text-sm/6 font-medium text-gray-700">
-                      City
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        id="city"
-                        name="city"
-                        type="text"
-                        autoComplete="address-level2"
-                        className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="country" className="block text-sm/6 font-medium text-gray-700">
-                      Country
-                    </label>
-                    <div className="mt-2 grid grid-cols-1">
-                      <select
-                        id="country"
-                        name="country"
-                        autoComplete="country-name"
-                        className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                      >
-                        <option>United States</option>
-                        <option>Canada</option>
-                        <option>Mexico</option>
-                      </select>
-                      <ChevronDownIcon
-                        aria-hidden="true"
-                        className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end fill-gray-500 sm:size-4"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="region" className="block text-sm/6 font-medium text-gray-700">
-                      State / Province
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        id="region"
-                        name="region"
-                        type="text"
-                        autoComplete="address-level1"
-                        className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="postal-code" className="block text-sm/6 font-medium text-gray-700">
-                      Postal code
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        id="postal-code"
-                        name="postal-code"
-                        type="text"
-                        autoComplete="postal-code"
-                        className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <label htmlFor="phone" className="block text-sm/6 font-medium text-gray-700">
-                      Phone
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        id="phone"
-                        name="phone"
-                        type="text"
-                        autoComplete="tel"
-                        className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-10 border-t border-gray-200 pt-10">
-                <h2 className="text-lg font-medium text-gray-900">Delivery method</h2>
+                <h2 className="text-lg font-medium text-gray-900">Método de Entrega</h2>
 
                 <fieldset aria-label="Delivery method" className="mt-4">
                   <RadioGroup
@@ -285,6 +139,216 @@ export default function Checkout() {
                   </RadioGroup>
                 </fieldset>
               </div>
+
+              <div className="mt-10 border-t border-gray-200 pt-10">
+                {selectedDeliveryMethod.title === 'Recojer' ?
+                  (
+                    <>
+                      <h2 className="text-lg font-medium text-gray-900">Informacion de Recojer</h2>
+                      <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4 items-center">
+                        <div className='col-span-1'>
+                          <p className='text-gray-600'>ZONT Studio</p>
+                          <p className='text-gray-600'>Gral. Salvador Alvarado 72</p>
+                          <p className='text-gray-600'>Escandón I Secc, Miguel Hidalgo, 11800</p>
+                          <p className='text-gray-600'>Ciudad de México, CDMX</p>
+                        </div>
+
+                        <div className='col-span-1'>
+                          <GoogleMap />
+                        </div>
+                      </div>
+                    </>
+                  )
+                  :
+                  (
+                    <>
+                      <h2 className="text-lg font-medium text-gray-900">Informacion de Entrega</h2>
+                      <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                        <div>
+                          <label htmlFor="first-name" className="block text-sm/6 font-medium text-gray-700">
+                            Nombre
+                          </label>
+                          <div className="mt-2">
+                            <input
+                              id="first-name"
+                              name="first-name"
+                              type="text"
+                              autoComplete="given-name"
+                              className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-700">
+                            Apellido
+                          </label>
+                          <div className="mt-2">
+                            <input
+                              id="last-name"
+                              name="last-name"
+                              type="text"
+                              autoComplete="family-name"
+                              className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="sm:col-span-2">
+                          <label htmlFor="address" className="block text-sm/6 font-medium text-gray-700">
+                            Address
+                          </label>
+                          <div className="mt-2">
+                            <input
+                              id="address"
+                              name="address"
+                              type="text"
+                              autoComplete="street-address"
+                              className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="sm:col-span-2">
+                          <label htmlFor="apartment" className="block text-sm/6 font-medium text-gray-700">
+                            Apartment, suite, etc.
+                          </label>
+                          <div className="mt-2">
+                            <input
+                              id="apartment"
+                              name="apartment"
+                              type="text"
+                              className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label htmlFor="city" className="block text-sm/6 font-medium text-gray-700">
+                            City
+                          </label>
+                          <div className="mt-2">
+                            <input
+                              id="city"
+                              name="city"
+                              type="text"
+                              autoComplete="address-level2"
+                              className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label htmlFor="country" className="block text-sm/6 font-medium text-gray-700">
+                            Country
+                          </label>
+                          <div className="mt-2 grid grid-cols-1">
+                            <select
+                              id="country"
+                              name="country"
+                              autoComplete="country-name"
+                              className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                            >
+                              <option>United States</option>
+                              <option>Canada</option>
+                              <option>Mexico</option>
+                            </select>
+                            <ChevronDownIcon
+                              aria-hidden="true"
+                              className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end fill-gray-500 sm:size-4"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label htmlFor="region" className="block text-sm/6 font-medium text-gray-700">
+                            State / Province
+                          </label>
+                          <div className="mt-2">
+                            <input
+                              id="region"
+                              name="region"
+                              type="text"
+                              autoComplete="address-level1"
+                              className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label htmlFor="postal-code" className="block text-sm/6 font-medium text-gray-700">
+                            Postal code
+                          </label>
+                          <div className="mt-2">
+                            <input
+                              id="postal-code"
+                              name="postal-code"
+                              type="text"
+                              autoComplete="postal-code"
+                              className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="sm:col-span-2">
+                          <label htmlFor="phone" className="block text-sm/6 font-medium text-gray-700">
+                            Phone
+                          </label>
+                          <div className="mt-2">
+                            <input
+                              id="phone"
+                              name="phone"
+                              type="text"
+                              autoComplete="tel"
+                              className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )
+                }
+              </div>
+
+              {/* <div className="mt-10 border-t border-gray-200 pt-10">
+                <h2 className="text-lg font-medium text-gray-900">Delivery method</h2>
+
+                <fieldset aria-label="Delivery method" className="mt-4">
+                  <RadioGroup
+                    value={selectedDeliveryMethod}
+                    onChange={setSelectedDeliveryMethod}
+                    className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4"
+                  >
+                    {deliveryMethods.map((deliveryMethod) => (
+                      <Radio
+                        key={deliveryMethod.id}
+                        value={deliveryMethod}
+                        aria-label={deliveryMethod.title}
+                        aria-description={`${deliveryMethod.turnaround} for ${deliveryMethod.priceText}`}
+                        className="group relative flex cursor-pointer rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2 data-[focus]:ring-indigo-500"
+                      >
+                        <span className="flex flex-1">
+                          <span className="flex flex-col">
+                            <span className="block text-sm font-medium text-gray-900">{deliveryMethod.title}</span>
+                            <span className="mt-1 flex items-center text-sm text-gray-500">
+                              {deliveryMethod.turnaround}
+                            </span>
+                            <span className="mt-6 text-sm font-medium text-gray-900">{deliveryMethod.priceText}</span>
+                          </span>
+                        </span>
+                        <CheckCircleIcon
+                          aria-hidden="true"
+                          className="size-5 text-indigo-600 group-[&:not([data-checked])]:hidden"
+                        />
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500"
+                        />
+                      </Radio>
+                    ))}
+                  </RadioGroup>
+                </fieldset>
+              </div> */}
 
               {/* Payment */}
               <div className="mt-10 border-t border-gray-200 pt-10">
@@ -474,9 +538,9 @@ export default function Checkout() {
                 </div>
               </div>
             </div>
-          </form>
-        </div>
-      </main>
-    </div>
+          </form >
+        </div >
+      </main >
+    </div >
   )
 }

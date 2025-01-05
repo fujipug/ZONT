@@ -19,8 +19,8 @@ export default function Home() {
         </video>
 
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center">
-          <Image src={zontSvg} alt="ZONT" width={500} height={500} />
-          <FlipWords className="text-md md:text-4xl text-white" words={words} />
+          <Image src={zontSvg} alt="ZONT" width={350} height={350} />
+          <FlipWords className="text-md md:text-3xl text-white" words={words} />
         </div>
       </div >
       <HomeTabs />

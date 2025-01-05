@@ -96,7 +96,7 @@ export default function Grabar() {
           <div className="mt-4">
             <span className="isolate inline-flex rounded-md shadow-sm w-full">
               <a
-                href="/schedule"
+                href="/schedule?record"
                 type="button"
                 className="w-full relative inline-flex items-center justify-center rounded-l-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white focus:z-10"
               >

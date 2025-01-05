@@ -1,6 +1,8 @@
 'use client'
 import { CakeIcon } from "@heroicons/react/24/outline";
 import { useAuth } from "../utils/AuthContext";
+import { Snippet } from "@nextui-org/react";
+import Link from "next/link";
 
 const items = [
   {
@@ -8,18 +10,21 @@ const items = [
     title: "Tus Classes",
     description: "Ve tus classes.",
     imgUrl: "/your_classes.png",
+    itemUrl: "aprende",
   },
   {
     header: "Comunidad",
     title: "Comunicate Con Otros Miembros",
     description: "Maecenas at augue sed elit dictum vulputate, in nisi aliquam maximus arcu.",
     imgUrl: "/community.png",
+    itemUrl: "comunidad",
   },
   {
     header: "Tienda",
     title: "Network",
     description: "Aenean vulputate justo commodo auctor vehicula in malesuada semper.",
     imgUrl: "https://marketplace.canva.com/EAGKtEbPACQ/1/0/1600w/canva-retro-world-emoji-day-instagram-post-IV6LeghOkmw.jpg",
+    itemUrl: "tienda",
   },
 ];
 
@@ -69,6 +74,11 @@ export default function Members() {
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. In gravida justo et nulla efficitur, maximus
                   egestas sem pellentesque.
                 </p>
+                <Link href={`item/contenido-nuevo`}>
+                  <button type="button" className="mt-6 inline-flex items-center gap-x-1.5 rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                    Ver Contenido Nuevo
+                  </button>
+                </Link>
               </div>
             </div>
             <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem]" />
@@ -87,6 +97,11 @@ export default function Members() {
                 <p className="mt-2 max-w-lg text-sm/6 text-gray-600">
                   Canjea tus puntos por descuentos en reservaciones, mercancía y más.
                 </p>
+                <Link href={`item/rewards`}>
+                  <button type="button" className="mt-6 inline-flex items-center gap-x-1.5 rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                    Ver Las Recompensas
+                  </button>
+                </Link>
               </div>
             </div>
             <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 lg:rounded-tr-[2rem]" />
@@ -107,6 +122,11 @@ export default function Members() {
                   <p className="mt-2 max-w-lg text-sm/6 text-gray-600">
                     {item.description}
                   </p>
+                  <Link href={`item/${item.itemUrl}`}>
+                    <button type="button" className="mt-6 inline-flex items-center gap-x-1.5 rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                      Ver Mas Detalles
+                    </button>
+                  </Link>
                 </div>
               </div>
               <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 max-lg:rounded-b-[2rem] lg:rounded-br-[2rem]" />
@@ -115,8 +135,9 @@ export default function Members() {
 
         </div>
 
-        <div className="mt-10 text-center text-gray-600 text-sm/6">
-          Quieres obtener más puntos? Comparte tu codigo de referencia con tus amigos.
+        <div className="mt-10 text-center text-gray-600">
+          <p className="mb-2 font-semibold">Quieres obtener más puntos? Comparte tu codigo de referencia con tus amigos.</p>
+          <Snippet size="sm" symbol="#" color="secondary">{profile?.userId}</Snippet>
         </div>
       </div>
     </div>

@@ -42,7 +42,6 @@ const HomeTabs = () => {
           />
         </div>
 
-
         <div className="hidden sm:block">
           <div className="border-b border-gray-200">
             <nav aria-label="Tabs" className="-mb-px flex">
