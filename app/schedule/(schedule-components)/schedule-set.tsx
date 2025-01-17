@@ -1,10 +1,10 @@
 'use client'
 import { DatePicker } from "@nextui-org/react";
 import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date";
-import TimeSlots from '@/components/ui/time-slots';
+// import TimeSlots from '@/components/ui/time-slots';
 import { useState } from 'react';
-import { getReservations } from '@/app/network/firebase';
-import { Timestamp } from 'firebase/firestore';
+// import { getReservations } from '@/app/network/firebase';
+// import { Timestamp } from 'firebase/firestore';
 import { classNames } from "@/app/utils/classesNames"
 
 const product = {
@@ -54,13 +54,13 @@ export default function ScheduleSet() {
     setSelectedTimeDuration({ time, length })
 
     if (selectedDate) {
-      const dateFormat = new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day, time, 0, 0, 0);
-      const firebaseTimestamp = Timestamp.fromDate(dateFormat);
-      const available = getReservations(firebaseTimestamp, length)
-      available.then((res) => {
-        console.log(res
-        )
-      })
+      // const dateFormat = new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day, time, 0, 0, 0);
+      // const firebaseTimestamp = Timestamp.fromDate(dateFormat);
+      // const available = getReservations(firebaseTimestamp, length)
+      // available.then((res) => {
+      //   console.log(res
+      //   )
+      // })
     }
   }
 
@@ -68,12 +68,12 @@ export default function ScheduleSet() {
     setSelectedDate(date)
 
     if (selectedTimeDuration) {
-      const dateFormat = new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day, selectedTimeDuration.time, 0, 0, 0);
-      const firebaseTimestamp = Timestamp.fromDate(dateFormat);
-      const available = getReservations(firebaseTimestamp, selectedTimeDuration.length)
-      available.then((res) => {
-        console.log(res)
-      })
+      // const dateFormat = new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day, selectedTimeDuration.time, 0, 0, 0);
+      // const firebaseTimestamp = Timestamp.fromDate(dateFormat);
+      // const available = getReservations(firebaseTimestamp, selectedTimeDuration.length)
+      // available.then((res) => {
+      //   console.log(res)
+      // })
     }
   }
 
@@ -130,7 +130,7 @@ export default function ScheduleSet() {
                       </div>
 
                       <div className='col-span-1 w-full'>
-                        <TimeSlots setScheduleTime={checkAvailabilityWhenTime} />
+                        {/* <TimeSlots setScheduleTime={checkAvailabilityWhenTime} /> */}
                       </div>
                     </div>
                   </div>
