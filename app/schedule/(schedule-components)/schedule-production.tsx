@@ -46,7 +46,7 @@ const policies = [
 
 export default function ScheduleProduction() {
   const [selectedDate, setSelectedDate] = useState<CalendarDate>(today(getLocalTimeZone()))
-  const [selectedTimeDuration, setSelectedTimeDuration] = useState<{
+  const [selectedTimeDuration] = useState<{
     time: number;
     length: number;
   } | null>(null)

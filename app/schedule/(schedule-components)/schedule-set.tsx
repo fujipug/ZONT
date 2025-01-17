@@ -45,7 +45,7 @@ const policies = [
 
 export default function ScheduleSet() {
   const [selectedDate, setSelectedDate] = useState<CalendarDate>(today(getLocalTimeZone()))
-  const [selectedTimeDuration, setSelectedTimeDuration] = useState<{
+  const [selectedTimeDuration] = useState<{
     time: number;
     length: number;
   } | null>(null)
