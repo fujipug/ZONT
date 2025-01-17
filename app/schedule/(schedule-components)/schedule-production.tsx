@@ -51,19 +51,19 @@ export default function ScheduleProduction() {
     length: number;
   } | null>(null)
 
-  const checkAvailabilityWhenTime = (time: number, length: number) => {
-    setSelectedTimeDuration({ time, length })
+  // const checkAvailabilityWhenTime = (time: number, length: number) => {
+  //   setSelectedTimeDuration({ time, length })
 
-    if (selectedDate) {
-      // const dateFormat = new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day, time, 0, 0, 0);
-      // const firebaseTimestamp = Timestamp.fromDate(dateFormat);
-      // const available = getReservations(firebaseTimestamp, length)
-      // available.then((res) => {
-      //   console.log(res
-      //   )
-      // })
-    }
-  }
+  //   if (selectedDate) {
+  //     const dateFormat = new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day, time, 0, 0, 0);
+  //     const firebaseTimestamp = Timestamp.fromDate(dateFormat);
+  //     const available = getReservations(firebaseTimestamp, length)
+  //     available.then((res) => {
+  //       console.log(res
+  //       )
+  //     })
+  //   }
+  // }
 
   const checkAvailabilityWhenDate = (date: CalendarDate) => {
     setSelectedDate(date)
