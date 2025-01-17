@@ -1,7 +1,6 @@
 import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/popover";
 import { useEffect, useState } from "react";
 import { classNames } from "@/app/utils/classesNames"
-import { Timestamp } from "firebase/firestore";
 import { CalendarDate } from "@internationalized/date";
 
 const timeSlots = [
