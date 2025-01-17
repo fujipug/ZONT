@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation';
 import { DocumentData } from 'firebase/firestore'
 import { getEventById } from '@/app/network/firebase';
+import GoogleMap from '@/app/utils/GoogleMap';
 
 const pages = [
   { name: 'Eventos', href: '/events', current: false },
@@ -68,7 +69,7 @@ export default function Event() {
           <div className="lg:col-span-5 lg:col-start-8">
             <div>
               <h3 className="text-sm/4 font-semibold text-indigo-600">Fecha: {''}
-                {new Date(event?.date?.seconds * 1000).toLocaleDateString("es-MX", {
+                {new Date(event?.dateStart?.seconds * 1000).toLocaleDateString("es-MX", {
                   year: "numeric",
                   month: "short",
                   day: "numeric",
@@ -107,15 +108,15 @@ export default function Event() {
               >
                 Ir a Taquilla
               </button>
-              <button
+              {/* <button
                 type="submit"
                 className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 ${event?.inPersonPrice}
-              </button>
+              </button> */}
             </form>
 
-            {/* Product details */}
+            {/* Event details */}
             <div className="mt-10">
               <h2 className="text-sm font-medium text-gray-900">Descripcion</h2>
 
@@ -126,25 +127,19 @@ export default function Event() {
             </div>
 
             <div className="mt-8 border-t border-gray-200 pt-8">
-              <h2 className="text-sm font-medium text-gray-900">Detalles del Curso</h2>
+              <h2 className="text-sm font-medium text-gray-900">Detalles del Evento</h2>
+              <div
+                dangerouslySetInnerHTML={{ __html: event?.details }}
+                className="mt-4 space-y-4 text-sm/6 text-gray-500"
+              />
+            </div>
 
-              {/* <div className="mt-4">
-                <ul role="list" className="space-y-2 text-md text-gray-700">
-                  {course?.lessons?.map((lesson: { id: number, title: string, bullets: string[] }) => (
-                    <li key={lesson.id}>
-                      Dia {lesson.id}: {lesson.title}
-
-                      <ul role="list" className="list-disc space-y-1 pl-5 text-sm/6 text-gray-500 marker:text-gray-300">
-                        {lesson?.bullets?.map((bullet: string, index: number) => (
-                          <li key={index} className="pl-2">
-                            {bullet}
-                          </li>
-                        ))}
-                      </ul>
-                    </li>
-                  ))}
-                </ul>
-              </div> */}
+            <div className="mt-8 border-t border-gray-200 pt-8">
+              <h2 className="text-sm font-medium text-gray-900">Ubicacion</h2>
+              <p className="my-4 text-gray-500">{event?.address}</p>
+              {(event?.title && event?.mapsLocation) &&
+                <GoogleMap title={event.title} lat={Number(event.mapsLocation?._lat)} long={Number(event.mapsLocation?._long)} />
+              }
             </div>
           </div>
         </div>

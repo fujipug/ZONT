@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation';
 import { getCourseById } from '@/app/network/firebase'
 import { DocumentData } from 'firebase/firestore'
+import { useCart } from '@/app/utils/CartContext';
 
 const pages = [
   { name: 'Classes', href: '/courses', current: false },
@@ -16,6 +17,7 @@ const pages = [
 export default function Course() {
   const params = useParams()
   const [course, setCourse] = useState<DocumentData | null>(null)
+  const { addToCart } = useCart()
 
   useEffect(() => {
     if (typeof params.slug === 'string') {
@@ -96,12 +98,14 @@ export default function Course() {
           <div className="mt- lg:col-span-5">
             <form>
               <button
+                onClick={(e) => { addToCart({ type: 'courses', priceType: 'online', itemId: course?.courseId }); e.preventDefault() }}
                 type="submit"
                 className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-600 px-8 py-3 text-base font-medium text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2"
               >
                 Clase en Linea ${course?.onlinePrice}
               </button>
               <button
+                onClick={(e) => { addToCart({ type: 'courses', priceType: 'inperson', itemId: course?.courseId }); e.preventDefault() }}
                 type="submit"
                 className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
@@ -142,7 +146,7 @@ export default function Course() {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </main >
+    </div >
   )
 }

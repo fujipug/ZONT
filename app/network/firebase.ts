@@ -77,17 +77,25 @@ export const firebaseGetProfile = async () => {
   }
 }
 
-export const getReservations = async (timestamp: Timestamp, hours: number) => {
-  console.log(`Checking reservations for timestamp: ${timestamp.toDate().toString()} and hours: ${hours}`);
+export const getReservations = async (timestamp: Timestamp) => {
+  // Get the start and end of the day for the given timestamp
+  const startOfDay = Timestamp.fromDate(new Date(timestamp.toDate().setHours(0, 0, 0, 0)));
+  const endOfDay = Timestamp.fromDate(new Date(timestamp.toDate().setHours(23, 59, 59, 999)));
 
-  const q = query(collection(db, "reservations"));
+  // Query for reservations within the day range
+  const q = query(
+    collection(db, "reservations"),
+    where("dateStart", ">=", startOfDay),
+    where("dateStart", "<=", endOfDay)
+  );
+
   const querySnapshot = await getDocs(q);
+  const reservations: DocumentData[] = [];
   querySnapshot.forEach((doc) => {
-    console.log(doc.data());
-    // check if the timestamp and hours added to the timestamp is between the start and end time of the reservation
-    // const startOfReservation = doc.data().dateTime.toDate();
-
+    reservations.push({ reservationId: doc.id, ...doc.data() });
   });
+
+  return reservations;
 };
 
 export const firebaseSignOut = async () => {
@@ -184,7 +192,7 @@ export const getCourseById = async (courseId: string) => {
   const docRef = doc(db, 'courses', courseId);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
-    return docSnap.data();
+    return { courseId: docSnap.id, ...docSnap.data() };
   } else {
     console.log('No such course!');
   }
@@ -213,10 +221,16 @@ export const getStoreItemById = async (itemId: string) => {
 };
 
 // get get item by id from store from firebase DB but the parameter is an array of ids
-export const getCheckoutItemsByIds = async (itemIds: string[]) => {
+interface CheckoutItem {
+  id: string;
+  quantity: number;
+  type: string;
+}
+
+export const getCheckoutItemsByIds = async (items: CheckoutItem[]) => {
   const checkoutItems: DocumentData[] = [];
-  for (const itemId of itemIds) {
-    const docRef = doc(db, 'store', itemId);
+  for (const item of items) {
+    const docRef = doc(db, item.type, item.id);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       checkoutItems.push({ itemId: docSnap.id, ...docSnap.data() });

@@ -1,9 +1,19 @@
 'use client'
+import { CalendarDate } from '@internationalized/date';
 import { createContext, useContext, useEffect, useState } from 'react';
 
+interface CartItem {
+  type: string;
+  itemId: string;
+  priceType?: string;
+  date?: CalendarDate;
+  time?: number;
+  length?: number;
+}
+
 interface CartContextType {
-  cart: string[];
-  addToCart: (item: string) => void;
+  cart: CartItem[];
+  addToCart: (item: CartItem) => void;
   removeItemFromCart: (itemId: string) => void;
   removeFromCart: (itemId: string) => void;
   clearCart: () => void;
@@ -22,7 +32,7 @@ export const useCart = () => useContext(CartContext);
 import { ReactNode } from 'react';
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<string[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -39,17 +49,23 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [cart]);
 
-  const addToCart = (item: string) => {
+  const addToCart = (item: CartItem) => {
     setCart((prevCart) => [...prevCart, item]);
   };
 
   // Remove one item from cart but start from the end
   const removeItemFromCart = (itemId: string) => {
-    setCart((prevCart) => prevCart.slice(0, prevCart.lastIndexOf(itemId)));
+    setCart((prevCart) => {
+      const index = prevCart.map(item => item.itemId).lastIndexOf(itemId);
+      if (index > -1) {
+        return [...prevCart.slice(0, index), ...prevCart.slice(index + 1)];
+      }
+      return prevCart;
+    });
   };
 
   const removeFromCart = (itemId: string) => {
-    setCart((prevCart) => prevCart.filter((item: string) => item !== itemId));
+    setCart((prevCart) => prevCart.filter((item: CartItem) => item.itemId !== itemId));
   };
 
   const clearCart = () => {

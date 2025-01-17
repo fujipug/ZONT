@@ -9,10 +9,11 @@ import { useCart } from '../utils/CartContext'
 import { getCheckoutItemsByIds } from '../network/firebase'
 import { DocumentData } from 'firebase/firestore'
 import GoogleMap from '../utils/GoogleMap'
+import { CalendarDate } from '@internationalized/date'
 
 const deliveryMethods = [
   { id: 1, title: 'Recojer', turnaround: 'Escandon, CDMX', price: 0, priceText: 'Gratis' },
-  { id: 2, title: 'Standard', turnaround: '2–5 dias laborales', price: 5, priceText: '$5.00' },
+  { id: 2, title: 'Standard', turnaround: '2–5 dias laborales', price: 80, priceText: '$80' },
 ]
 const paymentMethods = [
   { id: 'credit-card', title: 'Tarjeta de Credito' },
@@ -24,28 +25,54 @@ export default function Checkout() {
   const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(deliveryMethods[0])
   const { cart, removeFromCart, removeItemFromCart, addToCart, clearCart } = useCart()
   const [products, setProducts] = useState<DocumentData[]>([])
+  const [reservationItems, setReservationItems] = useState<DocumentData[]>([])
 
   useEffect(() => {
-    // check for duplicates in cart, create an object with the duplicate id and quantity
-    const uniqueCart = cart.reduce((acc: { [key: string]: number }, item: string) => {
-      if (!acc[item]) {
-        acc[item] = 1
+    const uniqueCart = cart.reduce((acc: Record<string, { quantity: number; type: string, priceType: string, length: number, time: number, date: CalendarDate }>, item) => {
+      if (!acc[item.itemId]) {
+        acc[item.itemId] = { quantity: 1, type: item.type || '', priceType: item.priceType || '', length: item.length || 0, time: item.time || 0, date: item.date || new CalendarDate(2023, 1, 1) };
       } else {
-        acc[item]++
+        acc[item.itemId].quantity++;
       }
-      return acc
-    }, {})
+      return acc;
+    }, {});
 
-    const uniqueCartArray = Object.keys(uniqueCart).map((key) => key)
+    const uniqueCartArray = Object.keys(uniqueCart).map((key) => ({
+      id: key,
+      ...uniqueCart[key],
+    }));
+
+
+    const reservationItems = uniqueCartArray.filter((item) => item.type === 'reservation'); // Collect all reservation items into an array
+    if (reservationItems.length > 0) {
+      console.log('reservation items', reservationItems);
+      // Find the practice item
+      const practiceItemIndex = uniqueCartArray.findIndex((item) => item.id === 'practice');
+      // Ensure practiceItem exists before proceeding
+      if (practiceItemIndex !== -1) {
+        const practiceItem = uniqueCartArray[practiceItemIndex]; // Get the practice item
+        uniqueCartArray.splice(practiceItemIndex, 1); // Remove practice item from uniqueCartArray
+        // Add the practice item to reservationItems
+        setReservationItems((prevItems) => [...prevItems, practiceItem]);
+      }
+    }
+
 
     getCheckoutItemsByIds(uniqueCartArray).then((items) => {
       const productsWithQuantity = items.map((item) => {
+        const itemType = uniqueCartArray.find((cartItem) => cartItem.id === item.itemId)?.type || '';
+        const courseTypePrice = uniqueCartArray.find((cartItem) => cartItem.id === item.itemId)?.priceType || '';
+        const newPrice = (itemType === 'courses' && courseTypePrice === 'online') ? item.onlinePrice : item.inPersonPrice;
         return {
           ...item,
-          quantity: uniqueCart[item.itemId]
+          quantity: uniqueCartArray.find((cartItem) => cartItem.id === item.itemId)?.quantity || 0,
+          type: itemType,
+          price: itemType === 'courses' ? newPrice : item.price,
+          priceType: courseTypePrice,
         }
       })
       setProducts(productsWithQuantity)
+      console.log(productsWithQuantity)
     })
   }, [cart])
 
@@ -53,7 +80,7 @@ export default function Checkout() {
     return acc + (product.price * product.quantity)
   }, 0)
 
-  const handleQuantityChange = (quantity: string, itemId: string) => {
+  const handleQuantityChange = (quantity: string, itemId: string, productType: string) => {
     const newQuantity = Number(quantity)
     products.map((product) => {
       if (product.itemId === itemId) {
@@ -66,7 +93,7 @@ export default function Checkout() {
 
         if (product.quantity < newQuantity) {
           for (let i = 0; i < newQuantity - product.quantity; i++) {
-            addToCart(itemId)
+            addToCart({ itemId: itemId, type: productType })
           }
         }
       }
@@ -154,7 +181,7 @@ export default function Checkout() {
                         </div>
 
                         <div className='col-span-1'>
-                          <GoogleMap />
+                          <GoogleMap title="ZONT Studio" lat={19.404495} long={-99.179555} />
                         </div>
                       </div>
                     </>
@@ -459,7 +486,14 @@ export default function Checkout() {
                                 {product.title}
                               </a>
                             </h4>
-                            <p className="mt-1 text-sm text-gray-500">{product.category}</p>
+                            {product.type === 'store' &&
+                              <p className="mt-1 text-sm text-gray-500">{product.category}</p>
+                            }
+                            {product.type === 'courses' &&
+                              <p className="mt-1 text-sm text-gray-500">Curso
+                                {product.priceType === 'online' ? ' en Linea' : ' en Persona'}
+                              </p>
+                            }
                             <p className="mt-1 text-sm text-gray-500">{product.size}</p>
                           </div>
 
@@ -478,33 +512,115 @@ export default function Checkout() {
                           <p className="mt-1 text-sm font-medium text-gray-900">${product.price * product.quantity}</p>
 
                           <div className="ml-4 grid grid-cols-1">
-                            <select
-                              id="quantity"
-                              name="quantity"
-                              aria-label="Quantity"
-                              onChange={(e) => handleQuantityChange(e.target.value, product.itemId)}
-                              defaultValue={product.quantity}
-                              className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                            >
-                              <option value={1}>1</option>
-                              <option value={2}>2</option>
-                              <option value={3}>3</option>
-                              <option value={4}>4</option>
-                              <option value={5}>5</option>
-                              <option value={6}>6</option>
-                              <option value={7}>7</option>
-                              <option value={8}>8</option>
-                            </select>
-                            <ChevronDownIcon
-                              aria-hidden="true"
-                              className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end fill-gray-500 sm:size-4"
-                            />
+                            {product.type === 'store' &&
+                              <>
+                                <select
+                                  id="quantity"
+                                  name="quantity"
+                                  aria-label="Quantity"
+                                  onChange={(e) => handleQuantityChange(e.target.value, product.itemId, product.type)}
+                                  defaultValue={product.quantity}
+                                  className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                >
+                                  <option value={1}>1</option>
+                                  <option value={2}>2</option>
+                                  <option value={3}>3</option>
+                                  <option value={4}>4</option>
+                                  <option value={5}>5</option>
+                                  <option value={6}>6</option>
+                                  <option value={7}>7</option>
+                                  <option value={8}>8</option>
+                                </select>
+                                <ChevronDownIcon
+                                  aria-hidden="true"
+                                  className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end fill-gray-500 sm:size-4"
+                                />
+                              </>
+                            }
                           </div>
                         </div>
                       </div>
                     </li>
                   ))}
                 </ul>
+
+
+
+
+
+
+
+                <ul role="list" className="divide-y divide-gray-200">
+                  {reservationItems.map((product) => (
+                    <li key={product.id} className="flex px-4 py-6 sm:px-6">
+                      <div className="shrink-0">
+                        <img alt="Product" src={product.imgUrl} className="w-20 rounded-md" />
+                      </div>
+
+                      <div className="ml-6 flex flex-1 flex-col">
+                        <div className="flex">
+                          <div className="min-w-0 flex-1">
+                            <h4 className="text-sm">
+                              <a href={product.href} className="font-medium text-gray-700 hover:text-gray-800">
+                                {product.title}
+                              </a>
+                            </h4>
+                            <p className="mt-1 text-sm text-gray-500">Reservacion - {product.id}</p>
+                            <p className="mt-1 text-sm font-medium text-gray-900">{product.date.day}/{product.date.month}/{product.date.year} - {product.time}:00</p>
+
+                          </div>
+
+                          <div className="ml-4 flow-root shrink-0">
+                            <button
+                              type="button"
+                              className="-m-2.5 flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500"
+                            >
+                              <span className="sr-only">Remove</span>
+                              <TrashIcon onClick={() => removeFromCart(product.itemId)} aria-hidden="true" className="size-5" />
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-1 items-end justify-between pt-2">
+                          <p className="mt-1 text-sm font-medium text-gray-900">${250 * product.length}</p>
+
+                          <div className="ml-4 grid grid-cols-1">
+                            {product.type === 'store' &&
+                              <>
+                                <select
+                                  id="quantity"
+                                  name="quantity"
+                                  aria-label="Quantity"
+                                  onChange={(e) => handleQuantityChange(e.target.value, product.itemId, product.type)}
+                                  defaultValue={product.quantity}
+                                  className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                >
+                                  <option value={1}>1</option>
+                                  <option value={2}>2</option>
+                                  <option value={3}>3</option>
+                                  <option value={4}>4</option>
+                                  <option value={5}>5</option>
+                                  <option value={6}>6</option>
+                                  <option value={7}>7</option>
+                                  <option value={8}>8</option>
+                                </select>
+                                <ChevronDownIcon
+                                  aria-hidden="true"
+                                  className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end fill-gray-500 sm:size-4"
+                                />
+                              </>
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+
+
+
+
+
                 <dl className="space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6">
                   <div className="flex items-center justify-between">
                     <dt className="text-sm">Subtotal</dt>

@@ -98,7 +98,7 @@ export default function Product() {
           <div className="mt-8 lg:col-span-5">
             <form>
               <button
-                onClick={() => addToCart(product?.itemId)}
+                onClick={(e) => { addToCart({ type: 'store', itemId: product?.itemId }); e.preventDefault() }}
                 type="submit"
                 className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
@@ -116,10 +116,10 @@ export default function Product() {
               />
             </div>
 
-            <div className="mt-8 border-t border-gray-200 pt-8">
+            {/* <div className="mt-8 border-t border-gray-200 pt-8">
               <h2 className="text-sm font-medium text-gray-900">Detalles del Curso</h2>
 
-              {/* <div className="mt-4">
+              <div className="mt-4">
                 <ul role="list" className="space-y-2 text-md text-gray-700">
                   {course?.lessons?.map((lesson: { id: number, title: string, bullets: string[] }) => (
                     <li key={lesson.id}>
@@ -135,8 +135,8 @@ export default function Product() {
                     </li>
                   ))}
                 </ul>
-              </div> */}
-            </div>
+              </div>
+            </div> */}
           </div>
         </div>
       </main>

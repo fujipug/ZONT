@@ -2,10 +2,18 @@
 import { DatePicker } from "@nextui-org/react";
 import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date";
 import TimeSlots from '@/components/ui/time-slots';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getReservations } from '@/app/network/firebase';
 import { Timestamp } from 'firebase/firestore';
 import { classNames } from "@/app/utils/classesNames"
+import { useCart } from "@/app/utils/CartContext";
+import { getOverlappingHours } from "@/app/utils/overlappingHours";
+
+interface Reservation {
+  reservationId: string;
+  dateStart: Timestamp;
+  dateEnd: Timestamp;
+}
 
 const product = {
   name: 'Practica en Estudio',
@@ -45,35 +53,53 @@ const policies = [
 ]
 
 export default function SchedulePractica() {
+  const { addToCart } = useCart()
   const [selectedDate, setSelectedDate] = useState<CalendarDate>(today(getLocalTimeZone()))
+  const [overlappingHours, setOverlappingHours] = useState<Record<string, number[]>>({})
   const [selectedTimeDuration, setSelectedTimeDuration] = useState<{
     time: number;
     length: number;
   } | null>(null)
 
-  const checkAvailabilityWhenTime = (time: number, length: number) => {
-    setSelectedTimeDuration({ time, length })
+  useEffect(() => {
+    const dateFormat = new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day);
+    const firebaseTimestamp = Timestamp.fromDate(dateFormat);
+    getReservations(firebaseTimestamp).then((reservations) => {
+      const hourOverlap = getOverlappingHoursForDay(reservations as Reservation[], firebaseTimestamp);
+      setOverlappingHours(hourOverlap);
+    });
+  }, [selectedDate])
 
-    if (selectedDate) {
-      const dateFormat = new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day, time, 0, 0, 0);
-      const firebaseTimestamp = Timestamp.fromDate(dateFormat);
-      const available = getReservations(firebaseTimestamp, length)
-      available.then((res) => {
-        console.log(res
-        )
-      })
+  const getOverlappingHoursForDay = (reservations: Reservation[], timestamp: Timestamp) => {
+    const result: Record<string, number[]> = {};
+
+    reservations?.forEach((reservation) => {
+      result[reservation.reservationId] = getOverlappingHours(reservation, timestamp);
+    });
+
+    return result;
+  };
+
+  const handleTimeSelected = (time: number, length: number) => {
+    if (time === 0 && length === 0) {
+      setSelectedTimeDuration(null)
+    } else {
+      setSelectedTimeDuration({ time, length })
     }
   }
 
-  const checkAvailabilityWhenDate = (date: CalendarDate) => {
-    setSelectedDate(date)
+  const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
 
-    if (selectedTimeDuration) {
-      const dateFormat = new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day, selectedTimeDuration.time, 0, 0, 0);
-      const firebaseTimestamp = Timestamp.fromDate(dateFormat);
-      const available = getReservations(firebaseTimestamp, selectedTimeDuration.length)
-      available.then((res) => {
-        console.log(res)
+    if (selectedDate && selectedTimeDuration) {
+      console.log('selectedDate', selectedDate)
+      console.log('selectedTimeDuration', selectedTimeDuration)
+      addToCart({
+        itemId: 'practice',
+        type: 'reservation',
+        date: selectedDate,
+        time: selectedTimeDuration.time,
+        length: selectedTimeDuration.length,
       })
     }
   }
@@ -124,31 +150,25 @@ export default function SchedulePractica() {
                           minValue={today(getLocalTimeZone())}
                           onChange={(date) => {
                             if (date) {
-                              checkAvailabilityWhenDate(date);
+                              setSelectedDate(date)
                             }
                           }}
                         />
                       </div>
 
                       <div className='col-span-1 w-full'>
-                        <TimeSlots setScheduleTime={checkAvailabilityWhenTime} />
+                        <TimeSlots selectedDate={selectedDate} overlappingHours={overlappingHours} setScheduleTime={handleTimeSelected} />
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <button
-                  type="submit"
-                  className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-600 px-8 py-3 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                >
-                  Agregar al Carrito
-                </button>
-
-                <button
+                  onClick={handleAddToCart}
                   type="submit"
                   className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                  Finalizar Compra
+                  Agregar al Carrito
                 </button>
               </form>
 

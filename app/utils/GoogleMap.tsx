@@ -8,7 +8,7 @@ declare global {
   }
 }
 
-const GoogleMap = () => {
+const GoogleMap = ({ title, lat, long, }: { title: string, lat: number, long: number }) => {
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const GoogleMap = () => {
 
     loader.load().then(() => {
       const google = window.google;
-      const zontLocation = { lat: 19.404495, lng: -99.179555 };
+      const zontLocation = { lat: lat, lng: long };
 
       const map = new google.maps.Map(mapRef.current, {
         center: zontLocation,
@@ -29,10 +29,10 @@ const GoogleMap = () => {
       new google.maps.Marker({
         position: zontLocation,
         map,
-        title: "ZONT Studio",
+        title: title,
         animation: google.maps.Animation.DROP,
         label: {
-          text: "ZONT Studio",
+          text: title,
           color: "black",
           fontSize: "20px",
           fontWeight: "bold",
