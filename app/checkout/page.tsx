@@ -10,6 +10,7 @@ import { getCheckoutItemsByIds } from '../network/firebase'
 import { DocumentData } from 'firebase/firestore'
 import GoogleMap from '../utils/GoogleMap'
 import { CalendarDate } from '@internationalized/date'
+import { CalendarDaysIcon, ClockIcon, MapPinIcon } from '@heroicons/react/24/outline'
 
 const deliveryMethods = [
   { id: 1, title: 'Recojer', turnaround: 'Escandon, CDMX', price: 0, priceText: 'Gratis' },
@@ -25,12 +26,11 @@ export default function Checkout() {
   const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(deliveryMethods[0])
   const { cart, removeFromCart, removeItemFromCart, addToCart, clearCart } = useCart()
   const [products, setProducts] = useState<DocumentData[]>([])
-  const [reservationItems, setReservationItems] = useState<DocumentData[]>([])
 
   useEffect(() => {
-    const uniqueCart = cart.reduce((acc: Record<string, { quantity: number; type: string, priceType: string, length: number, time: number, date: CalendarDate }>, item) => {
+    const uniqueCart = cart.reduce((acc: Record<string, { quantity: number; type: string, priceType: string, length: number, time: number, date: CalendarDate, venue: string, venuePrice: number }>, item) => {
       if (!acc[item.itemId]) {
-        acc[item.itemId] = { quantity: 1, type: item.type || '', priceType: item.priceType || '', length: item.length || 0, time: item.time || 0, date: item.date || new CalendarDate(2023, 1, 1) };
+        acc[item.itemId] = { quantity: 1, type: item.type || '', priceType: item.priceType || '', length: item.length || 0, time: item.time || 0, date: item.date || new CalendarDate(2023, 1, 1), venue: item.venue || '', venuePrice: item.venuePrice || 0 };
       } else {
         acc[item.itemId].quantity++;
       }
@@ -42,37 +42,57 @@ export default function Checkout() {
       ...uniqueCart[key],
     }));
 
-
-    const reservationItems = uniqueCartArray.filter((item) => item.type === 'reservation'); // Collect all reservation items into an array
-    if (reservationItems.length > 0) {
-      console.log('reservation items', reservationItems);
-      // Find the practice item
-      const practiceItemIndex = uniqueCartArray.findIndex((item) => item.id === 'practice');
-      // Ensure practiceItem exists before proceeding
-      if (practiceItemIndex !== -1) {
-        const practiceItem = uniqueCartArray[practiceItemIndex]; // Get the practice item
-        uniqueCartArray.splice(practiceItemIndex, 1); // Remove practice item from uniqueCartArray
-        // Add the practice item to reservationItems
-        setReservationItems((prevItems) => [...prevItems, practiceItem]);
-      }
-    }
-
-
     getCheckoutItemsByIds(uniqueCartArray).then((items) => {
       const productsWithQuantity = items.map((item) => {
         const itemType = uniqueCartArray.find((cartItem) => cartItem.id === item.itemId)?.type || '';
-        const courseTypePrice = uniqueCartArray.find((cartItem) => cartItem.id === item.itemId)?.priceType || '';
+        const courseTypePrice = uniqueCartArray.find((cartItem) => cartItem.id === item.itemId)?.priceType;
         const newPrice = (itemType === 'courses' && courseTypePrice === 'online') ? item.onlinePrice : item.inPersonPrice;
+        const serviceLength = uniqueCartArray.find((cartItem) => cartItem.id === item.itemId)?.length || 0;
+        const serviceTime = uniqueCartArray.find((cartItem) => cartItem.id === item.itemId)?.time || 0;
+        const serviceDate = uniqueCartArray.find((cartItem) => cartItem.id === item.itemId)?.date || new CalendarDate(2023, 1, 1);
+        const venue = uniqueCartArray.find((cartItem) => cartItem.id === item.itemId)?.venue;
+        const venuePrice = uniqueCartArray.find((cartItem) => cartItem.id === item.itemId)?.venuePrice;
+
+        let updatedPrice: number;
+        switch (itemType) {
+          case 'courses':
+            updatedPrice = newPrice;
+            break;
+
+          case 'services':
+            switch (item.itemId) {
+              case 'practice':
+              case 'produce':
+                updatedPrice = item.price * serviceLength;
+                break;
+              case 'record':
+                updatedPrice = venuePrice ?? 0;
+                break;
+              default:
+                updatedPrice = item.price;
+                break;
+            }
+            break;
+
+          default:
+            updatedPrice = item.price;
+            break;
+        }
+
         return {
           ...item,
           quantity: uniqueCartArray.find((cartItem) => cartItem.id === item.itemId)?.quantity || 0,
           type: itemType,
-          price: itemType === 'courses' ? newPrice : item.price,
+          price: updatedPrice,
           priceType: courseTypePrice,
+          length: serviceLength,
+          time: serviceTime,
+          date: serviceDate,
+          venue: venue,
         }
       })
       setProducts(productsWithQuantity)
-      console.log(productsWithQuantity)
+      // console.log(productsWithQuantity)
     })
   }, [cart])
 
@@ -494,6 +514,15 @@ export default function Checkout() {
                                 {product.priceType === 'online' ? ' en Linea' : ' en Persona'}
                               </p>
                             }
+                            {product.type === 'services' &&
+                              <>
+                                <p className="mt-1 text-sm text-gray-500 flex items-center"><ClockIcon className='size-4 mr-1' />{product.time}:00 - {product.length} {product.length === 1 ? 'hora' : 'horas'}</p>
+                                <p className="mt-1 text-sm text-gray-500 flex items-center"><CalendarDaysIcon className='size-4 mr-1' />{product.date.month}/{product.date.day}/{product.date.year}</p>
+                              </>
+                            }
+                            {product.itemId === 'record' &&
+                              <p className="mt-1 text-sm text-gray-500 flex items-center"><MapPinIcon className='size-4 mr-1' />{product.venue}</p>
+                            }
                             <p className="mt-1 text-sm text-gray-500">{product.size}</p>
                           </div>
 
@@ -543,83 +572,6 @@ export default function Checkout() {
                     </li>
                   ))}
                 </ul>
-
-
-
-
-
-
-
-                <ul role="list" className="divide-y divide-gray-200">
-                  {reservationItems.map((product) => (
-                    <li key={product.id} className="flex px-4 py-6 sm:px-6">
-                      <div className="shrink-0">
-                        <img alt="Product" src={product.imgUrl} className="w-20 rounded-md" />
-                      </div>
-
-                      <div className="ml-6 flex flex-1 flex-col">
-                        <div className="flex">
-                          <div className="min-w-0 flex-1">
-                            <h4 className="text-sm">
-                              <a href={product.href} className="font-medium text-gray-700 hover:text-gray-800">
-                                {product.title}
-                              </a>
-                            </h4>
-                            <p className="mt-1 text-sm text-gray-500">Reservacion - {product.id}</p>
-                            <p className="mt-1 text-sm font-medium text-gray-900">{product.date.day}/{product.date.month}/{product.date.year} - {product.time}:00</p>
-
-                          </div>
-
-                          <div className="ml-4 flow-root shrink-0">
-                            <button
-                              type="button"
-                              className="-m-2.5 flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500"
-                            >
-                              <span className="sr-only">Remove</span>
-                              <TrashIcon onClick={() => removeFromCart(product.itemId)} aria-hidden="true" className="size-5" />
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="flex flex-1 items-end justify-between pt-2">
-                          <p className="mt-1 text-sm font-medium text-gray-900">${250 * product.length}</p>
-
-                          <div className="ml-4 grid grid-cols-1">
-                            {product.type === 'store' &&
-                              <>
-                                <select
-                                  id="quantity"
-                                  name="quantity"
-                                  aria-label="Quantity"
-                                  onChange={(e) => handleQuantityChange(e.target.value, product.itemId, product.type)}
-                                  defaultValue={product.quantity}
-                                  className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                >
-                                  <option value={1}>1</option>
-                                  <option value={2}>2</option>
-                                  <option value={3}>3</option>
-                                  <option value={4}>4</option>
-                                  <option value={5}>5</option>
-                                  <option value={6}>6</option>
-                                  <option value={7}>7</option>
-                                  <option value={8}>8</option>
-                                </select>
-                                <ChevronDownIcon
-                                  aria-hidden="true"
-                                  className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end fill-gray-500 sm:size-4"
-                                />
-                              </>
-                            }
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-
-
-
-
 
                 <dl className="space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6">
                   <div className="flex items-center justify-between">

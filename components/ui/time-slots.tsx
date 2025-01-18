@@ -30,7 +30,7 @@ const timeLengths = [
   { timeLength: 10 },
 ]
 
-export default function TimeSlots({ selectedDate, overlappingHours, setScheduleTime }: { selectedDate: CalendarDate, overlappingHours: Record<string, number[]>, setScheduleTime: (time: number, length: number) => void }) {
+export default function TimeSlots({ hideDuration = false, selectedDate, overlappingHours, setScheduleTime }: { hideDuration?: boolean, selectedDate: CalendarDate, overlappingHours: Record<string, number[]>, setScheduleTime: (time: number, length: number) => void }) {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<number | null>(null)
   const [selectedTimeLength, setSelectedTimeLength] = useState<number | null>(null)
   const [isOpen, setIsOpen] = useState(false)
@@ -75,12 +75,12 @@ export default function TimeSlots({ selectedDate, overlappingHours, setScheduleT
             </span>
           )
             :
-            <span>Tiempo y Duracion</span>
+            <span>{hideDuration && 'Selecionar'} Hora {!hideDuration && 'y Duracion'}</span>
           }
         </button>
       </PopoverTrigger>
       <PopoverContent>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 p-4">
+        <div className={`grid grid-cols-1 gap-8 p-4 ${hideDuration ? 'sm:grid-cols-1' : 'sm:grid-cols-2'}`}>
           {/* Time Slots */}
           <div className="col-span-1">
             <h3 className="mb-2 text-md font-semibold">Tiempo de Empezar</h3>
@@ -94,7 +94,7 @@ export default function TimeSlots({ selectedDate, overlappingHours, setScheduleT
                 return (
                   <button
                     key={timeSlot.startTime}
-                    onClick={() => { setSelectedTimeSlot(timeSlot.startTime); setSelectedTimeLength(null); setConfirmedTime(false) }}
+                    onClick={() => { setSelectedTimeSlot(timeSlot.startTime); setSelectedTimeLength(hideDuration ? 1 : null); setConfirmedTime(false) }}
                     type="button"
                     disabled={isDisabled}
                     className={classNames(
@@ -113,41 +113,43 @@ export default function TimeSlots({ selectedDate, overlappingHours, setScheduleT
           </div>
 
           {/* Duration */}
-          <div className="col-span-1">
-            <h3 className="mb-2 text-md font-semibold">Duration</h3>
-            <div className="grid grid-cols-4 gap-2">
-              {timeLengths.map((length: { timeLength: number }, index: number) => {
-                const flattenedOverlaps = Object.values(overlappingHours).flat();
+          {!hideDuration && (
+            <div className="col-span-1">
+              <h3 className="mb-2 text-md font-semibold">Duration</h3>
+              <div className="grid grid-cols-4 gap-2">
+                {timeLengths.map((length: { timeLength: number }, index: number) => {
+                  const flattenedOverlaps = Object.values(overlappingHours).flat();
 
-                const range =
-                  selectedTimeSlot !== null
-                    ? Array.from({ length: length.timeLength }, (_, i) => selectedTimeSlot + i)
-                    : [];
+                  const range =
+                    selectedTimeSlot !== null
+                      ? Array.from({ length: length.timeLength }, (_, i) => selectedTimeSlot + i)
+                      : [];
 
-                const isLengthDisabled =
-                  range.some((hour) => flattenedOverlaps.includes(hour)) ||
-                  (range.length > 0 && range[range.length - 1] > (timeSlots[timeSlots.length - 1]).startTime);
+                  const isLengthDisabled =
+                    range.some((hour) => flattenedOverlaps.includes(hour)) ||
+                    (range.length > 0 && range[range.length - 1] > (timeSlots[timeSlots.length - 1]).startTime);
 
-                return (
-                  <button
-                    key={index}
-                    onClick={() => { setSelectedTimeLength(length.timeLength); setConfirmedTime(false) }}
-                    type="button"
-                    disabled={isLengthDisabled}
-                    className={classNames(
-                      isLengthDisabled
-                        ? 'w-full h-full rounded-xl bg-gray-200 px-3.5 py-2.5 text-sm font-semibold text-gray-400 cursor-not-allowed'
-                        : length.timeLength === selectedTimeLength
-                          ? 'w-full h-full rounded-xl bg-indigo-300 px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm'
-                          : 'w-full h-full rounded-xl bg-indigo-50 px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100'
-                    )}
-                  >
-                    {length.timeLength} hour{length.timeLength > 1 ? 's' : ''}
-                  </button>
-                );
-              })}
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => { setSelectedTimeLength(length.timeLength); setConfirmedTime(false) }}
+                      type="button"
+                      disabled={isLengthDisabled}
+                      className={classNames(
+                        isLengthDisabled
+                          ? 'w-full h-full rounded-xl bg-gray-200 px-3.5 py-2.5 text-sm font-semibold text-gray-400 cursor-not-allowed'
+                          : length.timeLength === selectedTimeLength
+                            ? 'w-full h-full rounded-xl bg-indigo-300 px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm'
+                            : 'w-full h-full rounded-xl bg-indigo-50 px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100'
+                      )}
+                    >
+                      {length.timeLength} hour{length.timeLength > 1 ? 's' : ''}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <hr className="border-t border-gray-200 h-.5" />

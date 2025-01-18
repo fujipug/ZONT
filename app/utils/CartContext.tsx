@@ -9,6 +9,8 @@ interface CartItem {
   date?: CalendarDate;
   time?: number;
   length?: number;
+  venue?: string;
+  venuePrice?: number;
 }
 
 interface CartContextType {

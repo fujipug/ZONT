@@ -240,3 +240,25 @@ export const getCheckoutItemsByIds = async (items: CheckoutItem[]) => {
   }
   return checkoutItems;
 };
+
+// get services from firebase DB
+export const getServices = async () => {
+  const q = query(collection(db, "services"));
+  const querySnapshot = await getDocs(q);
+  const services: DocumentData[] = [];
+  querySnapshot.forEach((doc) => {
+    services.push({ serviceId: doc.id, ...doc.data() });
+  });
+  return services;
+};
+
+// get venues from firebase DB
+export const getVenues = async () => {
+  const q = query(collection(db, "venues"));
+  const querySnapshot = await getDocs(q);
+  const venues: DocumentData[] = [];
+  querySnapshot.forEach((doc) => {
+    venues.push({ venueId: doc.id, ...doc.data() });
+  });
+  return venues;
+};

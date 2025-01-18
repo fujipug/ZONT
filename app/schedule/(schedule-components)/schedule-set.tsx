@@ -1,91 +1,98 @@
 'use client'
-import { DatePicker } from "@nextui-org/react";
+import { DatePicker, Select, SelectItem } from "@nextui-org/react";
 import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date";
-// import TimeSlots from '@/components/ui/time-slots';
-import { useState } from 'react';
-// import { getReservations } from '@/app/network/firebase';
-// import { Timestamp } from 'firebase/firestore';
+import TimeSlots from '@/components/ui/time-slots';
+import { useEffect, useState } from 'react';
+import { Timestamp } from 'firebase/firestore';
 import { classNames } from "@/app/utils/classesNames"
+import { DocumentData } from "firebase/firestore";
+import { useCart } from "@/app/utils/CartContext";
+import { getReservations, getVenues } from "@/app/network/firebase";
+import { getOverlappingHours } from "@/app/utils/overlappingHours";
 
-const product = {
-  name: 'Graba Tu Set',
-  images: [
-    {
-      id: 1,
-      imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-page-01-featured-product-shot.jpg',
-      imageAlt: "Back of women's Basic Tee in black.",
-      primary: true,
-    },
-    {
-      id: 2,
-      imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-page-01-product-shot-01.jpg',
-      imageAlt: "Side profile of women's Basic Tee in black.",
-      primary: false,
-    },
-    {
-      id: 3,
-      imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-page-01-product-shot-02.jpg',
-      imageAlt: "Front of women's Basic Tee in black.",
-      primary: false,
-    },
-  ],
-  description: `
-    <p>¿Listo para llevar tus habilidades de DJ al siguiente nivel? En ZONT, ofrecemos un estudio totalmente equipado que puedes reservar para practicar y perfeccionar tus sets. Con equipos de última generación, un ambiente profesional y el espacio perfecto para que puedas concentrarte en tu música, este estudio es ideal para DJs de todos los niveles.</p>
-  `,
-  details: [
-    'XDJ-AZ o DDJ-1000',
-    'KRK Classic 5 Monitores',
-    'Mesa Ajustable',
-  ],
+interface Reservation {
+  reservationId: string;
+  dateStart: Timestamp;
+  dateEnd: Timestamp;
 }
+
 const policies = [
-  { name: 'Audifonos', description: 'Audifonos con cable o ' },
+  { name: 'Audifonos', description: 'Audifonos con cable o FDJ-H10 Alpha Theta inalambricos' },
   { name: 'USB', description: "USB formateado con Rekordbox o Serato" },
 ]
 
-export default function ScheduleSet() {
+export default function ScheduleSet({ serviceData }: { serviceData: DocumentData }) {
+  const { addToCart } = useCart()
+  const [venues, setVenues] = useState<DocumentData[]>([])
+  const [selectedVenue, setSelectedVenue] = useState<string | null>(null)
   const [selectedDate, setSelectedDate] = useState<CalendarDate>(today(getLocalTimeZone()))
-  const [selectedTimeDuration] = useState<{
+  const [overlappingHours, setOverlappingHours] = useState<Record<string, number[]>>({})
+  const [selectedTimeDuration, setSelectedTimeDuration] = useState<{
     time: number;
     length: number;
   } | null>(null)
 
-  // const checkAvailabilityWhenTime = (time: number, length: number) => {
-  //   setSelectedTimeDuration({ time, length })
+  useEffect(() => {
+    const dateFormat = new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day);
+    const firebaseTimestamp = Timestamp.fromDate(dateFormat);
+    getReservations(firebaseTimestamp).then((reservations) => {
+      const hourOverlap = getOverlappingHoursForDay(reservations as Reservation[], firebaseTimestamp);
+      setOverlappingHours(hourOverlap);
+    });
+  }, [selectedDate])
 
-  //   if (selectedDate) {
-  //     const dateFormat = new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day, time, 0, 0, 0);
-  //     const firebaseTimestamp = Timestamp.fromDate(dateFormat);
-  //     const available = getReservations(firebaseTimestamp, length)
-  //     available.then((res) => {
-  //       console.log(res
-  //       )
-  //     })
-  //   }
-  // }
+  useEffect(() => {
+    getVenues().then((venues) => {
+      setVenues(venues)
+    })
+  }, [])
 
-  const checkAvailabilityWhenDate = (date: CalendarDate) => {
-    setSelectedDate(date)
+  const getOverlappingHoursForDay = (reservations: Reservation[], timestamp: Timestamp) => {
+    const result: Record<string, number[]> = {};
 
-    if (selectedTimeDuration) {
-      // const dateFormat = new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day, selectedTimeDuration.time, 0, 0, 0);
-      // const firebaseTimestamp = Timestamp.fromDate(dateFormat);
-      // const available = getReservations(firebaseTimestamp, selectedTimeDuration.length)
-      // available.then((res) => {
-      //   console.log(res)
-      // })
+    reservations?.forEach((reservation) => {
+      result[reservation.reservationId] = getOverlappingHours(reservation, timestamp);
+    });
+
+    return result;
+  };
+
+  const handleTimeSelected = (time: number, length: number) => {
+    if (time === 0 && length === 0) {
+      setSelectedTimeDuration(null)
+    } else {
+      setSelectedTimeDuration({ time, length })
+    }
+  }
+
+  const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+
+    if (selectedDate && selectedTimeDuration && selectedVenue) {
+      addToCart({
+        itemId: 'record',
+        type: 'services',
+        date: selectedDate,
+        time: selectedTimeDuration.time,
+        length: selectedTimeDuration.length,
+        venue: selectedVenue,
+        venuePrice: venues.find((venue) => venue.title === selectedVenue)?.price
+      })
     }
   }
 
   return (
-    <div className="bg-white">
+    <div className="bg-gray-50">
       <div className="pb-16 pt-6 sm:pb-24">
         <div className="mx-auto mt-8 max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
           <div className="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
             <div className="lg:col-span-5 lg:col-start-8">
               <div className="flex justify-between">
-                <h1 className="text-xl font-medium text-gray-900">{product.name}</h1>
-                {/* <p className="text-xl font-medium text-gray-900">{product.price} /hr</p> */}
+                <h1 className="text-xl font-medium text-gray-900">{serviceData.title}</h1>
+                {selectedVenue &&
+                  <p className="text-xl font-medium text-gray-900">
+                    ${venues.find((venue) => venue.title === selectedVenue)?.price} /hr
+                  </p>}
               </div>
             </div>
 
@@ -94,13 +101,13 @@ export default function ScheduleSet() {
               <h2 className="sr-only">Images</h2>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-8">
-                {product.images.map((image) => (
+                {serviceData.imgUrls?.map((imgUrl: string, index: number) => (
                   <img
-                    key={image.id}
-                    alt={image.imageAlt}
-                    src={image.imageSrc}
+                    key={index}
+                    alt='Record Set'
+                    src={imgUrl}
                     className={classNames(
-                      image.primary ? 'lg:col-span-2 lg:row-span-2' : 'hidden lg:block',
+                      index === 0 ? 'lg:col-span-2 lg:row-span-2' : 'hidden lg:block',
                       'rounded-lg',
                     )}
                   />
@@ -111,7 +118,6 @@ export default function ScheduleSet() {
             <div className="mt-4 lg:col-span-5">
               <form>
                 <div>
-                  <h2 className="text-lg font-medium text-gray-900">Dia y Hora</h2>
                   <div className="w-full mt-2">
                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
                       <div className="col-span-1 w-full">
@@ -123,51 +129,65 @@ export default function ScheduleSet() {
                           minValue={today(getLocalTimeZone())}
                           onChange={(date) => {
                             if (date) {
-                              checkAvailabilityWhenDate(date);
+                              setSelectedDate(date)
                             }
                           }}
                         />
                       </div>
 
                       <div className='col-span-1 w-full'>
-                        {/* <TimeSlots setScheduleTime={checkAvailabilityWhenTime} /> */}
+                        <TimeSlots hideDuration={true} selectedDate={selectedDate} overlappingHours={overlappingHours} setScheduleTime={handleTimeSelected} />
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <button
-                  type="submit"
-                  className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-600 px-8 py-3 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                >
-                  Agregar al Carrito
-                </button>
+                <div className="mt-4">
+                  <Select
+                    onChange={(e) => setSelectedVenue(e.target.value)}
+                    label="Seleciona el Local"
+                    color='secondary'
+                    size='lg'>
+                    {venues.map((venue: DocumentData) => (
+                      <SelectItem key={venue.title} value={venue.title} textValue={venue.title}>
+                        <div className="flex items-center justify-between">
+                          <span>{venue.title}</span>
+                          <span>${venue.price} /hr</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </Select>
+                </div>
 
                 <button
+                  disabled={!selectedDate || !selectedTimeDuration || !selectedVenue}
+                  onClick={handleAddToCart}
                   type="submit"
-                  className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  Finalizar Compra
+                  className={classNames(
+                    !selectedDate || !selectedTimeDuration || !selectedVenue
+                      ? 'mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-300 px-8 py-3 text-base font-medium text-gray-400 cursor-not-allowed'
+                      : 'mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                  )}                >
+                  Agregar al Carrito
                 </button>
               </form>
 
               {/* Product details */}
               <div className="mt-10">
                 <h2 className="text-sm font-medium text-gray-900">Descripcion</h2>
+              </div>
 
-                <div
-                  dangerouslySetInnerHTML={{ __html: product.description }}
-                  className="mt-4 space-y-4 text-sm/6 text-gray-500"
-                />
+              <div className="mt-4 space-y-4 text-sm/6 text-gray-500">
+                {serviceData.description}
               </div>
 
               <div className="mt-8 border-t border-gray-200 pt-8">
-                <h2 className="text-sm font-medium text-gray-900">Equipo del Estudio</h2>
+                <h2 className="text-sm font-medium text-gray-900">Equipo Utilizado</h2>
 
                 <div className="mt-4">
                   <ul role="list" className="list-disc space-y-1 pl-5 text-sm/6 text-gray-500 marker:text-gray-300">
-                    {product.details.map((item) => (
-                      <li key={item} className="pl-2">
+                    {serviceData.details?.map((item: string, index: number) => (
+                      <li key={index} className="pl-2">
                         {item}
                       </li>
                     ))}

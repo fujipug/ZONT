@@ -4,7 +4,7 @@ import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date";
 import TimeSlots from '@/components/ui/time-slots';
 import { useEffect, useState } from 'react';
 import { getReservations } from '@/app/network/firebase';
-import { Timestamp } from 'firebase/firestore';
+import { DocumentData, Timestamp } from 'firebase/firestore';
 import { classNames } from "@/app/utils/classesNames"
 import { useCart } from "@/app/utils/CartContext";
 import { getOverlappingHours } from "@/app/utils/overlappingHours";
@@ -15,44 +15,12 @@ interface Reservation {
   dateEnd: Timestamp;
 }
 
-const product = {
-  name: 'Practica en Estudio',
-  price: '$250',
-  images: [
-    {
-      id: 1,
-      imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-page-01-featured-product-shot.jpg',
-      imageAlt: "Back of women's Basic Tee in black.",
-      primary: true,
-    },
-    {
-      id: 2,
-      imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-page-01-product-shot-01.jpg',
-      imageAlt: "Side profile of women's Basic Tee in black.",
-      primary: false,
-    },
-    {
-      id: 3,
-      imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-page-01-product-shot-02.jpg',
-      imageAlt: "Front of women's Basic Tee in black.",
-      primary: false,
-    },
-  ],
-  description: `
-    <p>¿Listo para llevar tus habilidades de DJ al siguiente nivel? En ZONT, ofrecemos un estudio totalmente equipado que puedes reservar para practicar y perfeccionar tus sets. Con equipos de última generación, un ambiente profesional y el espacio perfecto para que puedas concentrarte en tu música, este estudio es ideal para DJs de todos los niveles.</p>
-  `,
-  details: [
-    'XDJ-AZ o DDJ-1000',
-    'KRK Classic 5 Monitores',
-    'Mesa Ajustable',
-  ],
-}
 const policies = [
-  { name: 'Audifonos', description: 'Audifonos con cable o ' },
+  { name: 'Audifonos', description: 'Audifonos con cable o FDJ-H10 Alpha Theta inalambricos' },
   { name: 'USB', description: "USB formateado con Rekordbox o Serato" },
 ]
 
-export default function SchedulePractica() {
+export default function SchedulePractica({ serviceData }: { serviceData: DocumentData }) {
   const { addToCart } = useCart()
   const [selectedDate, setSelectedDate] = useState<CalendarDate>(today(getLocalTimeZone()))
   const [overlappingHours, setOverlappingHours] = useState<Record<string, number[]>>({})
@@ -92,11 +60,9 @@ export default function SchedulePractica() {
     e.preventDefault()
 
     if (selectedDate && selectedTimeDuration) {
-      console.log('selectedDate', selectedDate)
-      console.log('selectedTimeDuration', selectedTimeDuration)
       addToCart({
         itemId: 'practice',
-        type: 'reservation',
+        type: 'services',
         date: selectedDate,
         time: selectedTimeDuration.time,
         length: selectedTimeDuration.length,
@@ -105,14 +71,14 @@ export default function SchedulePractica() {
   }
 
   return (
-    <div className="bg-white">
+    <div className="bg-gray-50">
       <div className="pb-16 pt-6 sm:pb-24">
         <div className="mx-auto mt-8 max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
           <div className="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
             <div className="lg:col-span-5 lg:col-start-8">
               <div className="flex justify-between">
-                <h1 className="text-xl font-medium text-gray-900">{product.name}</h1>
-                <p className="text-xl font-medium text-gray-900">{product.price} /hr</p>
+                <h1 className="text-xl font-medium text-gray-900">{serviceData.title}</h1>
+                <p className="text-xl font-medium text-gray-900">${serviceData.price} /hr</p>
               </div>
             </div>
 
@@ -121,13 +87,13 @@ export default function SchedulePractica() {
               <h2 className="sr-only">Images</h2>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-8">
-                {product.images.map((image) => (
+                {serviceData.imgUrls?.map((imgUrl: string, index: number) => (
                   <img
-                    key={image.id}
-                    alt={image.imageAlt}
-                    src={image.imageSrc}
+                    key={index}
+                    alt='Studio Images'
+                    src={imgUrl}
                     className={classNames(
-                      image.primary ? 'lg:col-span-2 lg:row-span-2' : 'hidden lg:block',
+                      index === 0 ? 'lg:col-span-2 lg:row-span-2' : 'hidden lg:block',
                       'rounded-lg',
                     )}
                   />
@@ -138,7 +104,6 @@ export default function SchedulePractica() {
             <div className="mt-4 lg:col-span-5">
               <form>
                 <div>
-                  <h2 className="text-lg font-medium text-gray-900">Dia y Hora</h2>
                   <div className="w-full mt-2">
                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
                       <div className="col-span-1 w-full">
@@ -164,10 +129,14 @@ export default function SchedulePractica() {
                 </div>
 
                 <button
+                  disabled={selectedDate === null || selectedTimeDuration === null}
                   onClick={handleAddToCart}
                   type="submit"
-                  className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
+                  className={classNames(
+                    !selectedDate || !selectedTimeDuration
+                      ? 'mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-300 px-8 py-3 text-base font-medium text-gray-400 cursor-not-allowed'
+                      : 'mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                  )}                >
                   Agregar al Carrito
                 </button>
               </form>
@@ -176,10 +145,9 @@ export default function SchedulePractica() {
               <div className="mt-10">
                 <h2 className="text-sm font-medium text-gray-900">Descripcion</h2>
 
-                <div
-                  dangerouslySetInnerHTML={{ __html: product.description }}
-                  className="mt-4 space-y-4 text-sm/6 text-gray-500"
-                />
+                <div className="mt-4 space-y-4 text-sm/6 text-gray-500">
+                  {serviceData.description}
+                </div>
               </div>
 
               <div className="mt-8 border-t border-gray-200 pt-8">
@@ -187,8 +155,8 @@ export default function SchedulePractica() {
 
                 <div className="mt-4">
                   <ul role="list" className="list-disc space-y-1 pl-5 text-sm/6 text-gray-500 marker:text-gray-300">
-                    {product.details.map((item) => (
-                      <li key={item} className="pl-2">
+                    {serviceData.details?.map((item: string, index: number) => (
+                      <li key={index} className="pl-2">
                         {item}
                       </li>
                     ))}
@@ -214,7 +182,9 @@ export default function SchedulePractica() {
                             <svg className='mx-auto mb-2' xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#A9A9A9"><path d="M480-80q-33 0-56.5-23.5T400-160q0-21 11-39t29-29v-92H320q-33 0-56.5-23.5T240-400v-92q-18-9-29-27t-11-41q0-33 23.5-56.5T280-640q33 0 56.5 23.5T360-560q0 23-11 40t-29 28v92h120v-320h-80l120-160 120 160h-80v320h120v-80h-40v-160h160v160h-40v80q0 33-23.5 56.5T640-320H520v92q19 10 29.5 28t10.5 40q0 33-23.5 56.5T480-80Z" /></svg>}
                         <span className="mt-4 text-sm font-medium text-gray-900">{policy.name}</span>
                       </dt>
-                      <dd className="mt-1 text-sm text-gray-500">{policy.description}</dd>
+                      <dd className="mt-1 text-sm text-gray-500">
+                        {policy.description}
+                      </dd>
                     </div>
                   ))}
                 </dl>

@@ -6,6 +6,7 @@ const features = [
         El estudio esta equipado con equipo y software de nivel profesional para producion:
         <ul className="list-disc pl-5 mt-2">
           <li>Ableton 12 Suite</li>
+          <li>Splice Sounds</li>
           <li>KRK Classic 5 Monitores</li>
           <li>Focusrite Scarlett 2i2</li>
           <li>Akai Mini mk2</li>
