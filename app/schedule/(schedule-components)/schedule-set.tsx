@@ -101,6 +101,12 @@ export default function ScheduleSet({ serviceData }: { serviceData: DocumentData
               <h2 className="sr-only">Images</h2>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-8">
+                {serviceData?.videoUrl &&
+                  <video className="w-full transform rotate-180" autoPlay loop muted>
+                    <source src={serviceData.videoUrl} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                }
                 {serviceData.imgUrls?.map((imgUrl: string, index: number) => (
                   <img
                     key={index}
