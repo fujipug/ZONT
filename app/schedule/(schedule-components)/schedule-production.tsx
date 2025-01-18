@@ -1,10 +1,7 @@
 'use client'
-import { DatePicker } from "@heroui/react";
+import { DatePicker } from "@heroui/date-picker";
 import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date";
-// import TimeSlots from '@/components/ui/time-slots';
 import { useEffect, useState } from 'react';
-// import { getReservations } from '@/app/network/firebase';
-// import { Timestamp } from 'firebase/firestore';
 import { classNames } from "@/app/utils/classesNames"
 import { DocumentData, Timestamp } from "firebase/firestore";
 import TimeSlots from "@/components/ui/time-slots";
