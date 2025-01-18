@@ -4,7 +4,7 @@ import "./globals.css";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import Footer from "@/components/ui/footer";
 import Navbar from "@/components/ui/navbar";
-import { NextUIProvider } from "@nextui-org/react";
+import { HeroUIProvider } from "@heroui/react";
 import { AuthProvider } from "./utils/AuthContext";
 import CartFab from "@/components/ui/cart-fab";
 import { CartProvider } from "./utils/CartContext";
@@ -42,9 +42,9 @@ export default function RootLayout({
           <AuthProvider>
             <Navbar />
             <MantineProvider>
-              <NextUIProvider>
+              <HeroUIProvider>
                 {children}
-              </NextUIProvider>
+              </HeroUIProvider>
             </MantineProvider>
           </AuthProvider>
           <Footer />

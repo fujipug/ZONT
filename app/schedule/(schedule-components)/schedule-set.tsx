@@ -1,5 +1,5 @@
 'use client'
-import { DatePicker, Select, SelectItem } from "@nextui-org/react";
+import { DatePicker, Select, SelectItem } from "@heroui/react";
 import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date";
 import TimeSlots from '@/components/ui/time-slots';
 import { useEffect, useState } from 'react';

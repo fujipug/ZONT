@@ -1,7 +1,7 @@
 'use client'
 import { CakeIcon } from "@heroicons/react/24/outline";
 import { useAuth } from "../utils/AuthContext";
-import { Snippet } from "@nextui-org/react";
+import { Snippet } from "@heroui/react";
 import Link from "next/link";
 
 const items = [

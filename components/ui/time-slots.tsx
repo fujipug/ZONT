@@ -1,4 +1,4 @@
-import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/popover";
+import { Popover, PopoverTrigger, PopoverContent } from "@heroui/popover";
 import { useEffect, useState } from "react";
 import { classNames } from "@/app/utils/classesNames"
 import { CalendarDate } from "@internationalized/date";
