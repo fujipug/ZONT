@@ -1,15 +1,7 @@
 export default function AdminSignIn() {
   return (
     <>
-      {/*
-          This example requires updating your template:
-  
-          ```
-          <html class="h-full bg-white">
-          <body class="h-full">
-          ```
-        */}
-      <div className="flex min-h-full flex-1">
+      <div className="flex h-screen flex-1">
         <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
           <div className="mx-auto w-full max-w-sm lg:w-96">
             <div>
@@ -18,8 +10,8 @@ export default function AdminSignIn() {
                 src="/ZONT_black.svg"
                 className="h-10 w-auto"
               />
-              <h2 className="mt-8 text-2xl/9 font-bold tracking-tight text-gray-900">Sign in to your account</h2>
-              <h2 className="text-xl/9 font-bold tracking-tight text-gray-700">Este es login para, profesores y administradores</h2>
+              <h2 className="mt-8 text-2xl/9 font-bold tracking-tight text-gray-900">Hola Banda!</h2>
+              <h2 className="text-xl/9 font-bold tracking-tight text-gray-700">Este es login para socios, profesores y administradores</h2>
 
             </div>
 
@@ -28,7 +20,7 @@ export default function AdminSignIn() {
                 <form action="#" method="POST" className="space-y-6">
                   <div>
                     <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
-                      Email address
+                      Email
                     </label>
                     <div className="mt-2">
                       <input
@@ -44,7 +36,7 @@ export default function AdminSignIn() {
 
                   <div>
                     <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
-                      Password
+                      Contraseña
                     </label>
                     <div className="mt-2">
                       <input
@@ -107,7 +99,7 @@ export default function AdminSignIn() {
                       type="submit"
                       className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
-                      Sign in
+                      Entrar Al Portal
                     </button>
                   </div>
                 </form>
@@ -119,7 +111,7 @@ export default function AdminSignIn() {
         <div className="relative hidden w-0 flex-1 lg:block">
           <img
             alt=""
-            src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
+            src="https://i.pinimg.com/originals/a0/91/42/a0914286df5679d1f8cab38d739e64ee.gif"
             className="absolute inset-0 size-full object-cover"
           />
         </div>

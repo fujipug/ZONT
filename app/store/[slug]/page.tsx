@@ -8,6 +8,7 @@ import { useParams } from 'next/navigation';
 import { DocumentData } from 'firebase/firestore'
 import { getStoreItemById } from '@/app/network/firebase';
 import { useCart } from '@/app/utils/CartContext';
+import Alerts from '@/components/ui/alerts';
 
 const pages = [
   { name: 'Tienda', href: '/store', current: false },
@@ -17,6 +18,7 @@ const pages = [
 export default function Product() {
   const params = useParams()
   const { addToCart } = useCart()
+  const [isAlertVisible, setIsAlertVisible] = useState(false)
   const [product, setProduct] = useState<DocumentData | null>(null)
 
   useEffect(() => {
@@ -31,6 +33,9 @@ export default function Product() {
 
   return (
     <div className="bg-gray-50">
+      <Alerts color="success" variant="faded" title="Listo"
+        description="Tu producto fue agregado al carrito"
+        isVisible={isAlertVisible} visibility={setIsAlertVisible} />
       <nav aria-label="Breadcrumb" className="flex border-b border-gray-200 bg-white">
         <ol role="list" className="mx-auto flex w-full max-w-screen-xl space-x-4 px-4 sm:px-6 lg:px-8">
           <li className="flex">
@@ -98,7 +103,7 @@ export default function Product() {
           <div className="mt-8 lg:col-span-5">
             <form>
               <button
-                onClick={(e) => { addToCart({ type: 'store', itemId: product?.itemId }); e.preventDefault() }}
+                onClick={(e) => { addToCart({ type: 'store', itemId: product?.itemId }); e.preventDefault(); setIsAlertVisible(true) }}
                 type="submit"
                 className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >

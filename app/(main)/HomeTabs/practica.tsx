@@ -7,6 +7,7 @@ const features = [
         <ul className="list-disc pl-5 mt-2">
           <li>XDJ-AZ y DDJ-1000</li>
           <li>KRK Classic 5 Monitores</li>
+          <li>Mesa Ajustable</li>
         </ul>
       </div>
     )

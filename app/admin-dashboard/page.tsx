@@ -26,6 +26,7 @@ import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { classNames } from '@/app/utils/classesNames'
 import Dashboard from './(admin-pages)/dashboard'
 import Courses from './(admin-pages)/courses'
+import WithAuth from '../utils/WithAuth'
 
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon },
@@ -45,20 +46,12 @@ const userNavigation = [
   { name: 'Sign out', href: '#' },
 ]
 
-export default function AdminDashboard() {
+const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [activePage, setActivePage] = useState('Dashboard')
 
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
       <div className='h-screen bg-gray-50'>
         <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
           <DialogBackdrop
@@ -299,3 +292,5 @@ export default function AdminDashboard() {
     </>
   )
 }
+
+export default WithAuth(AdminDashboard);

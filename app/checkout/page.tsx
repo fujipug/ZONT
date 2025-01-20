@@ -357,52 +357,12 @@ export default function Checkout() {
                 }
               </div>
 
-              {/* <div className="mt-10 border-t border-gray-200 pt-10">
-                <h2 className="text-lg font-medium text-gray-900">Delivery method</h2>
-
-                <fieldset aria-label="Delivery method" className="mt-4">
-                  <RadioGroup
-                    value={selectedDeliveryMethod}
-                    onChange={setSelectedDeliveryMethod}
-                    className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4"
-                  >
-                    {deliveryMethods.map((deliveryMethod) => (
-                      <Radio
-                        key={deliveryMethod.id}
-                        value={deliveryMethod}
-                        aria-label={deliveryMethod.title}
-                        aria-description={`${deliveryMethod.turnaround} for ${deliveryMethod.priceText}`}
-                        className="group relative flex cursor-pointer rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2 data-[focus]:ring-indigo-500"
-                      >
-                        <span className="flex flex-1">
-                          <span className="flex flex-col">
-                            <span className="block text-sm font-medium text-gray-900">{deliveryMethod.title}</span>
-                            <span className="mt-1 flex items-center text-sm text-gray-500">
-                              {deliveryMethod.turnaround}
-                            </span>
-                            <span className="mt-6 text-sm font-medium text-gray-900">{deliveryMethod.priceText}</span>
-                          </span>
-                        </span>
-                        <CheckCircleIcon
-                          aria-hidden="true"
-                          className="size-5 text-indigo-600 group-[&:not([data-checked])]:hidden"
-                        />
-                        <span
-                          aria-hidden="true"
-                          className="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500"
-                        />
-                      </Radio>
-                    ))}
-                  </RadioGroup>
-                </fieldset>
-              </div> */}
-
               {/* Payment */}
               <div className="mt-10 border-t border-gray-200 pt-10">
-                <h2 className="text-lg font-medium text-gray-900">Payment</h2>
+                <h2 className="text-lg font-medium text-gray-900">Pago</h2>
 
                 <fieldset className="mt-4">
-                  <legend className="sr-only">Payment type</legend>
+                  <legend className="sr-only">Tipo de Pago</legend>
                   <div className="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
                     {paymentMethods.map((paymentMethod, paymentMethodIdx) => (
                       <div key={paymentMethod.id} className="flex items-center">
@@ -424,7 +384,7 @@ export default function Checkout() {
                 <div className="mt-6 grid grid-cols-4 gap-x-4 gap-y-6">
                   <div className="col-span-4">
                     <label htmlFor="card-number" className="block text-sm/6 font-medium text-gray-700">
-                      Card number
+                      Numero de Tarjeta
                     </label>
                     <div className="mt-2">
                       <input
@@ -439,7 +399,7 @@ export default function Checkout() {
 
                   <div className="col-span-4">
                     <label htmlFor="name-on-card" className="block text-sm/6 font-medium text-gray-700">
-                      Name on card
+                      Nombre en la Tarjeta
                     </label>
                     <div className="mt-2">
                       <input
@@ -487,7 +447,9 @@ export default function Checkout() {
 
             {/* Order summary */}
             <div className="mt-10 lg:mt-0">
-              <h2 className="text-lg font-medium text-gray-900">Order summary</h2>
+              <h2 className="text-lg font-medium text-gray-900">
+                Resumen de la Orden
+              </h2>
 
               <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
                 <h3 className="sr-only">Items in your cart</h3>
@@ -579,7 +541,7 @@ export default function Checkout() {
                     <dd className="text-sm font-medium text-gray-900">${subtotal}</dd>
                   </div>
                   <div className="flex items-center justify-between">
-                    <dt className="text-sm">Shipping</dt>
+                    <dt className="text-sm">Envio</dt>
                     <dd className="text-sm font-medium text-gray-900">{selectedDeliveryMethod.priceText}</dd>
                   </div>
                   {/* <div className="flex items-center justify-between">
@@ -597,11 +559,11 @@ export default function Checkout() {
                     type="submit"
                     className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                   >
-                    Confirm order
+                    Confirmar Orden
                   </button>
 
                   <button onClick={clearCart} className="mt-4 w-full rounded-md border border-transparent bg-gray-200 px-4 py-3 text-base font-medium text-gray-900 shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-50">
-                    Clear cart
+                    Limpiar Carrito
                   </button>
                 </div>
               </div>

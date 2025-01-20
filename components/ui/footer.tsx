@@ -20,6 +20,7 @@ const navigation: Navigation = {
     { name: 'Ayuda', href: '/help' },
     { name: 'Contacto', href: '/contact' },
     // { name: 'Equipo', href: '/team' },
+    { name: 'Socios', href: '/admin-signin' },
   ],
   social: [
     {

@@ -9,6 +9,7 @@ import { getReservations } from "@/app/network/firebase";
 import { getOverlappingHours } from "@/app/utils/overlappingHours";
 import { useCart } from "@/app/utils/CartContext";
 import { MusicalNoteIcon } from "@heroicons/react/24/outline";
+import Alerts from "@/components/ui/alerts";
 
 interface Reservation {
   reservationId: string;
@@ -24,6 +25,7 @@ const policies = [
 
 export default function ScheduleProduction({ serviceData }: { serviceData: DocumentData }) {
   const { addToCart } = useCart()
+  const [isAlertVisible, setIsAlertVisible] = useState(false)
   const [selectedDate, setSelectedDate] = useState<CalendarDate>(today(getLocalTimeZone()))
   const [overlappingHours, setOverlappingHours] = useState<Record<string, number[]>>({})
   const [selectedTimeDuration, setSelectedTimeDuration] = useState<{
@@ -69,11 +71,16 @@ export default function ScheduleProduction({ serviceData }: { serviceData: Docum
         time: selectedTimeDuration.time,
         length: selectedTimeDuration.length,
       })
+
+      setIsAlertVisible(true)
     }
   }
 
   return (
     <div className="bg-gray-50">
+      <Alerts color="success" variant="faded" title="Listo"
+        description="Tu tiempo de producion fue agregado al carrito"
+        isVisible={isAlertVisible} visibility={setIsAlertVisible} />
       <div className="pb-16 pt-6 sm:pb-24">
         <div className="mx-auto mt-8 max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
           <div className="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">

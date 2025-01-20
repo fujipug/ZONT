@@ -3,6 +3,7 @@ import { CakeIcon } from "@heroicons/react/24/outline";
 import { useAuth } from "../utils/AuthContext";
 import { Snippet } from "@heroui/react";
 import Link from "next/link";
+import WithAuth from "../utils/WithAuth";
 
 const items = [
   {
@@ -20,15 +21,15 @@ const items = [
     itemUrl: "comunidad",
   },
   {
-    header: "Tienda",
-    title: "Network",
-    description: "Aenean vulputate justo commodo auctor vehicula in malesuada semper.",
-    imgUrl: "https://marketplace.canva.com/EAGKtEbPACQ/1/0/1600w/canva-retro-world-emoji-day-instagram-post-IV6LeghOkmw.jpg",
-    itemUrl: "tienda",
+    header: "Nuevo",
+    title: "Nuevo Contenido de ZONT",
+    description: "Los videos mas recientes se encuentran aqui.",
+    imgUrl: "/new_content.png",
+    itemUrl: "youtube",
   },
 ];
 
-export default function Members() {
+const Members = () => {
   const { profile } = useAuth();
 
   return (
@@ -60,7 +61,7 @@ export default function Members() {
         </div>
         <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
           <div className="relative lg:col-span-3">
-            <div className="absolute inset-px rounded-lg bg-white max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem]" />
+            <div className="absolute inset-px rounded-lg bg-gradient-to-r from-[#C6FFDD] via-[#FBD786] to-[#f7797d] max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem]" />
             <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)] lg:rounded-tl-[calc(2rem+1px)]">
               <img
                 alt="Contenido Nuevo"
@@ -68,15 +69,15 @@ export default function Members() {
                 className="h-80 object-cover object-left"
               />
               <div className="p-10 pt-4">
-                <h3 className="text-sm/4 font-semibold text-indigo-600">Nuevo!</h3>
-                <p className="mt-2 text-lg font-medium tracking-tight text-gray-950">Nuevo Contenido de ZONT</p>
+                <h3 className="text-sm/4 font-semibold text-indigo-600">DJ de la Semana!</h3>
+                <p className="mt-2 text-lg font-medium tracking-tight text-gray-950">{ }</p>
                 <p className="mt-2 max-w-lg text-sm/6 text-gray-600">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. In gravida justo et nulla efficitur, maximus
                   egestas sem pellentesque.
                 </p>
                 <Link href={`item/contenido-nuevo`}>
                   <button type="button" className="mt-6 inline-flex items-center gap-x-1.5 rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
-                    Ver Contenido Nuevo
+                    Descubre Mas Sobre Este Miembro
                   </button>
                 </Link>
               </div>
@@ -143,3 +144,5 @@ export default function Members() {
     </div>
   )
 }
+
+export default WithAuth(Members);

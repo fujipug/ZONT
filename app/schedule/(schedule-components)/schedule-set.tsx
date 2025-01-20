@@ -9,6 +9,7 @@ import { DocumentData } from "firebase/firestore";
 import { useCart } from "@/app/utils/CartContext";
 import { getReservations, getVenues } from "@/app/network/firebase";
 import { getOverlappingHours } from "@/app/utils/overlappingHours";
+import Alerts from "@/components/ui/alerts";
 
 interface Reservation {
   reservationId: string;
@@ -23,6 +24,7 @@ const policies = [
 
 export default function ScheduleSet({ serviceData }: { serviceData: DocumentData }) {
   const { addToCart } = useCart()
+  const [isAlertVisible, setIsAlertVisible] = useState(false)
   const [venues, setVenues] = useState<DocumentData[]>([])
   const [selectedVenue, setSelectedVenue] = useState<string | null>(null)
   const [selectedDate, setSelectedDate] = useState<CalendarDate>(today(getLocalTimeZone()))
@@ -78,11 +80,16 @@ export default function ScheduleSet({ serviceData }: { serviceData: DocumentData
         venue: selectedVenue,
         venuePrice: venues.find((venue) => venue.title === selectedVenue)?.price
       })
+
+      setIsAlertVisible(true)
     }
   }
 
   return (
     <div className="bg-gray-50">
+      <Alerts color="success" variant="faded" title="Listo"
+        description="Tu tiempo de grabar tu set fue agregado al carrito"
+        isVisible={isAlertVisible} visibility={setIsAlertVisible} />
       <div className="pb-16 pt-6 sm:pb-24">
         <div className="mx-auto mt-8 max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
           <div className="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
