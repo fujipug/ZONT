@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Dialog,
   DialogBackdrop,
@@ -27,6 +27,14 @@ import { classNames } from '@/app/utils/classesNames'
 import Dashboard from './(admin-pages)/dashboard'
 import Courses from './(admin-pages)/courses'
 import WithAuth from '../utils/WithAuth'
+import Reservations from './(admin-pages)/reservations'
+import Events from './(admin-pages)/events'
+import Store from './(admin-pages)/store'
+import Blogs from './(admin-pages)/blogs'
+import Users from './(admin-pages)/users'
+import Messages from './(admin-pages)/messages'
+import { getUnreadMessagesCount } from '../network/firebase'
+import { Badge } from '@heroui/react'
 
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon },
@@ -37,9 +45,9 @@ const navigation = [
   { name: 'Blogs', href: '#', icon: NewspaperIcon },
 ]
 const management = [
-  { id: 1, name: 'Manejar Usuarios', href: '#', initial: 'U' },
-  { id: 2, name: 'Mensajes', href: '#', initial: 'M' },
-  { id: 3, name: 'Quejas', href: '#', initial: 'Q' },
+  { name: 'Manejar Usuarios', href: '#', initial: 'U' },
+  { name: 'Mensajes', href: '#', initial: 'M' },
+  { name: 'Quejas', href: '#', initial: 'Q' },
 ]
 const userNavigation = [
   { name: 'Your profile', href: '#' },
@@ -49,10 +57,17 @@ const userNavigation = [
 const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [activePage, setActivePage] = useState('Dashboard')
+  const [unreadMessages, setUnreadMessages] = useState(0)
+
+  useEffect(() => {
+    getUnreadMessagesCount().then((count) => {
+      setUnreadMessages(count)
+    })
+  }, [])
 
   return (
     <>
-      <div className='h-screen bg-gray-50'>
+      <div className='bg-gray-50'>
         <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
           <DialogBackdrop
             transition
@@ -104,12 +119,12 @@ const AdminDashboard = () => {
                       </ul>
                     </li>
                     <li>
-                      <div className="text-xs/6 font-semibold text-gray-400">Your teams</div>
+                      <div className="text-xs/6 font-semibold text-gray-400">Manejar</div>
                       <ul role="list" className="-mx-2 mt-2 space-y-1">
                         {management.map((manage) => (
                           <li key={manage.name}>
                             <a
-                              href={manage.href}
+                              onClick={() => setActivePage(manage.name)}
                               className={classNames(
                                 manage.name
                                   ? 'bg-gray-800 text-white'
@@ -120,7 +135,12 @@ const AdminDashboard = () => {
                               <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
                                 {manage.initial}
                               </span>
-                              <span className="truncate">{manage.name}</span>
+
+                              {manage.name === "Mensajes" ? (
+                                <span className="truncate">{manage.name} <span className='bg-red-400 p-2 rounded-lg'>{unreadMessages}</span></span>
+                              ) : (
+                                <span className="truncate">{manage.name}</span>
+                              )}
                             </a>
                           </li>
                         ))}
@@ -176,12 +196,12 @@ const AdminDashboard = () => {
                   </ul>
                 </li>
                 <li>
-                  <div className="text-xs/6 font-semibold text-gray-400">Your teams</div>
+                  <div className="text-xs/6 font-semibold text-gray-400">Manejar</div>
                   <ul role="list" className="-mx-2 mt-2 space-y-1">
                     {management.map((manage) => (
                       <li key={manage.name}>
                         <a
-                          href={manage.href}
+                          onClick={() => setActivePage(manage.name)}
                           className={classNames(
                             manage.name
                               ? 'bg-gray-800 text-white'
@@ -192,7 +212,11 @@ const AdminDashboard = () => {
                           <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
                             {manage.initial}
                           </span>
-                          <span className="truncate">{manage.name}</span>
+                          {manage.name === "Mensajes" ? (
+                            <span className="truncate">{manage.name} <span className='bg-red-400 p-2 rounded-lg'>{unreadMessages}</span></span>
+                          ) : (
+                            <span className="truncate">{manage.name}</span>
+                          )}
                         </a>
                       </li>
                     ))}
@@ -285,6 +309,12 @@ const AdminDashboard = () => {
             <div className="px-4 sm:px-6 lg:px-8">
               {activePage === 'Dashboard' && <Dashboard />}
               {activePage === 'Classes' && <Courses />}
+              {activePage === 'Reservaciones' && <Reservations />}
+              {activePage === 'Eventos' && <Events />}
+              {activePage === 'Tienda' && <Store />}
+              {activePage === 'Blogs' && <Blogs />}
+              {activePage === 'Manejar Usuarios' && <Users />}
+              {activePage === 'Mensajes' && <Messages />}
             </div>
           </main>
         </div>
@@ -293,4 +323,4 @@ const AdminDashboard = () => {
   )
 }
 
-export default WithAuth(AdminDashboard);
+export default AdminDashboard;

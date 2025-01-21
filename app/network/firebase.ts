@@ -1,8 +1,9 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { initializeApp } from "firebase/app";
+import { User } from "firebase/auth";
 // import { getAnalytics } from "firebase/analytics";
 import { firebaseConfig } from "@/lib/firebase-config";
-import { getFirestore, collection, getDocs, Timestamp, query, doc, setDoc, getDoc, DocumentData, where, orderBy, limit } from "firebase/firestore";
+import { getFirestore, collection, getDocs, Timestamp, query, doc, setDoc, getDoc, DocumentData, where, orderBy, limit, deleteDoc, getCountFromServer } from "firebase/firestore";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -48,8 +49,6 @@ export const firebaseSignIn = async (formData: FormData) => {
     });
 }
 
-import { User } from "firebase/auth";
-
 const createUserInFirestore = async (user: User, firstName: string, lastName: string, djName: string) => {
   const docRef = doc(db, 'users', user.uid);
   return await setDoc(docRef, {
@@ -77,6 +76,17 @@ export const firebaseGetProfile = async () => {
   }
 }
 
+// get users from firebase DB
+export const getUsers = async () => {
+  const q = query(collection(db, "users"));
+  const querySnapshot = await getDocs(q);
+  const users: DocumentData[] = [];
+  querySnapshot.forEach((doc) => {
+    users.push({ userId: doc.id, ...doc.data() });
+  });
+  return users;
+};
+
 export const getReservations = async (timestamp: Timestamp) => {
   // Get the start and end of the day for the given timestamp
   const startOfDay = Timestamp.fromDate(new Date(timestamp.toDate().setHours(0, 0, 0, 0)));
@@ -96,6 +106,18 @@ export const getReservations = async (timestamp: Timestamp) => {
   });
 
   return reservations;
+};
+
+// delete reservation from firebase DB
+export const deleteReservationById = async (reservationId: string): Promise<void> => {
+  try {
+    const docRef = doc(db, 'reservations', reservationId);
+    await deleteDoc(docRef);
+    console.log(`Reservation with ID ${reservationId} has been deleted successfully.`);
+  } catch (error) {
+    console.error("Error deleting reservation:", error);
+    throw error; // Re-throw the error if you want to handle it higher up
+  }
 };
 
 export const firebaseSignOut = async () => {
@@ -261,4 +283,48 @@ export const getVenues = async () => {
     venues.push({ venueId: doc.id, ...doc.data() });
   });
   return venues;
+};
+
+// get blogs from firebase DB, sorted by date
+export const getBlogs = async () => {
+  const q = query(collection(db, "blogs"), orderBy("date", "desc"));
+  const querySnapshot = await getDocs(q);
+  const blogs: DocumentData[] = [];
+  querySnapshot.forEach((doc) => {
+    blogs.push({ blogId: doc.id, ...doc.data() });
+  });
+  return blogs;
+};
+
+// get messages from firebase DB sorted by date
+export const getMessages = async () => {
+  const q = query(collection(db, "messages"), orderBy("date", "desc"));
+  const querySnapshot = await getDocs(q);
+  const messages: DocumentData[] = [];
+  querySnapshot.forEach((doc) => {
+    messages.push({ messageId: doc.id, ...doc.data() });
+  });
+  return messages;
+};
+
+// add message to the firebase DB, the paramter is a FormData object
+export const addMessage = async (formData: FormData) => {
+  const docRef = doc(collection(db, 'messages'));
+  return await setDoc(docRef, {
+    firstName: formData.get('first-name'),
+    lastName: formData.get('last-name'),
+    email: formData.get('email'),
+    phoneNumber: formData.get('phone-number'),
+    message: formData.get('message'),
+    status: 'unread',
+    date: Timestamp.now(),
+  });
+};
+
+// get unread messages count
+export const getUnreadMessagesCount = async () => {
+  const coll = collection(db, "messages");
+  const q = query(coll, where("status", "==", "unread"));
+  const snapshot = await getCountFromServer(q);
+  return snapshot.data().count;
 };

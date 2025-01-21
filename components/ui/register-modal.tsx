@@ -1,5 +1,4 @@
 'use client'
-
 import { useAuth } from '@/app/utils/AuthContext';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import Form from 'next/form'
