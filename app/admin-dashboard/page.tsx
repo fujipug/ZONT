@@ -26,7 +26,6 @@ import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { classNames } from '@/app/utils/classesNames'
 import Dashboard from './(admin-pages)/dashboard'
 import Courses from './(admin-pages)/courses'
-import WithAuth from '../utils/WithAuth'
 import Reservations from './(admin-pages)/reservations'
 import Events from './(admin-pages)/events'
 import Store from './(admin-pages)/store'
@@ -34,7 +33,6 @@ import Blogs from './(admin-pages)/blogs'
 import Users from './(admin-pages)/users'
 import Messages from './(admin-pages)/messages'
 import { getUnreadMessagesCount } from '../network/firebase'
-import { Badge } from '@heroui/react'
 
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon },

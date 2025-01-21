@@ -22,7 +22,7 @@ export const columns = [
   { name: "ACTIONS", uid: "actions" },
 ];
 
-export const EyeIcon: React.FC<IconProps> = (props) => {
+export const EyeIcon = (props: IconProps) => {
   return (
     <svg
       aria-hidden="true"
@@ -52,7 +52,7 @@ export const EyeIcon: React.FC<IconProps> = (props) => {
   );
 };
 
-export const DeleteIcon: React.FC<IconProps> = (props) => {
+export const DeleteIcon = (props: IconProps) => {
   return (
     <svg
       aria-hidden="true"
@@ -103,7 +103,7 @@ export const DeleteIcon: React.FC<IconProps> = (props) => {
   );
 };
 
-export const EditIcon: React.FC<IconProps> = (props) => {
+export const EditIcon = (props: IconProps) => {
   return (
     <svg
       aria-hidden="true"
