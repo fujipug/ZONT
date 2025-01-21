@@ -20,9 +20,7 @@ export const columns = [
   { name: "ACTIONS", uid: "actions" },
 ];
 
-interface IconProps extends React.SVGProps<SVGSVGElement> { }
-
-export const EyeIcon = (props: IconProps) => {
+export const EyeIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       aria-hidden="true"
@@ -52,7 +50,7 @@ export const EyeIcon = (props: IconProps) => {
   );
 };
 
-export const DeleteIcon = (props: IconProps) => {
+export const DeleteIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       aria-hidden="true"

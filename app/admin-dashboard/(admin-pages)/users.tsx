@@ -13,8 +13,6 @@ import {
 import { getUsers } from "@/app/network/firebase";
 import { DocumentData } from "firebase/firestore";
 
-interface IconProps extends React.SVGProps<SVGSVGElement> { }
-
 export const columns = [
   { name: "NOMBRE", uid: "name" },
   { name: "NOMBRE DE DJ", uid: "djName" },
@@ -22,7 +20,7 @@ export const columns = [
   { name: "ACTIONS", uid: "actions" },
 ];
 
-export const EyeIcon = (props: IconProps) => {
+export const EyeIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       aria-hidden="true"
@@ -52,7 +50,7 @@ export const EyeIcon = (props: IconProps) => {
   );
 };
 
-export const DeleteIcon = (props: IconProps) => {
+export const DeleteIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       aria-hidden="true"
@@ -103,7 +101,7 @@ export const DeleteIcon = (props: IconProps) => {
   );
 };
 
-export const EditIcon = (props: IconProps) => {
+export const EditIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       aria-hidden="true"

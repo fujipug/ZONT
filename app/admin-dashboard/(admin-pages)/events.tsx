@@ -3,8 +3,8 @@ import { getUpcomingEvents } from "@/app/network/firebase"
 import { DocumentData } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { PlusIcon } from "@heroicons/react/24/outline"
-import { Button, Card, CardBody, CardHeader, DatePicker, Form, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, TimeInput, useDisclosure } from "@heroui/react"
-import { getLocalTimeZone, now, today } from "@internationalized/date"
+import { Button, Card, CardBody, CardHeader, DatePicker, Form, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Textarea, TimeInput, useDisclosure } from "@heroui/react"
+import { getLocalTimeZone, today } from "@internationalized/date"
 
 const cities = [
   { key: "cdmx", label: "Ciudad de México" },
@@ -131,6 +131,20 @@ export default function Events() {
 
                     <TimeInput size="sm" name="time-end" isRequired label="Tiempo de Terminar" />
                   </div>
+
+                  <Textarea
+                    isRequired
+                    name="description"
+                    label="Descripcion"
+                    placeholder="Descripcion del Evento"
+                  />
+
+                  <Textarea
+                    isRequired
+                    name="details"
+                    label="Detalles"
+                    placeholder="Detalles del Evento"
+                  />
 
                 </ModalBody>
                 <ModalFooter>
