@@ -15,7 +15,8 @@ import { DocumentData } from "firebase/firestore";
 
 export const columns = [
   { name: "NOMBRE", uid: "name" },
-  { name: "NOMBRE DE DJ", uid: "djName" },
+  { name: "ROL", uid: "role" },
+  { name: "INFORMACION", uid: "info" },
   { name: "PUNTOS", uid: "points" },
   { name: "ACTIONS", uid: "actions" },
 ];
@@ -159,17 +160,24 @@ export default function Users() {
         return (
           <User
             avatarProps={{ radius: "lg", src: user.imgUrl }}
-            description={user.email}
-            name={`${user.firstName} ${user.lastName}`}
+            description={`${user.firstName} ${user.lastName}`}
+            name={user.djName}
           >
             {user.email}
           </User>
         );
-      case "djName":
+      case "role":
+        const badgeColor = user.role === "admin" ? "success" : "default";
+        return (
+          <Chip className="capitalize" color={badgeColor} size="sm" variant="flat">
+            {user.role ? user.role : "usuario"}
+          </Chip>
+        );
+      case "info":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-sm capitalize">{user.djName}</p>
-            {/* <p className="text-bold text-sm capitalize text-default-400">{user.djName}</p> */}
+            <p className="text-bold text-sm">{user.email}</p>
+            {/* <p className="text-bold text-sm text-default-400">{user.phoneNumber}</p> */}
           </div>
         );
       case "points":
