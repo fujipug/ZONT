@@ -1,19 +1,19 @@
 'use client'
-import { FormEvent, useEffect } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useAuth } from "../utils/AuthContext";
 import { useRouter } from "next/navigation";
-import { Form, Input } from "@heroui/react";
+import { Form, Input, Spinner } from "@heroui/react";
 
 export default function AdminSignIn() {
   const { signIn } = useAuth();
   const router = useRouter();
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, profile } = useAuth();
 
   useEffect(() => {
-    if (isSignedIn) {
+    if (isSignedIn && profile?.role === 'admin') {
       router.push('/admin-dashboard');
     }
-  }, [isSignedIn]);
+  }, [isSignedIn, profile]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,7 +23,6 @@ export default function AdminSignIn() {
       router.push('/admin-dashboard');
     })
   };
-
 
   return (
     <>

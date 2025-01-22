@@ -89,6 +89,17 @@ export const getUsers = async () => {
   return users;
 };
 
+// get user by id from firebase DB
+export const getUserById = async (userId: string) => {
+  const docRef = doc(db, 'users', userId);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    console.log('No such event!');
+  }
+};
+
 export const getReservations = async (timestamp: Timestamp) => {
   // Get the start and end of the day for the given timestamp
   const startOfDay = Timestamp.fromDate(new Date(timestamp.toDate().setHours(0, 0, 0, 0)));

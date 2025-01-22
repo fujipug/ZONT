@@ -29,7 +29,7 @@ import Blogs from './(admin-pages)/blogs'
 import Users from './(admin-pages)/users'
 import Messages from './(admin-pages)/messages'
 import { getUnreadMessagesCount } from '../network/firebase'
-import WithAuth from '../utils/WithAuth'
+import WithAdminAuth from '../utils/WithAdminAuth'
 
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon },
@@ -278,4 +278,4 @@ const AdminDashboard = () => {
   )
 }
 
-export default WithAuth(AdminDashboard);
+export default WithAdminAuth(AdminDashboard);
