@@ -20,7 +20,6 @@ export default function Reservations() {
   }, [selectedDate])
 
   const handleDeleteReservation = (reservationId: string) => {
-    console.log(reservationId)
     deleteReservationById(reservationId).then(() => {
       const newReservations = reservations.filter((reservation) => reservation.reservationId !== reservationId);
       setReservations(newReservations);

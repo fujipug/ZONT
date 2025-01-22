@@ -1,4 +1,30 @@
+'use client'
+import { FormEvent, useEffect } from "react";
+import { useAuth } from "../utils/AuthContext";
+import { useRouter } from "next/navigation";
+import { Form } from "@heroui/react";
+
 export default function AdminSignIn() {
+  const { signIn } = useAuth();
+  const router = useRouter();
+  const { isSignedIn } = useAuth();
+
+  useEffect(() => {
+    if (isSignedIn) {
+      router.push('/admin-dashboard');
+    }
+  }, [isSignedIn]);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    signIn(formData).then(() => {
+      router.push('/admin-dashboard');
+    })
+  };
+
+
   return (
     <>
       <div className="flex h-screen flex-1">
@@ -17,7 +43,7 @@ export default function AdminSignIn() {
 
             <div className="mt-10">
               <div>
-                <form action="#" method="POST" className="space-y-6">
+                <Form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
                       Email
@@ -102,7 +128,7 @@ export default function AdminSignIn() {
                       Entrar Al Portal
                     </button>
                   </div>
-                </form>
+                </Form>
               </div>
 
             </div>

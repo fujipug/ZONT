@@ -4,6 +4,7 @@ import { User } from "firebase/auth";
 // import { getAnalytics } from "firebase/analytics";
 import { firebaseConfig } from "@/lib/firebase-config";
 import { getFirestore, collection, getDocs, Timestamp, query, doc, setDoc, getDoc, DocumentData, where, orderBy, limit, deleteDoc, getCountFromServer } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL, getStorage } from 'firebase/storage';
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -11,6 +12,7 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth();
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 export const firebaseRegister = async (formData: FormData) => {
   const email = formData.get('email') as string;
@@ -138,6 +140,34 @@ export const getEvents = async () => {
     events.push({ eventId: doc.id, ...doc.data() });
   });
   return events;
+};
+
+// add event to the firebase DB, the paramter is a FormData object
+export const addEvent = async (formData: FormData) => {
+  const docRef = doc(collection(db, 'events'));
+  return await setDoc(docRef, {
+    title: formData.get('title'),
+    collective: formData.get('collective'),
+    city: formData.get('city'),
+    ticketUrl: formData.get('ticket-url'),
+    address: formData.get('address'),
+    dateStart: Timestamp.fromDate(new Date(formData.get('date-start') as string)),
+    dateEnd: Timestamp.fromDate(new Date(formData.get('date-end') as string)),
+    description: formData.get('description'),
+    imgUrl: formData.get('img-url'),
+  });
+};
+
+// delete event from firebase DB
+export const deleteEventById = async (eventId: string): Promise<void> => {
+  try {
+    const docRef = doc(db, 'events', eventId);
+    await deleteDoc(docRef);
+    console.log(`Event with ID ${eventId} has been deleted successfully.`);
+  } catch (error) {
+    console.error("Error deleting event:", error);
+    throw error; // Re-throw the error if you want to handle it higher up
+  }
 };
 
 export const getUpcomingEvents = async () => {
@@ -328,3 +358,15 @@ export const getUnreadMessagesCount = async () => {
   const snapshot = await getCountFromServer(q);
   return snapshot.data().count;
 };
+
+export const fileUpload = async (file: File, folder: string) => {
+  const storageRef = ref(storage, `${folder}/${file.name}`);
+  try {
+    const snapshot = await uploadBytes(storageRef, file);
+    const downloadURL = await getDownloadURL(snapshot.ref);
+    return downloadURL;
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    return null;
+  }
+}

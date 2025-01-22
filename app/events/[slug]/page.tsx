@@ -102,12 +102,14 @@ export default function Event() {
 
           <div className="mt- lg:col-span-5">
             <form>
-              <button
+              <Link
+                target='_blank'
+                href={event?.ticketUrl ? event.ticketUrl : '#'}
                 type="submit"
                 className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-600 px-8 py-3 text-base font-medium text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2"
               >
                 Ir a Taquilla
-              </button>
+              </Link>
               {/* <button
                 type="submit"
                 className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
