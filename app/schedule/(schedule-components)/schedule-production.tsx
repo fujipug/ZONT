@@ -147,7 +147,7 @@ export default function ScheduleProduction({ serviceData }: { serviceData: Docum
                       : 'mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
                   )}
                 >
-                  Agregar al Carrito
+                  Agregar al carrito
                 </button>
               </form>
 
@@ -161,7 +161,7 @@ export default function ScheduleProduction({ serviceData }: { serviceData: Docum
               </div>
 
               <div className="mt-8 border-t border-gray-200 pt-8">
-                <h2 className="text-sm font-medium text-gray-900">Equipo del Estudio</h2>
+                <h2 className="text-sm font-medium text-gray-900">Equipo del estudio</h2>
 
                 <div className="mt-4">
                   <ul role="list" className="list-disc space-y-1 pl-5 text-sm/6 text-gray-500 marker:text-gray-300">
@@ -179,7 +179,7 @@ export default function ScheduleProduction({ serviceData }: { serviceData: Docum
                 <h2 id="policies-heading" className="sr-only">
                   Our Policies
                 </h2>
-                <h2 className="text-sm font-medium text-gray-900">Lo Que Tienes Que Traer</h2>
+                <h2 className="text-sm font-medium text-gray-900">Lo que tienes que traer</h2>
 
                 <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 mt-4">
                   {policies.map((policy) => (

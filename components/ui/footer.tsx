@@ -14,7 +14,7 @@ interface Navigation {
 
 const navigation: Navigation = {
   main: [
-    { name: 'Sobre Nosotros', href: '/about' },
+    { name: 'Sobre nosotros', href: '/about' },
     { name: 'Blog', href: '/blog' },
     // { name: 'Menciones', href: '#' },
     { name: 'Ayuda', href: '/help' },

@@ -172,7 +172,7 @@ export default function Events() {
         <main>
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             <div className="py-24 text-center">
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900">¡Eventos Que No Te Puedes Perder!</h1>
+              <h1 className="text-4xl font-bold tracking-tight text-gray-900">¡Eventos que no te puedes perder!</h1>
               <p className="mx-auto mt-4 max-w-3xl text-base text-gray-500">
                 Aquí encontrarás los eventos de ZONT y de nuestros colaboradores de otros colectivos,
                 ofreciendo una variedad de experiencias musicales únicas y exclusivas para que disfrutes
@@ -300,7 +300,7 @@ export default function Events() {
             {/* Product grid */}
             <section aria-labelledby="upcoming-events" className="mt-8">
               <h2 id="upcoming-events" className="sr-only">
-                Próximos Eventos
+                Próximos eventos
               </h2>
 
               <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
@@ -365,14 +365,14 @@ export default function Events() {
                     Quieres que salgo to evento aqui?
                   </h2>
                   <p className="mt-1 text-sm text-gray-300">
-                    Mandanos un mensaje y te ayudamos a promocionar tu evento.
+                    Mándanos un mensaje y te ayudamos a promocionar tu evento.
                   </p>
                 </div>
                 <a
                   href="/contact"
                   className="mt-6 flex shrink-0 items-center justify-center rounded-md border border-white/25 px-4 py-3 text-base font-medium text-white hover:bg-white/10 sm:ml-8 sm:mt-0 lg:ml-0 lg:w-full"
                 >
-                  Mandar Mensaje
+                  Mandar mensaje
                 </a>
               </div>
             </section>
@@ -382,7 +382,7 @@ export default function Events() {
                 More products
               </h2>
 
-              <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-gray-900 mb-8">Eventos Pasados</h1>
+              <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-gray-900 mb-8">Eventos pasados</h1>
               <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
                 {pastEvents.map((event) => (
                   <a key={event.eventId} href={`events/${event.eventId}`} className="group relative">

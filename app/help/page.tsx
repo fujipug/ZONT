@@ -1,5 +1,5 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
-import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/react/24/outline'
+import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline'
 
 const faqs = [
   {
@@ -51,7 +51,7 @@ export default function Help() {
       <div className="mx-auto max-w-7xl px-6 py-8 sm:py-16 lg:px-8 lg:py-16">
         <div className="mx-auto max-w-4xl divide-y divide-gray-900/10">
           <h2 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-            Preguntas Frecuentes (FAQs)
+            Preguntas frecuentes (FAQs)
           </h2>
           <dl className="mt-10 space-y-6 divide-y divide-gray-900/10">
             {faqs.map((faq) => (
@@ -60,8 +60,8 @@ export default function Help() {
                   <DisclosureButton className="group flex w-full items-start justify-between text-left text-gray-900">
                     <span className="text-base/7 font-semibold">{faq.question}</span>
                     <span className="ml-6 flex h-7 items-center">
-                      <PlusSmallIcon aria-hidden="true" className="size-6 group-data-[open]:hidden" />
-                      <MinusSmallIcon aria-hidden="true" className="size-6 group-[&:not([data-open])]:hidden" />
+                      <PlusIcon aria-hidden="true" className="size-6 group-data-[open]:hidden" />
+                      <MinusIcon aria-hidden="true" className="size-6 group-[&:not([data-open])]:hidden" />
                     </span>
                   </DisclosureButton>
                 </dt>

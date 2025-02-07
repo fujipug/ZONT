@@ -21,17 +21,17 @@ const features = [
     imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-feature-07-detail-02.jpg',
     imageAlt: 'Balcon Ritmico',
   },
-  {
-    name: 'Huertito Roma',
-    description:
-      `Huertito Roma es un rincón lleno de vida y naturaleza, ubicado en el corazón de la histórica La Romita.
-       Rodeado de plantas y un ambiente verde, este espacio único combina la serenidad de la 
-       naturaleza con el encanto del barrio. Es el lugar perfecto para grabar tus DJ sets en un 
-       entorno íntimo, fresco y lleno de inspiración, ideal para conectar con tu creatividad en un 
-       escenario especial.`,
-    imageSrc: '/huertito.jpeg',
-    imageAlt: 'Huertito Roma',
-  }
+  // {
+  //   name: 'Huertito Roma',
+  //   description:
+  //     `Huertito Roma es un rincón lleno de vida y naturaleza, ubicado en el corazón de la histórica La Romita.
+  //      Rodeado de plantas y un ambiente verde, este espacio único combina la serenidad de la 
+  //      naturaleza con el encanto del barrio. Es el lugar perfecto para grabar tus DJ sets en un 
+  //      entorno íntimo, fresco y lleno de inspiración, ideal para conectar con tu creatividad en un 
+  //      escenario especial.`,
+  //   imageSrc: '/huertito.jpeg',
+  //   imageAlt: 'Huertito Roma',
+  // }
 ]
 
 export default function Grabar() {
@@ -40,7 +40,7 @@ export default function Grabar() {
     <div className="bg-gray-50 mb-16">
       <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Graba tu Set</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Graba tu set</h2>
           <p className="mt-4 text-gray-500">
             Grabación de sets en cabina equipada con tecnología de audio y video de última generación,
             diseñada para que puedas capturar tus sets con calidad profesional y llevar tu música al
@@ -48,7 +48,7 @@ export default function Grabar() {
           </p>
         </div>
 
-        <div className="mt-16 space-y-16">
+        <div className="my-16 space-y-16">
           {features.map((feature, featureIdx) => (
             <div
               key={feature.name}
@@ -82,14 +82,14 @@ export default function Grabar() {
         <section aria-labelledby="how-does-it-work" className="relative">
           <div className="">
             <h2 id="how-does-it-work" className="font-medium text-gray-500">
-              Como reservar?
+              ¿Cómo reservar?
             </h2>
             <p className="mt-4 text-xl sm:text-4xl font-bold tracking-tight text-gray-900">
-              Reserva En Linea o Mandanos un Mensaje
+              Reserva en línea o mándanos un mensaje
             </p>
             <p className="mt-4 text-gray-500">
-              Puedes reservar en linea, mandarnos un mensaje por red social o por Whatsapp.
-              Recomendamos hacerlo en linea para ver rapidamente plazos de dia y tiempo disponisbles.
+              Puedes reservar en línea, mandarnos un mensaje por red social o por Whatsapp.
+              Recomendamos hacerlo en línea para ver rapidamente plazos de dia y tiempo disponisbles.
             </p>
           </div>
 
@@ -100,7 +100,7 @@ export default function Grabar() {
                 type="button"
                 className="w-full relative inline-flex items-center justify-center rounded-l-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white focus:z-10"
               >
-                En Linea
+                En línea
               </a>
               <a
                 href="https://www.instagram.com/zont_music_mx/" target="_blank"

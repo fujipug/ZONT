@@ -15,7 +15,7 @@ export default function Profile() {
           <div className="divide-y divide-white/5">
             <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
               <div>
-                <h2 className="text-base/7 font-semibold">Tu Informacion</h2>
+                <h2 className="text-base/7 font-semibold">Tu informacion</h2>
                 <p className="mt-1 text-sm/6 text-gray-500">Esta es tu informacion de perfil.</p>
               </div>
 
@@ -115,7 +115,7 @@ export default function Profile() {
                     type="submit"
                     className="rounded-md text-white bg-indigo-500 px-3 py-2 text-sm font-semibold shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                   >
-                    Guardar Informacion
+                    Guardar informacion
                   </button>
                 </div>
               </form>
@@ -123,7 +123,7 @@ export default function Profile() {
 
             <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
               <div>
-                <h2 className="text-base/7 font-semibold">Cambiar Contraseña</h2>
+                <h2 className="text-base/7 font-semibold">Cambiar contraseña</h2>
                 <p className="mt-1 text-sm/6 text-gray-500">Cambia la contraseña de tu perfil.</p>
               </div>
 
@@ -188,7 +188,7 @@ export default function Profile() {
 
             <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
               <div>
-                <h2 className="text-base/7 font-semibold">Eliminar Cuenta</h2>
+                <h2 className="text-base/7 font-semibold">Eliminar cuenta</h2>
                 <p className="mt-1 text-sm/6 text-gray-500">
                   Puedes eliminar tu cuenta aquí. Esta acción es irreversible.
                   Toda la información relacionada con esta cuenta, incluyendo tus puntos, será eliminada de forma permanente.

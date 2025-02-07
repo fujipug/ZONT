@@ -1,15 +1,23 @@
 import { useEffect, useState } from "react"
-import { deleteReservationById, getReservations } from "@/app/network/firebase"
+import { deleteReservationById, getNextReservations, getReservations } from "@/app/network/firebase"
 import { DocumentData, Timestamp } from "firebase/firestore"
 import { DatePicker } from "@heroui/date-picker"
 import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date"
 import { getDifferenceInHours } from "@/app/utils/timeDifference"
-import { Button } from "@heroui/react"
+import { Button, Card, CardBody, CardFooter, CardHeader, Divider } from "@heroui/react"
 import { EnvelopeIcon, UserIcon } from "@heroicons/react/24/outline"
+import AddReservation from "../modals/addReservation"
 
 export default function Reservations() {
   const [reservations, setReservations] = useState<DocumentData[]>([])
+  const [nextReservations, setNextReservations] = useState<DocumentData[]>([])
   const [selectedDate, setSelectedDate] = useState<CalendarDate>(today(getLocalTimeZone()))
+
+  useEffect(() => {
+    getNextReservations().then((reservations) => {
+      setNextReservations(reservations as DocumentData[])
+    })
+  }, [])
 
   useEffect(() => {
     const dateFormat = new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day);
@@ -28,8 +36,84 @@ export default function Reservations() {
 
   return (
     <div className="bg-gray-50 h-screen">
-      <div className="flex items-center mb-6 space-x-10">
-        <h2 className="text-bold text-2xl mb-4">Reservaciones</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-bold text-2xl mb-4">Reservaciones mas cercanas</h2>
+        <AddReservation />
+      </div>
+      <div className="flex items-center space-x-2 py-2 mb-12 overflow-x-auto">
+        {nextReservations.map((reservation) => (
+          <Card key={reservation.reservationId} className="max-w-[400px]">
+            <CardHeader className="flex gap-3">
+              <time className="mb-1 text-sm font-normal leading-none text-gray-600 dark:text-gray-500">
+                <span className="font-semibold text-indigo-600">
+                  {new Date(reservation?.dateStart?.seconds * 1000).toLocaleString("es-MX", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </span>
+                {" "}
+                |
+                {" "}
+                <span className="font-semibold">
+                  {new Date(reservation?.dateStart?.seconds * 1000).toLocaleString("es-MX", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: false,
+                  })}
+                </span>
+                {" "}
+                -
+                {" "}
+                <span className="font-semibold">
+                  {new Date(reservation?.dateEnd?.seconds * 1000).toLocaleString("es-MX", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: false,
+                  })}
+                </span>
+                {" "}
+                |
+                {" "}
+                <span className="font-semibold text-black">
+                  {getDifferenceInHours(reservation.dateStart, reservation.dateEnd) === 1 ?
+                    `${getDifferenceInHours(reservation.dateStart, reservation.dateEnd)} hora` :
+                    `${getDifferenceInHours(reservation.dateStart, reservation.dateEnd)} horas`
+                  }
+                </span>
+              </time>
+            </CardHeader>
+            <Divider />
+            <CardBody>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{reservation.title}</h3>
+              <div className="flex items-center jus space-x-2">
+                <UserIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                <p className="text-base font-normal text-gray-500 dark:text-gray-400">{reservation.client}</p>
+              </div>
+              <div className="flex items-center space-x-2 mb-4 mt-2">
+                <EnvelopeIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                <p className="text-base font-normal text-gray-500 dark:text-gray-400">{reservation.email}</p>
+              </div>
+            </CardBody>
+            <Divider />
+            <CardFooter>
+              <div className="w-full flex items-center justify-between">
+                <Button color="secondary" variant="flat">
+                  Editar
+                </Button>
+                <Button onPress={() => handleDeleteReservation(reservation.reservationId)} color="danger" variant="ghost">
+                  Eliminar
+                </Button>
+              </div>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+
+      <Divider />
+
+      <div className="flex items-center justify-between my-12 space-x-10">
+        <h2 className="text-bold text-2xl mb-4">Reservaciones por dia</h2>
         <DatePicker
           className="w-48"
           size='sm'

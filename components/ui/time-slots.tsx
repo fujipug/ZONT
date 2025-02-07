@@ -75,7 +75,7 @@ export default function TimeSlots({ hideDuration = false, selectedDate, overlapp
             </span>
           )
             :
-            <span>{hideDuration && 'Selecionar'} Hora {!hideDuration && 'y Duracion'}</span>
+            <span>{hideDuration && 'Selecionar'} Hora {!hideDuration && 'y duracion'}</span>
           }
         </button>
       </PopoverTrigger>
@@ -83,7 +83,7 @@ export default function TimeSlots({ hideDuration = false, selectedDate, overlapp
         <div className={`grid grid-cols-1 gap-8 p-4 ${hideDuration ? 'sm:grid-cols-1' : 'sm:grid-cols-2'}`}>
           {/* Time Slots */}
           <div className="col-span-1">
-            <h3 className="mb-2 text-md font-semibold">Tiempo de Empezar</h3>
+            <h3 className="mb-2 text-md font-semibold">Tiempo de empezar</h3>
             <div className="grid grid-cols-4 gap-2">
               {timeSlots.map((timeSlot) => {
 
@@ -115,7 +115,7 @@ export default function TimeSlots({ hideDuration = false, selectedDate, overlapp
           {/* Duration */}
           {!hideDuration && (
             <div className="col-span-1">
-              <h3 className="mb-2 text-md font-semibold">Duration</h3>
+              <h3 className="mb-2 text-md font-semibold">Duracion</h3>
               <div className="grid grid-cols-4 gap-2">
                 {timeLengths.map((length: { timeLength: number }, index: number) => {
                   const flattenedOverlaps = Object.values(overlappingHours).flat();
@@ -143,7 +143,7 @@ export default function TimeSlots({ hideDuration = false, selectedDate, overlapp
                             : 'w-full h-full rounded-xl bg-indigo-50 px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100'
                       )}
                     >
-                      {length.timeLength} hour{length.timeLength > 1 ? 's' : ''}
+                      {length.timeLength} hora{length.timeLength > 1 ? 's' : ''}
                     </button>
                   );
                 })}
@@ -162,7 +162,7 @@ export default function TimeSlots({ hideDuration = false, selectedDate, overlapp
           )}
           disabled={!selectedTimeSlot || !selectedTimeLength}
         >
-          Confirmar Horario
+          Confirmar horario
         </button>
       </PopoverContent>
     </Popover>

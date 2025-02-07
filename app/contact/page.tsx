@@ -7,7 +7,6 @@ import Alerts from "@/components/ui/alerts";
 export default function Contact() {
   const [isAlertVisible, setIsAlertVisible] = useState(false)
 
-
   const handleMessageSubmit = (formData: FormData) => {
     addMessage(formData).then(() => {
       setIsAlertVisible(true)
@@ -46,7 +45,7 @@ export default function Contact() {
         </svg>
         <div className="mx-auto max-w-xl lg:max-w-4xl">
           <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-            Mandanos un mensaje
+            Mándanos un mensaje
           </h2>
           <p className="mt-2 text-lg/8 text-gray-600">
             Tienes preguntas o comentarios? Quieres hacer una colaboracion? Nos encantaría saber de ti. Llena el formulario y te responderemos lo más pronto posible.

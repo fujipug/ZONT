@@ -108,7 +108,7 @@ export default function Event() {
                 type="submit"
                 className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-600 px-8 py-3 text-base font-medium text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2"
               >
-                Ir a Taquilla
+                Ir a taquilla
               </Link>
               {/* <button
                 type="submit"
@@ -129,7 +129,7 @@ export default function Event() {
             </div>
 
             <div className="mt-8 border-t border-gray-200 pt-8">
-              <h2 className="text-sm font-medium text-gray-900">Detalles del Evento</h2>
+              <h2 className="text-sm font-medium text-gray-900">Detalles del evento</h2>
               <div
                 dangerouslySetInnerHTML={{ __html: event?.details }}
                 className="mt-4 space-y-4 text-sm/6 text-gray-500"

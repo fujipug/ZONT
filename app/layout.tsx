@@ -3,11 +3,11 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import Footer from "@/components/ui/footer";
-import Navbar from "@/components/ui/navbar";
 import { HeroUIProvider } from "@heroui/react";
 import { AuthProvider } from "./utils/AuthContext";
 import CartFab from "@/components/ui/cart-fab";
 import { CartProvider } from "./utils/CartContext";
+import NavbarWrapper from "./utils/NavbarWrapper";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -40,7 +40,7 @@ export default function RootLayout({
       >
         <CartProvider>
           <AuthProvider>
-            <Navbar />
+            <NavbarWrapper />
             <MantineProvider>
               <HeroUIProvider>
                 {children}
@@ -51,6 +51,6 @@ export default function RootLayout({
           <CartFab />
         </CartProvider>
       </body>
-    </html >
+    </html>
   );
 }

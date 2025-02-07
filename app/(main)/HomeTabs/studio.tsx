@@ -1,6 +1,6 @@
 const features = [
   {
-    name: 'Equipo Profesional',
+    name: 'Equipo profesional',
     description: (
       <div>
         El estudio esta equipado con equipo y software de nivel profesional para producion:
@@ -16,7 +16,7 @@ const features = [
     )
   },
   {
-    name: 'Precios Accesiblese',
+    name: 'Precios accesibles',
     description: (
       <div>
         Nuestra misión es hacer que los estudios de calidad estén al alcance de todos. Aprovecha nuestras tarifas asequibles.
@@ -28,12 +28,12 @@ const features = [
     )
   },
   {
-    name: 'Adaptamos a tu Horario',
+    name: 'Nos adaptamos a tu horario',
     description:
       'Horarios flexibles para que puedas practicar cuando más lo necesites, adaptándonos a tu agenda.',
   },
   {
-    name: 'Recompensas para Miembros',
+    name: 'Recompensas para miembros',
     description: 'Ustedes nos apoyan, y nosotros queremos apoyarlos a ustedes. Gana sesiones de práctica gratis a través de nuestro programa de recompensas.'
   },
 ]
@@ -53,7 +53,7 @@ export default function Studio() {
             <h2 id="features-heading" className="font-medium text-gray-500">
               Donde tu música toma vida
             </h2>
-            <p className="mt-4 text-xl sm:text-4xl font-bold tracking-tight text-gray-900">Estudio de Producion</p>
+            <p className="mt-4 text-xl sm:text-4xl font-bold tracking-tight text-gray-900">Estudio de producion</p>
             <p className="mt-4 text-gray-500">
               Estudio con las heramientas que necesitas para producir tu musica, con los mejores equipos de audio y video.
             </p>
@@ -74,9 +74,9 @@ export default function Studio() {
         <div className="grid grid-cols-1 sm:grid-cols-2 my-16 gap-x-8">
           <div className="col-span-1">
             <h2 id="why-zont" className="font-medium text-gray-500">
-              Porque ZONT?
+              ¿Por qué Zont??
             </h2>
-            <p className="mt-4 text-xl sm:text-4xl font-bold tracking-tight text-gray-900">Estudio por Artistas, para Artistas</p>
+            <p className="mt-4 text-xl sm:text-4xl font-bold tracking-tight text-gray-900">Estudio de artistas para artistas</p>
             <p className="mt-4 text-gray-500">
               En ZONT, entendemos las necesidades de los DJs, productores y músicos, por lo que ofrecemos un entorno diseñado específicamente para que puedas practicar, grabar y producir tu música con el equipo más avanzado.
             </p>
@@ -95,14 +95,14 @@ export default function Studio() {
       <section aria-labelledby="how-does-it-work" className="relative">
         <div className="">
           <h2 id="how-does-it-work" className="font-medium text-gray-500">
-            Como reservar?
+            ¿Cómo reservar?
           </h2>
           <p className="mt-4 text-2xl sm:text-4xl font-bold tracking-tight text-gray-900">
-            Reserva En Linea o Mandanos un Mensaje
+            Reserva en línea o mándanos un mensaje
           </p>
           <p className="mt-4 text-gray-500">
-            Puedes reservar en linea, mandarnos un mensaje por red social o por Whatsapp.
-            Recomendamos hacerlo en linea para ver rapidamente plazos de dia y tiempo disponisbles.
+            Puedes reservar en línea, mandarnos un mensaje por red social o por Whatsapp.
+            Recomendamos hacerlo en línea para ver rapidamente plazos de dia y tiempo disponisbles.
           </p>
         </div>
 
@@ -113,7 +113,7 @@ export default function Studio() {
               type="button"
               className="w-full relative inline-flex items-center justify-center rounded-l-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white focus:z-10"
             >
-              En Linea
+              En línea
             </a>
             <a
               href="https://www.instagram.com/zont_music_mx/" target="_blank"

@@ -2,21 +2,21 @@ import { classNames } from "@/app/utils/classesNames"
 
 const features = [
   {
-    name: 'Fotographia Profesional',
+    name: 'Fotographía profesional',
     description:
-      `Fotografía Profesional en ZONT te ofrece la oportunidad de capturar imágenes impactantes 
+      `Fotografía profesional en ZONT te ofrece la oportunidad de capturar imágenes impactantes 
       y de alta calidad que reflejen tu esencia como artista. Ya sea para promocionar tu música, 
       compartir en redes sociales o complementar tus proyectos creativos, nuestro servicio combina 
       experiencia técnica, equipo de primer nivel y un enfoque personalizado para resaltar tu estilo 
       único. En un ambiente profesional y dinámico, creamos fotografías que cuentan tu historia y 
       potencian tu presencia artística.`,
     imageSrc: '/photography.jpg',
-    imageAlt: 'fotographia profesional',
+    imageAlt: 'fotographía profesional',
   },
   {
-    name: 'Ayuda con Press Kit',
+    name: 'Ayuda con press kit',
     description:
-      `Ayuda con Press Kit en ZONT te brinda las herramientas necesarias para destacar como 
+      `Ayuda con press kit en ZONT te brinda las herramientas necesarias para destacar como 
       artista y comunicar tu esencia de manera profesional. Desde la creación de tu biografía 
       hasta la selección de fotos, diseño y contenido clave, te apoyamos en la elaboración de 
       un press kit que capture tu identidad musical y atraiga la atención de promotores, 
@@ -26,9 +26,9 @@ const features = [
     imageAlt: 'Ayuda con Press Kit',
   },
   {
-    name: 'Desiño de Pagina Web',
+    name: 'Desiño de pagina web',
     description:
-      `Diseño de Página Web en ZONT te ofrece una plataforma personalizada y profesional para 
+      `Diseño de página web en ZONT te ofrece una plataforma personalizada y profesional para 
       mostrar tu música y conectar con tu audiencia. Creamos sitios web visualmente atractivos 
       y funcionales, adaptados a tu estilo y necesidades, que te permiten destacar en el mundo digital. 
       Desde la integración de tus sets hasta la promoción de tus próximos eventos, te ayudamos a tener 
@@ -44,7 +44,7 @@ export default function Services() {
     <div className="bg-gray-50 mb-16">
       <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Nuestros Otros Servicios</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Otros servicios que ofrecemos</h2>
           <p className="mt-4 text-gray-500">
             Estamos para ofrecerte todo el apoyo necesario en tu carrera musical.
             Ya sea que necesites potenciar tu presencia digital, mejorar tu imagen o preparar

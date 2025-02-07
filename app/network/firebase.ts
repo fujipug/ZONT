@@ -100,6 +100,19 @@ export const getUserById = async (userId: string) => {
   }
 };
 
+// edit user in firebase DB
+export const editUser = async (userId: string, formData: FormData) => {
+  const docRef = doc(db, 'users', userId);
+  return await setDoc(docRef, {
+    firstName: formData.get('first-name'),
+    lastName: formData.get('last-name'),
+    djName: formData.get('dj-name'),
+    email: formData.get('email'),
+    points: Number(formData.get('points')),
+    role: formData.get('role'),
+  });
+};
+
 export const getReservations = async (timestamp: Timestamp) => {
   // Get the start and end of the day for the given timestamp
   const startOfDay = Timestamp.fromDate(new Date(timestamp.toDate().setHours(0, 0, 0, 0)));
@@ -120,6 +133,36 @@ export const getReservations = async (timestamp: Timestamp) => {
 
   return reservations;
 };
+
+// get the next 10 reservations from firebase DB
+export const getNextReservations = async () => {
+  const q = query(
+    collection(db, "reservations"),
+    where("dateStart", ">=", Timestamp.now()),
+    orderBy("dateStart", "asc"),
+    limit(10)
+  );
+
+  const querySnapshot = await getDocs(q);
+  const reservations: DocumentData[] = [];
+  querySnapshot.forEach((doc) => {
+    reservations.push({ reservationId: doc.id, ...doc.data() });
+  });
+
+  return reservations;
+};
+
+// add reservation to the firebase DB, the paramter is a FormData object
+export const addReservation = async (formData: FormData, dateStart: Timestamp, dateEnd: Timestamp) => {
+  const docRef = doc(collection(db, 'reservations'));
+  return await setDoc(docRef, {
+    dateStart: dateStart,
+    dateEnd: dateEnd,
+    client: formData.get('client'),
+    title: formData.get('title'),
+  });
+};
+
 
 // delete reservation from firebase DB
 export const deleteReservationById = async (reservationId: string): Promise<void> => {

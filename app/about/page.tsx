@@ -6,7 +6,7 @@ const stats = [
 ]
 const values = [
   {
-    name: 'Creatividad Sin Límites',
+    name: 'Creatividad sin límites',
     description:
       'Fomentamos la libertad de expresión y la innovación sin barreras.',
   },
@@ -21,12 +21,12 @@ const values = [
       'Nos comprometemos a ofrecer servicios de alta calidad, siempre buscando lo mejor.',
   },
   {
-    name: 'Aprendizaje y Crecimiento',
+    name: 'Aprendizaje y crecimiento',
     description:
       'Apoyamos el desarrollo continuo de cada individuo, desde principiantes hasta expertos.',
   },
   {
-    name: 'Pasión por la Música',
+    name: 'Pasión por la música',
     description:
       'Nos mueve el amor por la música y el deseo de ayudar a otros a compartirlo.',
   },
@@ -50,20 +50,20 @@ const team = [
       '/azamat.jpg',
   },
   {
-    name: 'Edson Utrev',
+    name: 'Edson Bautista Utrera',
     role: 'Residente',
     imageUrl:
       '/edson.jpg',
   },
   {
     name: 'Valentino',
-    role: 'Primer Perro DJ',
+    role: 'Perrito/Residente',
     imageUrl:
       '/valentino.png',
   },
   {
-    name: 'Miguel',
-    role: 'Profesor',
+    name: 'Miguel Gaitan',
+    role: 'Profesor/Residente',
     imageUrl:
       '/miguel.jpg',
   },
@@ -117,7 +117,7 @@ export default function About() {
               <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
                 <div className="relative w-full lg:max-w-xl lg:shrink-0 xl:max-w-2xl">
                   <h1 className="text-pretty text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">
-                    Quiénes Somos y Qué Nos Mueve
+                    Quiénes somos y qué nos mueve
                   </h1>
                   <p className="mt-8 text-pretty text-lg font-medium text-gray-500 sm:max-w-md sm:text-xl/8 lg:max-w-none">
                     En ZONT, somos más que un estudio de música; somos un espacio diseñado para que
@@ -183,7 +183,7 @@ export default function About() {
         {/* Content section */}
         <div className="mx-auto -mt-12 max-w-7xl px-6 sm:mt-0 lg:px-8 xl:-mt-8">
           <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
-            <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Nuestra Misión</h2>
+            <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Nuestra misión</h2>
             <div className="mt-6 flex flex-col gap-x-8 gap-y-20 lg:flex-row">
               <div className="lg:w-full lg:max-w-2xl lg:flex-auto">
                 <p className="text-xl/8 text-gray-600">
@@ -229,7 +229,7 @@ export default function About() {
         {/* Values section */}
         <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8">
           <div className="mx-auto max-w-2xl lg:mx-0">
-            <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Nuestros Valores</h2>
+            <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Nuestros valores</h2>
             <p className="mt-6 text-lg/8 text-gray-600">
               En ZONT, nos impulsan la pasión, la creatividad y el compromiso con nuestra comunidad.
               Creemos en el poder de la música para conectar personas y fomentar la expresión
@@ -317,7 +317,7 @@ export default function About() {
         {/* Team section */}
         <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-48 lg:px-8 mb-8">
           <div className="mx-auto max-w-2xl lg:mx-0">
-            <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">El Equipo Detrás de ZONT</h2>
+            <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">El equipo detrás de ZONT</h2>
             <p className="mt-6 text-lg/8 text-gray-600">
               Nuestro equipo está formado por personas apasionadas y creativas que comparten el
               objetivo de ofrecer un espacio único para artistas. Con experiencia en música, diseño

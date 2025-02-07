@@ -6,8 +6,8 @@ import HomeTabs from "../app/(main)/HomeTabs/page";
 
 export default function Home() {
 
-  const words = ["Practica en Cabina", "Grabacion de Set", "Estudio de Producion",
-    "Fotos/Fotographia", "Eventos en CDMX"];
+  const words = ["Practica en cabina", "Grabación de set", "Estudio de producción",
+    "Fotografía y vídeo", "Eventos en CDMX"];
   // Maybe: "Diseño de Logo", "Diseño de Pagina Web", "Press Kit"
 
   return (

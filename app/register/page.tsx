@@ -5,29 +5,29 @@ import { useState } from "react"
 
 const incentives = [
   {
-    name: 'Recompensas de Lealtad',
+    name: 'Recompensas de lealtad',
     imageSrc: SparklesIcon,
     description: "Gana puntos por tu participación y compromiso, canjeables por recompensas y experiencias exclusivas.",
   },
   {
-    name: 'Ventajas en Sorteos',
+    name: 'Ventajas en sorteos',
     imageSrc: GiftIcon,
     description: "Obtén más participaciones en sorteos, aumentando tus posibilidades de ganar increíbles premios.",
   },
   {
-    name: 'Descuentos en Eventos',
+    name: 'Descuentos en eventos',
     imageSrc: TicketIcon,
     description:
       "Disfruta de precios especiales en eventos organizados por ZONT, desde sets de DJs electrizantes hasta fiestas inolvidables.",
   },
   {
-    name: 'Contenido Exclusivo',
+    name: 'Contenido exclusivo',
     imageSrc: FilmIcon,
     description:
       "Accede a contenido solo para miembros, anuncios anticipados de eventos y actualizaciones exclusivas.",
   },
   {
-    name: 'Conexión con la Comunidad',
+    name: 'Conexión con la comunidad',
     imageSrc: UserGroupIcon,
     description:
       "Únete a una comunidad apasionada de amantes de la música y DJs, compartiendo la energía y creatividad de ZONT.",
@@ -52,7 +52,7 @@ export default function Register() {
               </p>
 
               <button onClick={() => setOpen(true)} className="mt-8 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
-                Regístrate Ahora
+                Regístrate ahora
               </button>
             </div>
             <img

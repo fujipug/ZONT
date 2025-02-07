@@ -12,16 +12,16 @@ const HomeTabs = () => {
 
   const tabs = [
     { name: 'Practicar' },
-    { name: 'Grabar Set' },
+    { name: 'Grabar set' },
     { name: 'Producir' },
-    { name: 'Ver Otros Servicios' },
+    { name: 'Otros servicios' },
     // { name: 'Diseño de Logo' },
     // { name: 'Diseño de Pagina Web' },
   ]
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-8 bg-gray-50">
-      <h1 className="text-xl sm:text-2xl text-black font-bold">Que Quieres Hacer?</h1>
+      <h1 className="text-xl sm:text-2xl text-black font-bold">¿Qué te gustaría hacer?</h1>
 
       <div>
 
@@ -67,9 +67,9 @@ const HomeTabs = () => {
 
         <div className="mt-8">
           {activeTab === 'Practicar' && <Practica />}
-          {activeTab === 'Grabar Set' && <Grabar />}
+          {activeTab === 'Grabar set' && <Grabar />}
           {activeTab === 'Producir' && <Studio />}
-          {activeTab === 'Ver Otros Servicios' && <Services />}
+          {activeTab === 'Otros servicios' && <Services />}
         </div>
       </div>
 

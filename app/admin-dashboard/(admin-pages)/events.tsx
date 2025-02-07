@@ -8,7 +8,8 @@ import { getLocalTimeZone, today } from "@internationalized/date"
 
 const cities = [
   { key: "CDMX", label: "Ciudad de México" },
-  { key: "lc", label: "Los Cabos" },
+  { key: "GDL", label: "Guadalajara" },
+  { key: "LC", label: "Los Cabos" },
 ]
 
 export default function Events() {
@@ -53,7 +54,6 @@ export default function Events() {
       const firebaseTimestampEnd = Timestamp.fromDate(dateEnd);
       data['date-end'] = firebaseTimestampEnd.toDate().toISOString();
 
-      console.log('data', data);
       const formData = new FormData();
       for (const key in data) {
         formData.append(key, data[key]);
