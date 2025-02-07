@@ -7,6 +7,7 @@ import { getDifferenceInHours } from "@/app/utils/timeDifference"
 import { Button, Card, CardBody, CardFooter, CardHeader, Divider } from "@heroui/react"
 import { EnvelopeIcon, UserIcon } from "@heroicons/react/24/outline"
 import AddReservation from "../modals/addReservation"
+import { I18nProvider } from "@react-aria/i18n";
 
 export default function Reservations() {
   const [reservations, setReservations] = useState<DocumentData[]>([])
@@ -114,20 +115,22 @@ export default function Reservations() {
 
       <div className="flex items-center justify-between my-12 space-x-10">
         <h2 className="text-bold text-2xl mb-4">Reservaciones por dia</h2>
-        <DatePicker
-          className="w-48"
-          size='sm'
-          color="secondary"
-          label="Dia"
-          disableAnimation
-          value={selectedDate}
-          minValue={today(getLocalTimeZone())}
-          onChange={(date) => {
-            if (date) {
-              setSelectedDate(date)
-            }
-          }}
-        />
+        <I18nProvider locale="es-ES">
+          <DatePicker
+            className="w-48"
+            size='sm'
+            color="secondary"
+            label="Dia"
+            disableAnimation
+            value={selectedDate}
+            minValue={today(getLocalTimeZone())}
+            onChange={(date) => {
+              if (date) {
+                setSelectedDate(date)
+              }
+            }}
+          />
+        </I18nProvider>
       </div>
 
       {reservations.length === 0 ? (

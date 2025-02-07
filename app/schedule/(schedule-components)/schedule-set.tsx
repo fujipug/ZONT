@@ -10,6 +10,7 @@ import { useCart } from "@/app/utils/CartContext";
 import { getReservations, getVenues } from "@/app/network/firebase";
 import { getOverlappingHours } from "@/app/utils/overlappingHours";
 import Alerts from "@/components/ui/alerts";
+import { I18nProvider } from "@react-aria/i18n";
 
 interface Reservation {
   reservationId: string;
@@ -134,18 +135,20 @@ export default function ScheduleSet({ serviceData }: { serviceData: DocumentData
                   <div className="w-full mt-2">
                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
                       <div className="col-span-1 w-full">
-                        <DatePicker
-                          size='lg'
-                          label="Dia"
-                          disableAnimation
-                          value={selectedDate}
-                          minValue={today(getLocalTimeZone())}
-                          onChange={(date) => {
-                            if (date) {
-                              setSelectedDate(date)
-                            }
-                          }}
-                        />
+                        <I18nProvider locale="es-ES">
+                          <DatePicker
+                            size='lg'
+                            label="Dia"
+                            disableAnimation
+                            value={selectedDate}
+                            minValue={today(getLocalTimeZone())}
+                            onChange={(date) => {
+                              if (date) {
+                                setSelectedDate(date)
+                              }
+                            }}
+                          />
+                        </I18nProvider>
                       </div>
 
                       <div className='col-span-1 w-full'>

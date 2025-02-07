@@ -5,6 +5,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { PlusIcon } from "@heroicons/react/24/outline"
 import { Button, Card, CardBody, CardHeader, DatePicker, Form, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Textarea, TimeInput, useDisclosure } from "@heroui/react"
 import { getLocalTimeZone, today } from "@internationalized/date"
+import { I18nProvider } from "@react-aria/i18n";
 
 const cities = [
   { key: "CDMX", label: "Ciudad de México" },
@@ -192,20 +193,24 @@ export default function Events() {
                   />
 
                   <div className="flex items-center gap-2">
-                    <DatePicker isRequired
-                      errorMessage="Este campo es requerido"
-                      minValue={today(getLocalTimeZone())}
-                      size="sm" name="date-start" label="Fecha de Empezar" />
+                    <I18nProvider locale="es-ES">
+                      <DatePicker isRequired
+                        errorMessage="Este campo es requerido"
+                        minValue={today(getLocalTimeZone())}
+                        size="sm" name="date-start" label="Fecha de Empezar" />
+                    </I18nProvider>
 
                     <TimeInput errorMessage="Este campo es requerido"
                       size="sm" name="time-start" isRequired label="Tiempo de Empezar" />
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <DatePicker isRequired
-                      errorMessage="Este campo es requerido"
-                      minValue={today(getLocalTimeZone())}
-                      size="sm" name="date-end" label="Fecha de Terminar" />
+                    <I18nProvider locale="es-ES">
+                      <DatePicker isRequired
+                        errorMessage="Este campo es requerido"
+                        minValue={today(getLocalTimeZone())}
+                        size="sm" name="date-end" label="Fecha de Terminar" />
+                    </I18nProvider>
 
                     <TimeInput errorMessage="Este campo es requerido"
                       size="sm" name="time-end" isRequired label="Tiempo de Terminar" />
