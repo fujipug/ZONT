@@ -74,10 +74,13 @@ export default function AddReservation() {
     }
   }
 
-  const handleServiceSelected = (e: any) => {
-    setSelectedTimeDuration(null);
-    setOverlappingHours({});
-    setSelectedService(e.currentKey ?? null);
+  const handleServiceSelected = (service: string | undefined) => {
+    console.log(service)
+    if (service !== undefined) {
+      setSelectedTimeDuration(null);
+      setOverlappingHours({});
+      setSelectedService(service ?? null);
+    }
   }
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -122,7 +125,7 @@ export default function AddReservation() {
                     type="text"
                   />
 
-                  <Select onSelectionChange={(e) => handleServiceSelected(e)} label="Selecionar servicio" labelPlacement="outside" name="title" placeholder="ex: Practica en estudio" isRequired>
+                  <Select onSelectionChange={(e) => handleServiceSelected(e.currentKey)} label="Selecionar servicio" labelPlacement="outside" name="title" placeholder="ex: Practica en estudio" isRequired>
                     {services.map((service) => (
                       <SelectItem key={service.title}>{service.title}</SelectItem>
                     ))}
